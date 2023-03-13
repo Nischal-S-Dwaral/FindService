@@ -1,0 +1,67 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/admin/node_modules
+/admin/.pnp
+/admin/.pnp.js
+
+# testing
+/admin/coverage
+
+# production
+/admin/build
+
+# misc
+/admin/.DS_Store
+/admin/.env.local
+/admin/.env.development.local
+/admin/.env.test.local
+/admin/.env.production.local
+
+/admin/npm-debug.log*
+/admin/yarn-debug.log*
+/admin/yarn-error.log*
+
+# dependencies
+/customer/node_modules
+/customer/.pnp
+/customer/.pnp.js
+
+# testing
+/customer/coverage
+
+# production
+/customer/build
+
+# misc
+/customer/.DS_Store
+/customer/.env.local
+/customer/.env.development.local
+/customer/.env.test.local
+/customer/.env.production.local
+
+/customer/npm-debug.log*
+/customer/yarn-debug.log*
+/customer/yarn-error.log*
+
+# dependencies
+/service-provider/node_modules
+/service-provider/.pnp
+/service-provider/.pnp.js
+
+# testing
+/service-provider/coverage
+
+# production
+/service-provider/build
+
+# misc
+/service-provider/.DS_Store
+/service-provider/.env.local
+/service-provider/.env.development.local
+/service-provider/.env.test.local
+/service-provider/.env.production.local
+
+/service-provider/npm-debug.log*
+/service-provider/yarn-debug.log*
+/service-provider/yarn-error.log*
