@@ -65,3 +65,8 @@
 /service-provider/npm-debug.log*
 /service-provider/yarn-debug.log*
 /service-provider/yarn-error.log*
+
+**/.idea
+./idea/idea
+.idea/vcs.xml
+.idea/.gitignore
