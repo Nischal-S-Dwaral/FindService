@@ -3,15 +3,17 @@ import styled from "styled-components";
 import {AccessTime, DescriptionOutlined, LocationOn} from "@material-ui/icons";
 import StarRating from "./StarRating";
 import {CurrencyPound} from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const Container = styled.div `
   display: flex;
   height: 200px;
-  border: 0.2px groove black;
+  border: 0.01px groove black;
   border-radius: 15px;
   cursor: pointer;
   transition: all 0.5s ease;
   margin-bottom: 15px;
+  box-shadow: 0 10px 15px rgba(0,0,0,.1);
 
   &:hover {
     background-color: #e9f5f5;
@@ -77,43 +79,45 @@ const Description = styled.p `
 const ServiceItem = ({item}) => {
     console.log(item)
     return (
-        <Container>
-            <LeftContainer>
-                <ImageContainer>
-                    <Image src={item.img}/>
-                </ImageContainer>
-            </LeftContainer>
-            <RightContainer>
-                <RightTopContainer>
-                    <Title>
-                        {item.serviceName}
-                    </Title>
-                    <Content>
-                        <StarRating properties={
-                            {
-                                rating: item.rating
-                            }
-                        }/>
-                    </Content>
-                    <Content>
-                        <LocationOn/>
-                        <ContentText>{item.location}</ContentText>
-                    </Content>
-                    <Content>
-                        <AccessTime/>
-                        <ContentText>{item.timings}</ContentText>
-                    </Content>
-                    <Content>
-                        <DescriptionOutlined/>
-                        <Description>{item.description}</Description>
-                    </Content>
-                    <Content>
-                        <CurrencyPound/>
-                        <ContentText>{item.price}</ContentText>
-                    </Content>
-                </RightTopContainer>
-            </RightContainer>
-        </Container>
+        <Link to={`/service/${item.id}`} style={{ textDecoration: 'none',color: "black" }}>
+            <Container>
+                <LeftContainer>
+                    <ImageContainer>
+                        <Image src={item.img}/>
+                    </ImageContainer>
+                </LeftContainer>
+                <RightContainer>
+                    <RightTopContainer>
+                        <Title>
+                            {item.serviceName}
+                        </Title>
+                        <Content>
+                            <StarRating properties={
+                                {
+                                    rating: item.rating
+                                }
+                            }/>
+                        </Content>
+                        <Content>
+                            <LocationOn/>
+                            <ContentText>{item.location}</ContentText>
+                        </Content>
+                        <Content>
+                            <AccessTime/>
+                            <ContentText>{item.timings}</ContentText>
+                        </Content>
+                        <Content>
+                            <DescriptionOutlined/>
+                            <Description>{item.description}</Description>
+                        </Content>
+                        <Content>
+                            <CurrencyPound/>
+                            <ContentText>{item.price}</ContentText>
+                        </Content>
+                    </RightTopContainer>
+                </RightContainer>
+            </Container>
+        </Link>
     );
 };
 

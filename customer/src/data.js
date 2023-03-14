@@ -114,7 +114,59 @@ export const serviceDetails = [
         price: "800",
         rating: 2.5,
         img: "https://media.istockphoto.com/id/1409304338/photo/electricity-and-electrical-maintenance-service-engineer-hand-holding-ac-multimeter-checking.jpg?s=612x612&w=0&k=20&c=Pj3gqobTp67aPN8l-lm6q-uT2DDnm-aeFk7Gkvmbaok=",
-        description: "Wanting to fix a faulty electrical flow? Or looking forward to installing new electrical features at home? We have all the expertise required on the electrical front."
+        description: "Wanting to fix a faulty electrical flow? Or looking forward to installing new electrical features at home? We have all the expertise required on the electrical front.",
+        reviews: [
+            {
+                id: 1,
+                username: "Nischal",
+                rating: 4.5,
+                date: "Mar, 2023",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            },
+            {
+                id: 2,
+                username: "John",
+                rating: 3.8,
+                date: "Dec, 2022",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor teur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            },
+            {
+                id: 3,
+                username: "Nick",
+                rating: 4.8,
+                date: "Jun, 2022",
+                comment: "Excellent Service!!"
+            },
+            {
+                id: 4,
+                username: "Karen",
+                rating: 1,
+                date: "Feb, 2022",
+                comment: "Very poor!! Very disappointing!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            }
+        ],
+        photos: [
+            {
+                id: 1,
+                img: "https://media.istockphoto.com/id/1409304338/photo/electricity-and-electrical-maintenance-service-engineer-hand-holding-ac-multimeter-checking.jpg?s=612x612&w=0&k=20&c=Pj3gqobTp67aPN8l-lm6q-uT2DDnm-aeFk7Gkvmbaok="
+            },
+            {
+                id: 2,
+                img: "https://images.unsplash.com/photo-1657664066042-c59e5f84b7a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 3,
+                img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 4,
+                img: "https://plus.unsplash.com/premium_photo-1663100935279-660c42ef1d41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzd8fGVsZWN0cmljaWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 5,
+                img: "https://images.unsplash.com/photo-1641194298727-fa6e5401bf1b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDZ8fGVsZWN0cmljaWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            }
+        ]
     },
     {
         id: 2,

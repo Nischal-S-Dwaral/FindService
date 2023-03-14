@@ -4,6 +4,7 @@ import Services from "./pages/Services";
 import ViewServiceRequests from "./pages/ViewServiceRequests";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Service from "./pages/Service";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
               <Route path="/register" element={<Register/>} />
               <Route path="/services" element={<Services/>} />
               <Route path="/view/serviceRequests" element={<ViewServiceRequests/>} />
+              <Route path="/service/:id" element={<Service />} />
           </Routes>
       </Router>
     );

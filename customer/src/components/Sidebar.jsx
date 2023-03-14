@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {HomeRepairService,AccountCircleRounded, AddCircleOutlined, HomeOutlined, ListAltOutlined} from "@mui/icons-material";
+import {HomeRepairService,AccountCircleRounded, HomeOutlined, ListAltOutlined} from "@mui/icons-material";
 
 const Container = styled.div `
   flex: 1;
@@ -83,17 +83,6 @@ const Sidebar = () => {
                             <Icon>
                                 <HomeRepairService />
                                 Services
-                            </Icon>
-                        </ListItem>
-                    </List>
-                </Menu>
-                <Menu>
-                    <Title>Service Requests</Title>
-                    <List>
-                        <ListItem>
-                            <Icon>
-                                <AddCircleOutlined />
-                                Create Request
                             </Icon>
                         </ListItem>
                         <ListItem>
