@@ -7,7 +7,8 @@ const Container = styled.div `
   background-color: rgb(251, 251, 255);
   position: sticky;
   top: 50px;
-  height: 100%;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 const Wrapper = styled.div `
