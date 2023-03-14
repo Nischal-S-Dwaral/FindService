@@ -176,7 +176,48 @@ export const serviceDetails = [
         price: "400",
         rating: 3.75,
         img: "https://plus.unsplash.com/premium_photo-1663047166207-fd717b9a0ba7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHBsdW1iZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        description: "A leaking pipe flooding your home? Or looking forward to installing new plumbing fixtures at home? Then John Plumbing is the right person to call."
+        description: "A leaking pipe flooding your home? Or looking forward to installing new plumbing fixtures at home? Then John Plumbing is the right person to call.",
+        reviews: [
+            {
+                id: 1,
+                username: "Nischal",
+                rating: 4.5,
+                date: "Mar, 2023",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            },
+            {
+                id: 2,
+                username: "John",
+                rating: 3.8,
+                date: "Dec, 2022",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor teur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            },
+            {
+                id: 3,
+                username: "Nick",
+                rating: 4.8,
+                date: "Jun, 2022",
+                comment: "Excellent Service!!"
+            }
+        ],
+        photos: [
+            {
+                id: 1,
+                img: "https://media.istockphoto.com/id/1409304338/photo/electricity-and-electrical-maintenance-service-engineer-hand-holding-ac-multimeter-checking.jpg?s=612x612&w=0&k=20&c=Pj3gqobTp67aPN8l-lm6q-uT2DDnm-aeFk7Gkvmbaok="
+            },
+            {
+                id: 2,
+                img: "https://images.unsplash.com/photo-1657664066042-c59e5f84b7a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 3,
+                img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 4,
+                img: "https://plus.unsplash.com/premium_photo-1663100935279-660c42ef1d41?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mzd8fGVsZWN0cmljaWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+            }
+        ]
     },
     {
         id: 3,
@@ -186,7 +227,51 @@ export const serviceDetails = [
         price: "1500",
         rating: 4.8,
         img: "https://media.istockphoto.com/id/528908438/photo/wedding-makeup-artist-making-a-make-up-for-bride.jpg?s=612x612&w=0&k=20&c=KsOMyM9A3v0JmRtEnk3b4KumuXyEZAGjM4Yfij4YL94=",
-        description: "Only a professional artist can understand the mood and style of make-up to make you look astonishing."
+        description: "Only a professional artist can understand the mood and style of make-up to make you look astonishing.",
+        reviews: [
+            {
+                id: 1,
+                username: "Nischal",
+                rating: 4.5,
+                date: "Mar, 2023",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+            },
+            {
+                id: 2,
+                username: "John",
+                rating: 3.8,
+                date: "Dec, 2022",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor teur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            },
+            {
+                id: 3,
+                username: "Nick",
+                rating: 4.8,
+                date: "Jun, 2022",
+                comment: "Excellent Service!!"
+            },
+            {
+                id: 4,
+                username: "Karen",
+                rating: 1,
+                date: "Feb, 2022",
+                comment: "Very poor!! Very disappointing!! Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+            }
+        ],
+        photos: [
+            {
+                id: 1,
+                img: "https://media.istockphoto.com/id/1409304338/photo/electricity-and-electrical-maintenance-service-engineer-hand-holding-ac-multimeter-checking.jpg?s=612x612&w=0&k=20&c=Pj3gqobTp67aPN8l-lm6q-uT2DDnm-aeFk7Gkvmbaok="
+            },
+            {
+                id: 2,
+                img: "https://images.unsplash.com/photo-1657664066042-c59e5f84b7a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            },
+            {
+                id: 3,
+                img: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            }
+        ]
     },
     {
         id: 4,
@@ -196,6 +281,25 @@ export const serviceDetails = [
         price: "750",
         rating: 3.5,
         img: "https://images.unsplash.com/photo-1526634332515-d56c5fd16991?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGJhYnklMjBzaXR0ZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60",
-        description: "If you are looking for the best baby sitters, you must consider the Kidz Company."
+        description: "If you are looking for the best baby sitters, you must consider the Kidz Company.",
+        reviews: [
+            {
+                id: 1,
+                username: "Nischal",
+                rating: 4.5,
+                date: "Mar, 2023",
+                comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            }
+        ],
+        photos: [
+            {
+                id: 1,
+                img: "https://media.istockphoto.com/id/1409304338/photo/electricity-and-electrical-maintenance-service-engineer-hand-holding-ac-multimeter-checking.jpg?s=612x612&w=0&k=20&c=Pj3gqobTp67aPN8l-lm6q-uT2DDnm-aeFk7Gkvmbaok="
+            },
+            {
+                id: 2,
+                img: "https://images.unsplash.com/photo-1657664066042-c59e5f84b7a8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
+            }
+        ]
     }
 ];

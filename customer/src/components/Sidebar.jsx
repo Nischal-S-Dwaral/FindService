@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {HomeRepairService,AccountCircleRounded, HomeOutlined, ListAltOutlined} from "@mui/icons-material";
+import {Link} from "react-router-dom";
 
 const Container = styled.div `
   flex: 1;
@@ -62,12 +63,14 @@ const Sidebar = () => {
                 <Menu>
                     <Title>Dashboard</Title>
                     <List>
-                        <ListItem>
-                            <Icon>
-                                <HomeOutlined />
-                                Home
-                            </Icon>
-                        </ListItem>
+                        <Link to="/" style={{ textDecoration: 'none',color: "black" }}>
+                            <ListItem>
+                                <Icon>
+                                    <HomeOutlined />
+                                    Home
+                                </Icon>
+                            </ListItem>
+                        </Link>
                         <ListItem>
                             <Icon>
                                <AccountCircleRounded />
@@ -79,18 +82,22 @@ const Sidebar = () => {
                 <Menu>
                     <Title>Quick Menu</Title>
                     <List>
-                        <ListItem>
-                            <Icon>
-                                <HomeRepairService />
-                                Services
-                            </Icon>
-                        </ListItem>
-                        <ListItem>
-                            <Icon>
-                                <ListAltOutlined />
-                                View Requests
-                            </Icon>
-                        </ListItem>
+                        <Link to="/services" style={{ textDecoration: 'none',color: "black" }}>
+                            <ListItem>
+                                <Icon>
+                                    <HomeRepairService />
+                                    Services
+                                </Icon>
+                            </ListItem>
+                        </Link>
+                        <Link to="/view/serviceRequests" style={{ textDecoration: 'none',color: "black" }}>
+                            <ListItem>
+                                <Icon>
+                                    <ListAltOutlined />
+                                    View Requests
+                                </Icon>
+                            </ListItem>
+                        </Link>
                     </List>
                 </Menu>
             </Wrapper>

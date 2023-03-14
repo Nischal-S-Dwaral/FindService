@@ -18,7 +18,7 @@ const ViewServiceRequestsContainer = styled.div `
 `;
 
 const TitleContainer = styled.div `
-  margin-bottom: 10px;
+  margin: 30px 0 10px 0;
   display: flex;
   align-items: center;
 `;
