@@ -17,8 +17,10 @@ const Container = styled.div `
   cursor: pointer;
 
   &:hover {
+    color: inherit;
     background-color: #e9f5f5;
-    transform: scale(1.1);
+    transform: scale(1.01);
+    border: 0.5px solid black;
   }
 `;
 
