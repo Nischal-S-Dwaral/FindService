@@ -16,6 +16,7 @@ const Wrapper = styled.div `
 const Title = styled.h1 `
   font-weight: 800;
   padding: 0 30px;
+  margin-top: 30px;
 `;
 
 const Hr = styled.hr `

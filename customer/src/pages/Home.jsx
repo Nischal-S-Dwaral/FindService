@@ -13,7 +13,6 @@ const Container = styled.div `
 
 const Main = styled.div `
   display: flex;
-  margin-top: 10px;
 `;
 
 const HomeContainer = styled.div `
