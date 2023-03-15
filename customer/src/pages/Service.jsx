@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
@@ -9,6 +9,7 @@ import {LocationOn} from "@material-ui/icons";
 import Review from "../components/Review";
 import {serviceDetails} from "../data";
 import PhotoSlider from "../components/PhotoSlider";
+import ServiceRequest from "../components/ServiceRequest";
 
 const Container = styled.div `
 `;
@@ -127,62 +128,83 @@ const Service = () => {
         return Math.ceil(reviews.length / 2);
     }
 
+    const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
+
     return (
         <Container>
-            <Navbar/>
-            <Main>
-                <Sidebar/>
-                <ServiceContainer>
-                <Contents>
-                    <TopDetails>
-                        <LeftTopContainer>
-                            <Title>{data.serviceName}</Title>
-                            <Rating>
-                                <TextRating>{data.rating}</TextRating>
-                                <StarRating properties={
-                                    {
-                                        rating: data.rating
-                                    }
-                                }/>
-                            </Rating>
-                            <Location>
-                                <LocationOn/>
-                                <LocationText>{data.location}</LocationText>
-                            </Location>
-                        </LeftTopContainer>
-                        <RightTopContainer>
-                            <SubTitle>Cost: £{data.price}</SubTitle>
-                            <CreateServiceRequestButton>Create a service request</CreateServiceRequestButton>
-                        </RightTopContainer>
-                    </TopDetails>
-                </Contents>
-                <Contents>
-                    <MiddleContainer>
-                        <SubTitle>Description</SubTitle>
-                        <MiddleContainerText>{data.description}</MiddleContainerText>
-                        <Hr/>
-                    </MiddleContainer>
-                    <MiddleContainer>
-                        <SubTitle>Timings</SubTitle>
-                        <MiddleContainerText>{data.timings}</MiddleContainerText>
-                        <Hr/>
-                    </MiddleContainer>
-                    <MiddleContainer>
-                        <SubTitle>Photos</SubTitle>
-                        <PhotoSlider photos={photos}/>
-                    </MiddleContainer>
-                </Contents>
-                <Contents>
-                    <SubTitle>Reviews & Ratings</SubTitle>
-                    <ReviewGrid rows={getTemplateRows(reviews)}>
-                        {reviews.map(item => (
-                            <Review key={item.id} item={item}/>
-                        ))}
-                    </ReviewGrid>
-                </Contents>
-            </ServiceContainer>
-            </Main>
-            <Footer/>
+            {
+                openServiceRequestModal && (
+                    <>
+                        <ServiceRequest
+                            open={openServiceRequestModal}
+                            onClose={() => setOpenServiceRequestModal(false)}
+                            data={data}
+                        />
+                    </>
+                )
+            }
+            {
+                !openServiceRequestModal && (
+                    <>
+                        <Navbar/>
+                        <Main>
+                            <Sidebar/>
+                            <ServiceContainer>
+                                <Contents>
+                                    <TopDetails>
+                                        <LeftTopContainer>
+                                            <Title>{data.serviceName}</Title>
+                                            <Rating>
+                                                <TextRating>{data.rating}</TextRating>
+                                                <StarRating properties={
+                                                    {
+                                                        rating: data.rating
+                                                    }
+                                                }/>
+                                            </Rating>
+                                            <Location>
+                                                <LocationOn/>
+                                                <LocationText>{data.location}</LocationText>
+                                            </Location>
+                                        </LeftTopContainer>
+                                        <RightTopContainer>
+                                            <SubTitle>Cost: £{data.price}</SubTitle>
+                                            <CreateServiceRequestButton onClick={() => setOpenServiceRequestModal(true)}>
+                                                Create a service request
+                                            </CreateServiceRequestButton>
+                                        </RightTopContainer>
+                                    </TopDetails>
+                                </Contents>
+                                <Contents>
+                                    <MiddleContainer>
+                                        <SubTitle>Description</SubTitle>
+                                        <MiddleContainerText>{data.description}</MiddleContainerText>
+                                        <Hr/>
+                                    </MiddleContainer>
+                                    <MiddleContainer>
+                                        <SubTitle>Timings</SubTitle>
+                                        <MiddleContainerText>{data.timings}</MiddleContainerText>
+                                        <Hr/>
+                                    </MiddleContainer>
+                                    <MiddleContainer>
+                                        <SubTitle>Photos</SubTitle>
+                                        <PhotoSlider photos={photos}/>
+                                    </MiddleContainer>
+                                </Contents>
+                                <Contents>
+                                    <SubTitle>Reviews & Ratings</SubTitle>
+                                    <ReviewGrid rows={getTemplateRows(reviews)}>
+                                        {reviews.map(item => (
+                                            <Review key={item.id} item={item}/>
+                                        ))}
+                                    </ReviewGrid>
+                                </Contents>
+                            </ServiceContainer>
+                        </Main>
+                        <Footer/>
+                    </>
+                )
+            }
         </Container>
     );
 };
