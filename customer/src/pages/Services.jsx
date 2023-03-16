@@ -49,6 +49,10 @@ const Option = styled.option `
 const ServiceList = styled.div `
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - returns the service list page
+ */
 const Services = () => {
 
     return (

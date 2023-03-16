@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import Categories from "../components/Categories";
-import ServiceRequests from "../components/ServiceRequests";
+import ServiceRequestList from "../components/ServiceRequestList";
 import {Link} from "react-router-dom";
 import {UnfoldMoreOutlined} from "@material-ui/icons";
 
@@ -41,6 +41,10 @@ const SeeAllServiceRequestsLink = styled.div `
   align-items: center;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - Home Page of the website
+ */
 const Home = () => {
     return (
         <Container>
@@ -58,7 +62,7 @@ const Home = () => {
                             </SeeAllServiceRequestsLink>
                         </Link>
                     </ServiceRequestsTitleContainer>
-                    <ServiceRequests properties={
+                    <ServiceRequestList properties={
                         {
                             height: 35,
                             pageSize: 3

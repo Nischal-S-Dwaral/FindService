@@ -61,6 +61,10 @@ const Button = styled.button `
   }
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - Registration form
+ */
 const Register = () => {
     return (
         <Container>

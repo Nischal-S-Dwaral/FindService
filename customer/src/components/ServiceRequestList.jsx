@@ -43,7 +43,7 @@ const Icon = styled.div `
   margin-right: 10px;
 `;
 
-const ServiceRequests = ({properties}) => {
+const ServiceRequestList = ({properties}) => {
 
     const data = serviceRequests
 
@@ -107,4 +107,4 @@ const ServiceRequests = ({properties}) => {
     );
 };
 
-export default ServiceRequests;
+export default ServiceRequestList;

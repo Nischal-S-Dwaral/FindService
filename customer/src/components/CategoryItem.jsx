@@ -42,6 +42,11 @@ const Image = styled.img `
   margin-bottom: 5px;
 `;
 
+/**
+ * @author Nischal S D
+ * @param item - Information about the each category. It contains the name of the category and the image of the icon for the category.
+ * @returns A category card.
+ */
 const CategoryItem = ({item}) => {
     return (
         <Container>

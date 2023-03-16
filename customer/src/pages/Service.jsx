@@ -116,6 +116,10 @@ const ReviewGrid = styled.div `
   grid-template-rows: repeat({$props.columns}, 1fr);
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - returns the service details page
+ */
 const Service = () => {
 
     const location = useLocation();

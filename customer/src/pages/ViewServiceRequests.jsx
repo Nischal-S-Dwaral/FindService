@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import ServiceRequests from "../components/ServiceRequests";
+import ServiceRequestList from "../components/ServiceRequestList";
 
 const Container = styled.div `
   margin-bottom: 20px;
@@ -28,6 +28,10 @@ const Title = styled.h1 `
   padding: 0 15px 0 30px;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - View all the Service Requests of the customer
+ */
 const ViewServiceRequests = () => {
     return (
         <Container>
@@ -38,7 +42,7 @@ const ViewServiceRequests = () => {
                     <TitleContainer>
                         <Title>Service Requests</Title>
                     </TitleContainer>
-                    <ServiceRequests properties={
+                    <ServiceRequestList properties={
                         {
                             height: 80,
                             pageSize: 10

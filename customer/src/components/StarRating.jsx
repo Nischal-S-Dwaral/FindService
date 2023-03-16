@@ -29,7 +29,11 @@ const Star = styled.div `
   }
 `;
 
-
+/**
+ * @author Nischal S D
+ * @param properties - Contains the rating of the review or the service
+ * @returns {JSX.Element} - Star rating component
+ */
 const StarRating = ({properties}) => {
 
     const getWidth = (rating) => {

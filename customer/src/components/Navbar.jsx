@@ -55,6 +55,10 @@ const MenuItem = styled.div `
   font-weight: bold;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} Navbar component, which is displayed at the top of all the pages
+ */
 const Navbar = () => {
     {
         return (

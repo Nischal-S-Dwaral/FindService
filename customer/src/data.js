@@ -1,3 +1,6 @@
+/**
+ * Sample Data for populating the UI.
+ */
 export const categories = [
     {
         id: 1,

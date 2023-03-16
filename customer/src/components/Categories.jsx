@@ -29,6 +29,10 @@ const Hr = styled.hr `
   margin-bottom: 20px;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} Component with Categories Header and List of Category Item Components for the Home Page
+ */
 const Categories = () => {
     return (
         <Container>

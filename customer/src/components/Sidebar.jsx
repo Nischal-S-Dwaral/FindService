@@ -56,6 +56,10 @@ const Icon =  styled.div `
   text-indent: 5px;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} Sidebar component, which is displayed on the left side of all the pages
+ */
 const Sidebar = () => {
     return (
         <Container>

@@ -16,6 +16,12 @@ const Image = styled.img `
   height: 100%;
   object-fit: cover;
 `;
+
+/**
+ * @author Nischal S D
+ * @param photo - Contains the url for the photo
+ * @returns {JSX.Element} Photo component, which is used in the Photo Carousel/Slider in the Service Page.
+ */
 const Photo = ({photo}) => {
     return (
         <Container>

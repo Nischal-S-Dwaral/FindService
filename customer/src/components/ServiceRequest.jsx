@@ -90,6 +90,13 @@ const LabelWithInput = styled.div `
   margin-right: 20px;
 `;
 
+/**
+ * @author Nischal S D
+ * @param open
+ * @param onClose
+ * @param data -
+ * @returns {JSX.Element|null} - Modal component which contains the form for creating the service request
+ */
 const ServiceRequest = ({ open, onClose, data }) => {
     if (!open) {
         return null;

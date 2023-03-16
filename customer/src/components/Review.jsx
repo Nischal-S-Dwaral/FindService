@@ -50,6 +50,11 @@ const ReviewText = styled.div `
   overflow: hidden;
 `;
 
+/**
+ * @author Nischal S D
+ * @param item - Each review object
+ * @returns {JSX.Element} One review card component
+ */
 const Review = ({item}) => {
     return (
         <Container>

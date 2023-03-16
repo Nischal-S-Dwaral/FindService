@@ -1,3 +1,7 @@
+/*
+This CSS file is to override the default CSS of the React Elastic Carousel implementation
+ */
+
 .rec-dot_active {
   background-color: black !important;
   box-shadow: 0 0 1px 3px black !important;

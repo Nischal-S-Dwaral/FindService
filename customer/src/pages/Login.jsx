@@ -72,6 +72,10 @@ const Hr = styled.hr `
   background-color: white;
 `;
 
+/**
+ * @author Nischal S D
+ * @returns {JSX.Element} - Login Page with form
+ */
 const Login = () => {
     return (
         <Container>

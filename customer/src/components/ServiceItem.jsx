@@ -76,6 +76,11 @@ const Description = styled.p `
   overflow: hidden;
 `;
 
+/**
+ * @author Nischal S D
+ * @param item - Each service details
+ * @returns {JSX.Element} - Service details card for the service list
+ */
 const ServiceItem = ({item}) => {
     console.log(item)
     return (
