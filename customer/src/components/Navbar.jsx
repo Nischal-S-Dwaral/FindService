@@ -1,10 +1,15 @@
 import React from 'react';
 import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
+import {mobile} from "../responsive";
 
 const Container =styled.div `
   height: 60px;
   background-color: black;
+  ${mobile({
+    height: "50px",
+    display: "flex"
+  })}
 `;
 
 const Wrapper = styled.div `
@@ -38,6 +43,9 @@ const IconText = styled.h2 `
 const Logo = styled.h1 `
   font-weight: bold;
   color: white;
+  ${mobile({
+    opacity: 0
+  })}
 `;
 
 const Right = styled.div `
@@ -55,6 +63,16 @@ const MenuItem = styled.div `
   font-weight: bold;
 `;
 
+const MenuItemText = styled.div `
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 25px;
+  color: white;
+  font-weight: bold;
+  ${mobile({
+    opacity: 0
+  })}
+`;
 /**
  * @author Nischal S D
  * @returns {JSX.Element} Navbar component, which is displayed at the top of all the pages
@@ -71,7 +89,7 @@ const Navbar = () => {
                         <Logo>FIND A SERVICE</Logo>
                     </Left>
                     <Right>
-                        <MenuItem>Sign In/Register</MenuItem>
+                        <MenuItemText>Sign In/Register</MenuItemText>
                         <MenuItem>
                             <AccountCircleRounded/>
                         </MenuItem>

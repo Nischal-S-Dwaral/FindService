@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import {categories} from "../data";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
 `;
@@ -17,6 +18,10 @@ const Title = styled.h1 `
   font-weight: 800;
   padding: 0 30px;
   margin-top: 30px;
+  ${mobile({
+    padding: "0 0 0 20px",
+    marginTop: "10px"
+  })}
 `;
 
 const Hr = styled.hr `

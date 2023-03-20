@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import {HomeRepairService,AccountCircleRounded, HomeOutlined, ListAltOutlined} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   flex: 1;
@@ -10,11 +11,19 @@ const Container = styled.div `
   top: 50px;
   height: 100vh;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  ${mobile({
+    position: "static",
+  })}
 `;
 
 const Wrapper = styled.div `
   padding: 20px;
   color: #555;
+  ${mobile({
+    display: "flex",
+    justifyContent: "space-evenly",
+    padding: "10px 0 0 0"
+  })}
 `;
 
 const Menu = styled.div `

@@ -7,12 +7,16 @@ import Categories from "../components/Categories";
 import ServiceRequestList from "../components/ServiceRequestList";
 import {Link} from "react-router-dom";
 import {UnfoldMoreOutlined} from "@material-ui/icons";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
 `;
 
 const Main = styled.div `
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const HomeContainer = styled.div `
@@ -30,6 +34,9 @@ const ServiceRequestsTitleContainer = styled.div `
 const ServiceRequestsTitle = styled.h1 `
   font-weight: 800;
   padding: 0 15px 0 30px;
+  ${mobile({
+    padding: "0 0 0 20px",
+  })}
 `;
 
 const SeeAllServiceRequestsLink = styled.div `
