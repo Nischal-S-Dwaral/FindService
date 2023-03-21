@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {CalendarMonthOutlined} from "@mui/icons-material";
 import StarRating from "./StarRating";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   margin-top: 5px;
@@ -29,11 +30,17 @@ const Name = styled.div `
 const Date = styled.div `
   display: flex;
   align-items: center;
-  flex: 4;
+  flex: 1;
 `;
 
 const DetailsText = styled.p `
   margin-left: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  ${mobile({
+    width: "30vw",
+  })}
 `;
 
 const RatingText = styled.p `

@@ -10,12 +10,16 @@ import Review from "../components/Review";
 import {serviceDetails} from "../data";
 import PhotoSlider from "../components/PhotoSlider";
 import ServiceRequest from "../components/ServiceRequest";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
 `;
 
 const Main = styled.div `
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const ServiceContainer = styled.div `
@@ -35,6 +39,9 @@ const Contents = styled.div `
 const TopDetails = styled.div `
   margin-bottom: 10px;
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const LeftTopContainer = styled.div `
@@ -78,6 +85,9 @@ const RightTopContainer = styled.div `
   align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  ${mobile({
+    alignItems: "flex-start",
+  })}
 `;
 
 const MiddleContainer = styled.div `
@@ -103,6 +113,9 @@ const CreateServiceRequestButton = styled.button `
   font-size: 16px;
   border-radius: 15px;
   cursor: pointer;
+  ${mobile({
+    width: "100%",
+  })}
 `;
 
 const SubTitle = styled.h2 `
@@ -113,6 +126,9 @@ const ReviewGrid = styled.div `
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(2, 1fr);
+  ${mobile({
+    gridTemplateColumns: "repeat(1, 1fr)",
+  })}
   grid-template-rows: repeat({$props.columns}, 1fr);
 `;
 

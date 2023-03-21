@@ -135,7 +135,7 @@ export const serviceDetails = [
             },
             {
                 id: 3,
-                username: "Nick",
+                username: "Nick Long Name Random",
                 rating: 4.8,
                 date: "Jun, 2022",
                 comment: "Excellent Service!!"
