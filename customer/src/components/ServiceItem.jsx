@@ -49,7 +49,11 @@ const RightTopContainer = styled.div `
 `;
 
 const Title = styled.h2 `
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 45vw;
 `;
 
 const Content = styled.div `
@@ -65,15 +69,7 @@ const ContentText = styled.div `
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-`;
-
-const Description = styled.p `
-  margin-left: 5px;
-  font-size: 16px;
   width: 45vw;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 `;
 
 /**
@@ -113,7 +109,7 @@ const ServiceItem = ({item}) => {
                         </Content>
                         <Content>
                             <DescriptionOutlined/>
-                            <Description>{item.description}</Description>
+                            <ContentText>{item.description}</ContentText>
                         </Content>
                         <Content>
                             <CurrencyPound/>
