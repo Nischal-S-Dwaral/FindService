@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   background-color: rgba(0,0,0,0.3);
@@ -13,6 +14,9 @@ const Container = styled.div `
 const Wrapper = styled.div `
   padding: 20px;
   width: 28vw;
+  ${mobile({
+    width: "70vw"
+  })}
   background-color: black;
   color: white;
   height: 88vh;
