@@ -731,19 +731,19 @@ export const notificationData = {
     updatesServiceRequest: [
         {
             id: 1,
-            notificationText: "Update in Request 1",
+            notificationText: "Update in Request 1 I would prefer the service to be done on the exact time, else we can reschedule it later",
             notificationTimeStamp: "24/03/2023 03:00PM",
             redirectUrl: "/request/1"
         },
         {
             id: 2,
-            notificationText: "Update in Request 2",
+            notificationText: "Update in Request 2 I would prefer the service to be done on the exact time, else we can reschedule it later",
             notificationTimeStamp: "24/03/2023 03:00PM",
             redirectUrl: "/request/2"
         },
         {
             id: 3,
-            notificationText: "Update in Request 3",
+            notificationText: "Update in Request 3 I would prefer the service to be done on the exact time, else we can reschedule it later",
             notificationTimeStamp: "24/03/2023 03:00PM",
             redirectUrl: "/request/3"
         },
@@ -789,18 +789,18 @@ export const notificationData = {
     general: [
         {
             id: 1,
-            notificationText: "General Request 1",
+            notificationText: "General Notification 1",
             notificationTimeStamp: "24/03/2023 03:00PM",
         },
         {
             id: 2,
-            notificationText: "General Request 2",
+            notificationText: "General Notification 2",
             notificationTimeStamp: "24/03/2023 03:00PM",
             redirectUrl: "/2/review"
         },
         {
             id: 3,
-            notificationText: "General Request 3",
+            notificationText: "General Notification 3",
             notificationTimeStamp: "24/03/2023 03:00PM",
             redirectUrl: "/3/review"
         }

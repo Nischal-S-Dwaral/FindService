@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import Navbar from "../components/Navbar";
@@ -24,11 +24,16 @@ const NotificationContainer = styled.div `
   margin: 30px;
 `;
 
+const ContentsContainer = styled.div `
+  display: flex;
+`;
+
 const Contents = styled.div `
+  flex: 1;
   border: 0.01px groove lightgrey;
   border-radius: 15px;
-  margin-bottom: 15px;
   padding: 10px;
+  margin: 10px;
 `;
 
 const Title = styled.h1 `
@@ -53,8 +58,7 @@ const SubNotificationContainer = styled.div `
   flex-direction: column;
   overflow: hidden;
   height: 100%;
-  max-height: 29vh;
-  overflow: hidden;
+  max-height: 40vh;
   overflow-y: scroll;
 `;
 
@@ -77,35 +81,37 @@ const Notifications = () => {
                 <Sidebar/>
                 <NotificationContainer>
                     <Title>Notifications</Title>
-                    <Contents>
-                        <Subtitle>Updates- Service Request</Subtitle>
-                        <Hr/>
-                        <SubNotificationContainer>
-                            {updateServiceRequestNotifications.map( item => (
+                    <ContentsContainer>
+                        <Contents>
+                            <Subtitle>Updates- Service Request</Subtitle>
+                            <Hr/>
+                            <SubNotificationContainer>
+                                {updateServiceRequestNotifications.map( item => (
+                                    <>
+                                        <Notification key={item.id} item={item} />
+                                    </>
+                                ))}
+                            </SubNotificationContainer>
+                        </Contents>
+                        <Contents>
+                            <Subtitle>Review Requests</Subtitle>
+                            <Hr/>
+                            {reviewRequestNotifications.map( item => (
                                 <>
                                     <Notification key={item.id} item={item} />
                                 </>
                             ))}
-                        </SubNotificationContainer>
-                    </Contents>
-                    <Contents>
-                        <Subtitle>Review Requests</Subtitle>
-                        <Hr/>
-                        {reviewRequestNotifications.map( item => (
-                            <>
-                                <Notification key={item.id} item={item} />
-                            </>
-                        ))}
-                    </Contents>
-                    <Contents>
-                        <Subtitle>General</Subtitle>
-                        <Hr/>
-                        {generalNotifications.map( item => (
-                            <>
-                                <NonClickableNotification key={item.id} item={item} />
-                            </>
-                        ))}
-                    </Contents>
+                        </Contents>
+                        <Contents>
+                            <Subtitle>General</Subtitle>
+                            <Hr/>
+                            {generalNotifications.map( item => (
+                                <>
+                                    <NonClickableNotification key={item.id} item={item} />
+                                </>
+                            ))}
+                        </Contents>
+                    </ContentsContainer>
                 </NotificationContainer>
             </Main>
             <Footer/>
