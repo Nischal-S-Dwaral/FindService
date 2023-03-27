@@ -88,12 +88,14 @@ const Sidebar = () => {
                                 </Icon>
                             </ListItem>
                         </Link>
-                        <ListItem>
-                            <Icon>
-                               <AccountCircleRounded />
-                                Profile
-                            </Icon>
-                        </ListItem>
+                        <Link to="/notifications" style={{ textDecoration: 'none',color: "black" }}>
+                            <ListItem>
+                                <Icon>
+                                    <CircleNotifications />
+                                    Notifications
+                                </Icon>
+                            </ListItem>
+                        </Link>
                     </List>
                 </Menu>
                 <Menu>
@@ -112,14 +114,6 @@ const Sidebar = () => {
                                 <Icon>
                                     <ListAltOutlined />
                                     View Requests
-                                </Icon>
-                            </ListItem>
-                        </Link>
-                        <Link to="/notifications" style={{ textDecoration: 'none',color: "black" }}>
-                            <ListItem>
-                                <Icon>
-                                    <CircleNotifications />
-                                    Notifications
                                 </Icon>
                             </ListItem>
                         </Link>
