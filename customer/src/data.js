@@ -725,4 +725,84 @@ export const serviceRequestDetails = [
             },
         ]
     }
-]
+];
+
+export const notificationData = {
+    updatesServiceRequest: [
+        {
+            id: 1,
+            notificationText: "Update in Request 1",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/request/1"
+        },
+        {
+            id: 2,
+            notificationText: "Update in Request 2",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/request/2"
+        },
+        {
+            id: 3,
+            notificationText: "Update in Request 3",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/request/3"
+        },
+        {
+            id: 4,
+            notificationText: "Update in Request 4",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/request/4"
+        },
+        {
+            id: 5,
+            notificationText: "Update in Request 5",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/request/5"
+        }
+    ],
+    reviewRequest: [
+        {
+            id: 1,
+            notificationText: "Review for Request 1",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/1/review"
+        },
+        {
+            id: 2,
+            notificationText: "Review for Request 2",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/2/review"
+        },
+        {
+            id: 3,
+            notificationText: "Review for Request 3",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/3/review"
+        },
+        {
+            id: 4,
+            notificationText: "Review for Request 4",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/4/review"
+        }
+    ],
+    general: [
+        {
+            id: 1,
+            notificationText: "General Request 1",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+        },
+        {
+            id: 2,
+            notificationText: "General Request 2",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/2/review"
+        },
+        {
+            id: 3,
+            notificationText: "General Request 3",
+            notificationTimeStamp: "24/03/2023 03:00PM",
+            redirectUrl: "/3/review"
+        }
+    ]
+};

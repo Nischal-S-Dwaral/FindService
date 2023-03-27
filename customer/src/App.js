@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Service from "./pages/Service";
 import ServiceRequest from "./pages/ServiceRequest";
+import Notifications from "./pages/Notifications";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
               <Route path="/view/serviceRequests" element={<ViewServiceRequests/>} />
               <Route path="/service/:id" element={<Service />} />
               <Route path="/request/:id" element={<ServiceRequest />} />
+              <Route path="/notifications" element={<Notifications/>} />
           </Routes>
       </Router>
     );

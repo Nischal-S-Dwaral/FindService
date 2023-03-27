@@ -77,7 +77,7 @@ const ServiceRequest = () => {
                 <ServiceRequestContainer>
                     <Contents>
                         <TopContainer>
-                            <Title>Request ID: {data.requestId}</Title>
+                            <Title>Request ID: {id}</Title>
                             <Hr/>
                         </TopContainer>
                         <TopContainer>
