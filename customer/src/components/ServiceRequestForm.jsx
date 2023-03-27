@@ -101,7 +101,7 @@ const LabelWithInput = styled.div `
  * @param data -
  * @returns {JSX.Element|null} - Modal component which contains the form for creating the service request
  */
-const ServiceRequest = ({ open, onClose, data }) => {
+const ServiceRequestForm = ({ open, onClose, data }) => {
     if (!open) {
         return null;
     }
@@ -149,4 +149,4 @@ const ServiceRequest = ({ open, onClose, data }) => {
     );
 };
 
-export default ServiceRequest;
+export default ServiceRequestForm;

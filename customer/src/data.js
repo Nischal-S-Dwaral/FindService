@@ -306,3 +306,435 @@ export const serviceDetails = [
         ]
     }
 ];
+
+export const serviceRequestDetails = [
+    {
+        id: 1,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 2,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 3,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 4,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 5,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 6,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 7,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 8,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 9,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 10,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    },
+    {
+        id: 11,
+        requestId: 1,
+        customerId: 1,
+        customerName: "Nischal",
+        serviceName: "Kidz Company",
+        category: "Electrical Repairs",
+        date: "27/03/2023",
+        time: "2:00 PM",
+        address: "Highfield Campus, Southampton, SO17 2GY",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
+        status: "Accepted",
+        moreDetailsComments: [
+            {
+                id: 1,
+                sender: "Service Provider",
+                timestamp: "22/03/2023 10:00AM",
+                commentText: "Can you give more information about your preference"
+            },
+            {
+                id: 2,
+                sender: "Nischal",
+                timestamp: "24/03/2023 12:00PM",
+                commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
+            },
+            {
+                id: 3,
+                sender: "Service Provider",
+                timestamp: "25/03/2023 10:30AM",
+                commentText: "Lets reschedule to 28/03/2023 2:00PM"
+            },
+            {
+                id: 4,
+                sender: "Nischal",
+                timestamp: "25/03/2023 03:00PM",
+                commentText: "Sure"
+            },
+        ]
+    }
+]

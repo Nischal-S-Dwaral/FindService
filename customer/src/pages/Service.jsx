@@ -9,7 +9,7 @@ import {LocationOn} from "@material-ui/icons";
 import Review from "../components/Review";
 import {serviceDetails} from "../data";
 import PhotoSlider from "../components/PhotoSlider";
-import ServiceRequest from "../components/ServiceRequest";
+import ServiceRequestForm from "../components/ServiceRequestForm";
 import {mobile} from "../responsive";
 
 const Container = styled.div `
@@ -155,7 +155,7 @@ const Service = () => {
             {
                 openServiceRequestModal && (
                     <>
-                        <ServiceRequest
+                        <ServiceRequestForm
                             open={openServiceRequestModal}
                             onClose={() => setOpenServiceRequestModal(false)}
                             data={data}

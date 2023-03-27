@@ -2,7 +2,9 @@ import React from 'react';
 import styled from "styled-components";
 import {serviceRequests} from "../data";
 import { DataGrid } from "@material-ui/data-grid";
-import {EditOutlined, VisibilityOutlined} from "@material-ui/icons";
+import {VisibilityOutlined} from "@material-ui/icons";
+import {getColorCodeForStatus} from "../utils";
+import {Link} from "react-router-dom";
 
 const Container = styled.div `
   display: flex;
@@ -47,21 +49,6 @@ const ServiceRequestList = ({properties}) => {
 
     const data = serviceRequests
 
-    const getColorCodeForStatus = (status) => {
-        switch (status) {
-            case "Accepted":
-                return "dodgerblue";
-            case "Rejected":
-                return "#ff0000";
-            case "Update Required":
-                return "yellow";
-            case "Completed":
-                return "forestgreen";
-            default:
-                return "lightgrey";
-        }
-    }
-
     const columns = [
         { field: "id", headerName: "Request ID", width: 150 },
         { field: "serviceName", headerName: "Service Name", width: 200 },
@@ -78,15 +65,14 @@ const ServiceRequestList = ({properties}) => {
         },
         {
             field: "action", headerName: "Action", width: 250,
-            renderCell: () => {
+            renderCell: (params) => {
                 return (
                     <>
-                        <Icon>
-                            <VisibilityOutlined/>
-                        </Icon>
-                        <Icon>
-                            <EditOutlined/>
-                        </Icon>
+                        <Link to={"/request/" + params.row.id}>
+                            <Icon>
+                                <VisibilityOutlined/>
+                            </Icon>
+                        </Link>
                     </>
                 );
             },
