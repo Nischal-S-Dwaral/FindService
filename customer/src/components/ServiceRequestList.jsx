@@ -50,21 +50,8 @@ const ServiceRequestList = ({properties}) => {
     const data = serviceRequests
 
     const columns = [
-        { field: "id", headerName: "Request ID", width: 150 },
-        { field: "serviceName", headerName: "Service Name", width: 200 },
-        { field: "serviceProvider", headerName: "Service Provider", width: 200 },
         {
-            field: "status", headerName: "Status", width: 250,
-            renderCell: (params) => {
-                return (
-                    <Status color={getColorCodeForStatus(params.row.status)}>
-                        {params.row.status}
-                    </Status>
-                )
-            }
-        },
-        {
-            field: "action", headerName: "Action", width: 250,
+            field: "action", headerName: "Action", width: 125,
             renderCell: (params) => {
                 return (
                     <>
@@ -77,6 +64,18 @@ const ServiceRequestList = ({properties}) => {
                 );
             },
         },
+        { field: "serviceName", headerName: "Service Name", width: 250 },
+        { field: "serviceProvider", headerName: "Service Provider", width: 250 },
+        {
+            field: "status", headerName: "Status", width: 250,
+            renderCell: (params) => {
+                return (
+                    <Status color={getColorCodeForStatus(params.row.status)}>
+                        {params.row.status}
+                    </Status>
+                )
+            }
+        }
     ];
 
     return (

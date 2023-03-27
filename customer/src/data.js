@@ -358,7 +358,7 @@ export const serviceRequestDetails = [
         time: "2:00 PM",
         address: "Highfield Campus, Southampton, SO17 2GY",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
-        status: "Accepted",
+        status: "Rejected",
         moreDetailsComments: [
             {
                 id: 1,
@@ -371,19 +371,7 @@ export const serviceRequestDetails = [
                 sender: "Nischal",
                 timestamp: "24/03/2023 12:00PM",
                 commentText: "I would prefer the service to be done on the exact time, else we can reschedule it later"
-            },
-            {
-                id: 3,
-                sender: "Service Provider",
-                timestamp: "25/03/2023 10:30AM",
-                commentText: "Lets reschedule to 28/03/2023 2:00PM"
-            },
-            {
-                id: 4,
-                sender: "Nischal",
-                timestamp: "25/03/2023 03:00PM",
-                commentText: "Sure"
-            },
+            }
         ]
     },
     {
@@ -397,7 +385,7 @@ export const serviceRequestDetails = [
         time: "2:00 PM",
         address: "Highfield Campus, Southampton, SO17 2GY",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
-        status: "Accepted",
+        status: "Update Required",
         moreDetailsComments: [
             {
                 id: 1,
@@ -436,7 +424,7 @@ export const serviceRequestDetails = [
         time: "2:00 PM",
         address: "Highfield Campus, Southampton, SO17 2GY",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
-        status: "Accepted",
+        status: "Completed",
         moreDetailsComments: [
             {
                 id: 1,
@@ -475,7 +463,7 @@ export const serviceRequestDetails = [
         time: "2:00 PM",
         address: "Highfield Campus, Southampton, SO17 2GY",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident",
-        status: "Accepted",
+        status: "Pending",
         moreDetailsComments: [
             {
                 id: 1,

@@ -12,19 +12,17 @@ import {mobile} from "../responsive";
 
 const Container = styled.div `
   flex: 1;
-  background-color: rgb(251, 251, 255);
-  position: sticky;
-  top: 50px;
-  height: 100vh;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  ${mobile({
-    position: "static",
-  })}
+  overflow: hidden;
+  overflow-y: hidden;
 `;
 
 const Wrapper = styled.div `
   padding: 20px;
   color: #555;
+  background-color: rgb(251, 251, 255);
+  top: 50px;
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
   ${mobile({
     display: "flex",
     justifyContent: "space-evenly",
