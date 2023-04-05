@@ -795,14 +795,12 @@ export const notificationData = {
         {
             id: 2,
             notificationText: "General Notification 2",
-            notificationTimeStamp: "24/03/2023 03:00PM",
-            redirectUrl: "/2/review"
+            notificationTimeStamp: "24/03/2023 03:00PM"
         },
         {
             id: 3,
             notificationText: "General Notification 3",
-            notificationTimeStamp: "24/03/2023 03:00PM",
-            redirectUrl: "/3/review"
+            notificationTimeStamp: "24/03/2023 03:00PM"
         }
     ]
 };
