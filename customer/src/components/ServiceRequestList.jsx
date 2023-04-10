@@ -16,7 +16,6 @@ const Container = styled.div `
 const DataGridContainer = styled.div `
   width: 100%;
   height: 100%;
-  margin: 0 30px;
 `;
 
 const Status = styled.div `

@@ -23,6 +23,7 @@ const HomeContainer = styled.div `
   flex: 4;
   height: 100%;
   overflow: hidden;
+  margin: 30px;
 `;
 
 const ServiceRequestsTitleContainer = styled.div `
@@ -33,10 +34,7 @@ const ServiceRequestsTitleContainer = styled.div `
 
 const ServiceRequestsTitle = styled.h1 `
   font-weight: 800;
-  padding: 0 15px 0 30px;
-  ${mobile({
-    padding: "0 0 0 20px",
-  })}
+  margin-right: 10px ;
 `;
 
 const SeeAllServiceRequestsLink = styled.div `
@@ -46,6 +44,16 @@ const SeeAllServiceRequestsLink = styled.div `
   border-radius: 5px;
   display: flex;
   align-items: center;
+`;
+
+const Hr = styled.hr `
+  border: none;
+  width: 100%;
+  height: 0.5px;
+  color: black;
+  background-color: black;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 /**
@@ -60,6 +68,7 @@ const Home = () => {
                 <Sidebar/>
                 <HomeContainer>
                     <Categories />
+                    <Hr/>
                     <ServiceRequestsTitleContainer>
                         <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
                         <Link to="/view/serviceRequests">

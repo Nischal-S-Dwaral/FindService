@@ -8,7 +8,6 @@ const Container = styled.div `
 `;
 
 const Wrapper = styled.div `
-  padding: 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -16,22 +15,10 @@ const Wrapper = styled.div `
 
 const Title = styled.h1 `
   font-weight: 800;
-  padding: 0 30px;
-  margin-top: 30px;
+  margin-top: 10px;
   ${mobile({
-    padding: "0 0 0 20px",
     marginTop: "10px"
   })}
-`;
-
-const Hr = styled.hr `
-  border: none;
-  width: 95%;
-  height: 0.5px;
-  color: black;
-  background-color: black;
-  margin-left: 30px;
-  margin-bottom: 20px;
 `;
 
 /**
@@ -47,7 +34,6 @@ const Categories = () => {
                     <CategoryItem item={item} key={item.id}/>
                 ))}
             </Wrapper>
-            <Hr/>
         </Container>
     );
 };
