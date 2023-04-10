@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {mobile} from "../responsive";
@@ -169,6 +169,10 @@ const Navbar = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleLogoutButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
