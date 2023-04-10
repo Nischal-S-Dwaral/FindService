@@ -2,7 +2,10 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {mobile} from "../responsive";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {logout} from "../redux/userRedux";
+import {persistor} from "../redux/store";
+import { useNavigate } from "react-router-dom";
 
 const Container =styled.div `
   height: 60px;
@@ -162,8 +165,19 @@ const Button = styled.button `
 const Navbar = () => {
 
     let {currentUser} = useSelector(state => state.user);
-
     const [openDropdown, setOpenDropdown] = useState(false);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleLogoutButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+
+        dispatch(logout());
+        persistor.purge();
+
+        navigate("/login");
+    }
 
     return (
         <Container>
@@ -186,7 +200,7 @@ const Navbar = () => {
                                     <UserEmail>{currentUser.email}</UserEmail>
                                 </DropdownRightContainer>
                             </DropdownTopContainer>
-                            <Button>LOGOUT</Button>
+                            <Button onClick={handleLogoutButtonClick}>LOGOUT</Button>
                         </ProfileDropdown>
                     </MenuItem>
                 </Right>
