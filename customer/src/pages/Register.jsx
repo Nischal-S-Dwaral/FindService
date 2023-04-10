@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {register, updatingProfile} from "../api/registerApiCalls";
 
 const Container = styled.div `
   width: 100vw;
@@ -31,6 +33,7 @@ const Title = styled.h1 `
 const Form = styled.form `
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
 `;
 
 const Input = styled.input `
@@ -61,26 +64,68 @@ const Button = styled.button `
   }
 `;
 
+const Error = styled.span `
+  color: red;
+`;
+
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Registration form
  */
 const Register = () => {
+
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const dispatch = useDispatch();
+
+    let {error, errorMessage} = useSelector(state => state.user);
+
+    let notMatchingPassword = false;
+
+    /**
+     * function to handle register button click
+     */
+    const handleRegisterButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+
+        if (password !== confirmPassword) {
+            notMatchingPassword = true;
+        } else {
+            register(dispatch, {email, password, username}).then(() => {
+                updatingProfile({username})
+            })
+        }
+    };
+
     return (
         <Container>
             <Wrapper>
                 <Title>CREATE AN ACCOUNT</Title>
                 <Form>
-                    <Input type="text" placeholder="First Name" />
-                    <Input type="text" placeholder="Last Name" />
-                    <Input type="email" placeholder="Email" />
-                    <Input type="text" placeholder="Username" />
-                    <Input type="password" placeholder="Password" />
-                    <Input type="password" placeholder="Confirm Password" />
+                    <Input type="text" placeholder="Username"
+                           onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Input type="email" placeholder="Email"
+                           onChange={(e)=> setEmail(e.target.value)}
+                    />
+                    <Input type="password" placeholder="Password"
+                           onChange={(p) => setPassword(p.target.value)}
+                    />
+                    <Input type="password" placeholder="Confirm Password"
+                           onChange={(p) => setConfirmPassword(p.target.value)}
+                    />
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
-                    <Button>CREATE</Button>
+                    <Button
+                        onClick={handleRegisterButtonClick}>
+                        CREATE
+                    </Button>
+                    {error && <Error>{errorMessage}</Error>}
+                    {notMatchingPassword && <Error>The passwords are not matching</Error>}
                 </Form>
             </Wrapper>
         </Container>

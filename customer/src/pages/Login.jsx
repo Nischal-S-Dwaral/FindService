@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {login} from "../api/loginApiCalls";
 
 const Container = styled.div `
   width: 100vw;
@@ -57,7 +60,7 @@ const Button = styled.button `
   }
 `;
 
-const Link = styled.a `
+const LinkText = styled.a `
   margin: 5px 0;
   font-size: 12px;
   text-decoration: underline;
@@ -72,22 +75,46 @@ const Hr = styled.hr `
   background-color: white;
 `;
 
+const Error = styled.span `
+  color: red;
+`;
+
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Login Page with form
  */
 const Login = () => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const dispatch = useDispatch();
+
+    let {error, errorMessage} = useSelector(state => state.user);
+
+    const handleLoginButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+        login(dispatch, {email, password});
+    }
+
     return (
         <Container>
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
-                    <Input type="text" placeholder="Username" />
-                    <Input type="password" placeholder="Password" />
-                    <Button>LOGIN</Button>
-                    <Link>DON'T REMEMBER YOUR PASSWORD?</Link>
+                    <Input type="text" placeholder="Username"
+                           onChange={(e)=> setEmail(e.target.value)}
+                    />
+                    <Input type="password" placeholder="Password"
+                           onChange={(p) => setPassword(p.target.value)}
+                    />
+                    <Button onClick={handleLoginButtonClick}>LOGIN</Button>
+                    <LinkText>DON'T REMEMBER YOUR PASSWORD?</LinkText>
+                    {error && <Error>{errorMessage}</Error>}
                     <Hr/>
-                    <Button>REGISTER</Button>
+                    <Link to={"/register"} style={{ textDecoration: 'none',color: "black" }}>
+                        <Button>REGISTER</Button>
+                    </Link>
                 </Form>
             </Wrapper>
         </Container>
