@@ -18,7 +18,6 @@ export const login = async (dispatch, user) => {
             username : response.user.displayName
         }));
     } catch (error) {
-        console.log("This is in the error: ", error);
         dispatch(processFailure(error.code))
     }
 }

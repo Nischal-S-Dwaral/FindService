@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../redux/userRedux";
 import {persistor} from "../redux/store";
 import { useNavigate } from "react-router-dom";
+import { signOut } from 'firebase/auth';
+import {auth} from "../firebase"
 
 const Container =styled.div `
   height: 60px;
@@ -177,10 +179,15 @@ const Navbar = () => {
     const handleLogoutButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
 
-        dispatch(logout());
-        persistor.purge();
+        try {
+            signOut(auth)
+            dispatch(logout());
+            persistor.purge();
 
-        navigate("/login");
+            navigate("/login", { replace: true });
+        } catch (error) {
+            console.log("Error while logging out: ", error);
+        }
     }
 
     return (
