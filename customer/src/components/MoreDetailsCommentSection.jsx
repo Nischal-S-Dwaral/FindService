@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import PreviousComment from "./PreviousComment";
+import axios from "axios";
+import {useSelector} from "react-redux";
 
 const Container = styled.div ``;
 
@@ -56,13 +58,74 @@ const Button = styled.button `
  */
 const MoreDetailsCommentSection = ({properties}) => {
 
-    const previousMoreDetailsComments = properties.moreDetailsComments
+    const serviceRequestId = properties.serviceRequestId
+    const [moreDetailsComments, setMoreDetailsComments] = useState([]);
+    const user = useSelector((state) => state.user.currentUser);
+    const [addComment, setAddComment] = useState(false);
+    const [commentText, setCommentText] = useState("");
+
+    useEffect(() => {
+
+        const getMoreDetailsComments = async () => {
+            try {
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/commentServiceRequest/getByID?serviceRequestId='+serviceRequestId,
+                    headers: { }
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setMoreDetailsComments(response.data.commentList)
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getMoreDetailsComments()
+    }, [serviceRequestId, addComment]);
+
+    const handleSubmitButtonClick = async (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+
+        try {
+            let data = JSON.stringify({
+                "serviceRequestId": serviceRequestId,
+                "name": user.username,
+                "text": commentText
+            });
+
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:8080/api/commentServiceRequest/add',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data : data
+            };
+
+            const response = await axios.request(config)
+
+            if (response.data.returnCode === "0") {
+                setAddComment(true);
+            } else {
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <Container>
             <Main>
                 <PreviousCommentsContainer>
-                    {previousMoreDetailsComments.map(item => (
+                    {moreDetailsComments.map(item => (
                         <>
                             <PreviousComment key={item.id} item={item}/>
                             <Hr/>
@@ -74,8 +137,10 @@ const MoreDetailsCommentSection = ({properties}) => {
                         <TextArea
                             id="comment" cols={40} rows={10}
                             name="commentText"
-                            placeholder="Please provide your comment..."/>
-                        <Button>SUBMIT COMMENT</Button>
+                            placeholder="Please provide your comment..."
+                            onChange={(e)=> setCommentText(e.target.value)}
+                        />
+                        <Button onClick={handleSubmitButtonClick}>SUBMIT COMMENT</Button>
                     </AddCommentForm>
                 </AddCommentContainer>
             </Main>

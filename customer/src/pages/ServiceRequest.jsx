@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {useLocation} from "react-router-dom";
-import {serviceRequestDetails} from "../data";
+import {categoryValueToText} from "../data";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import {getColorCodeForStatus} from "../utils";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
+import axios from "axios";
 
 const Container = styled.div ``;
 
@@ -67,7 +68,38 @@ const ServiceRequest = () => {
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const data = serviceRequestDetails[id-1];
+
+    const [serviceRequest, setServiceRequest] = useState({});
+    const [serviceCategoryText, setServiceCategoryText] = useState("");
+
+    useEffect(() => {
+
+        const getServiceRequest = async () => {
+            try {
+                let requestData = '';
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/serviceRequest/getByID?id='+id,
+                    headers: { },
+                    data : requestData
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setServiceRequest(response.data.serviceRequest)
+                    setServiceCategoryText(categoryValueToText.get(response.data.serviceRequest.serviceCategory))
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getServiceRequest()
+    }, [id]);
+
 
     return (
         <Container>
@@ -75,46 +107,52 @@ const ServiceRequest = () => {
             <Main>
                 <Sidebar/>
                 <ServiceRequestContainer>
-                    <Contents>
-                        <TopContainer>
-                            <Title>Request ID: {id}</Title>
-                            <Hr/>
-                        </TopContainer>
-                        <TopContainer>
-                            <SubTitle>Service</SubTitle>
-                            <TopContainerText>Name: {data.serviceName}</TopContainerText>
-                            <TopContainerText>Category: {data.category}</TopContainerText>
-                            <Hr/>
-                        </TopContainer>
-                        <TopContainer>
-                            <SubTitle>Timings</SubTitle>
-                            <TopContainerText>Date: {data.date}</TopContainerText>
-                            <TopContainerText>Time: {data.time}</TopContainerText>
-                            <Hr/>
-                        </TopContainer>
-                        <TopContainer>
-                            <SubTitle>Address</SubTitle>
-                            <TopContainerText>{data.address}</TopContainerText>
-                            <Hr/>
-                        </TopContainer>
-                        <TopContainer>
-                            <SubTitle>Description</SubTitle>
-                            <TopContainerText>{data.description}</TopContainerText>
-                        </TopContainer>
-                    </Contents>
-                    <Contents background={getColorCodeForStatus(data.status)} border="black">
-                        <SubTitle>Status: {data.status}</SubTitle>
-                    </Contents>
-                    <Contents>
-                        <SubTitle>Extra Details</SubTitle>
-                        <MoreDetailsCommentSection properties={
-                            {
-                                customerId: data.customerId,
-                                customerName: data.customerName,
-                                moreDetailsComments: data.moreDetailsComments
-                            }
-                        }/>
-                    </Contents>
+                    {
+                        serviceRequest && (
+                            <>
+                                <Contents>
+                                    <TopContainer>
+                                        <Title>Request ID: {id}</Title>
+                                        <Hr/>
+                                    </TopContainer>
+                                    <TopContainer>
+                                        <SubTitle>Service</SubTitle>
+                                        <TopContainerText>Name: {serviceRequest.serviceName}</TopContainerText>
+                                        <TopContainerText>Category: {serviceCategoryText}</TopContainerText>
+                                        <Hr/>
+                                    </TopContainer>
+                                    <TopContainer>
+                                        <SubTitle>Timings</SubTitle>
+                                        <TopContainerText>Date: {serviceRequest.date}</TopContainerText>
+                                        <TopContainerText>Time: {serviceRequest.time}</TopContainerText>
+                                        <Hr/>
+                                    </TopContainer>
+                                    <TopContainer>
+                                        <SubTitle>Address</SubTitle>
+                                        <TopContainerText>{serviceRequest.address}</TopContainerText>
+                                        <Hr/>
+                                    </TopContainer>
+                                    <TopContainer>
+                                        <SubTitle>Description</SubTitle>
+                                        <TopContainerText>{serviceRequest.description}</TopContainerText>
+                                    </TopContainer>
+                                </Contents>
+                                <Contents background={getColorCodeForStatus(serviceRequest.status)} border="black">
+                                    <SubTitle>Status: {serviceRequest.status}</SubTitle>
+                                </Contents>
+                                <Contents>
+                                    <SubTitle>Extra Details</SubTitle>
+                                    <MoreDetailsCommentSection properties={
+                                        {
+                                            customerId: serviceRequest.customerId,
+                                            customerName: serviceRequest.customerName,
+                                            serviceRequestId: id
+                                        }
+                                    }/>
+                                </Contents>
+                            </>
+                        )
+                    }
                 </ServiceRequestContainer>
             </Main>
             <Footer/>

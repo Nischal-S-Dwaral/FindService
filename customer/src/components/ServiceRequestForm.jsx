@@ -116,6 +116,13 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
     const user = useSelector((state) => state.user.currentUser);
     const navigate = useNavigate();
 
+    const handleTimeChange = (event) => {
+        const timeValue = event.target.value;
+        const amPm = timeValue.slice(-2);
+        const time = timeValue.slice(0, -3);
+        setTime(time + ":" + amPm);
+    };
+
     const handleCreateButtonClick = async (event) => {
         event.preventDefault(); // prevents the refresh of the page
         try {
@@ -140,7 +147,6 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
             };
 
             const response = await axios.request(config)
-            console.log(response.data);
 
             if (response.data.returnCode === "0") {
                 navigate("/requests", { replace: true });
@@ -184,7 +190,7 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
                     <LabelWithInput>
                         <Label htmlFor="requestTime">Select Time</Label>
                         <Input id="requestTime" type="time"
-                               onChange={(e)=> setTime(e.target.value)}
+                               onChange={handleTimeChange}
                         />
                     </LabelWithInput>
                     <LabelWithInput>
