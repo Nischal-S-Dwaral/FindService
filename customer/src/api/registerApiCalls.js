@@ -16,7 +16,7 @@ export const register = async (dispatch, user) => {
         dispatch(processSuccess({
             uid : response.user.uid,
             email : response.user.email,
-            username : response.user.displayName
+            username : user.username
         }));
     } catch (error) {
         console.log("This is in the error: ", error);

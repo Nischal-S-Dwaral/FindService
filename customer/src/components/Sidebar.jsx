@@ -2,7 +2,6 @@ import React from 'react';
 import styled from "styled-components";
 import {
     HomeRepairService,
-    AccountCircleRounded,
     HomeOutlined,
     ListAltOutlined,
     CircleNotifications
@@ -109,7 +108,7 @@ const Sidebar = () => {
                                 </Icon>
                             </ListItem>
                         </Link>
-                        <Link to="/view/serviceRequests" style={{ textDecoration: 'none',color: "black" }}>
+                        <Link to="/requests" style={{ textDecoration: 'none',color: "black" }}>
                             <ListItem>
                                 <Icon>
                                     <ListAltOutlined />
