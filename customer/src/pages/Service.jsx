@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
@@ -7,10 +7,10 @@ import Footer from "../components/Footer";
 import StarRating from "../components/StarRating";
 import {LocationOn} from "@material-ui/icons";
 import Review from "../components/Review";
-import {serviceDetails} from "../data";
 import PhotoSlider from "../components/PhotoSlider";
 import ServiceRequestForm from "../components/ServiceRequestForm";
 import {mobile} from "../responsive";
+import axios from "axios";
 
 const Container = styled.div `
 `;
@@ -140,9 +140,60 @@ const Service = () => {
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const data = serviceDetails[id-1];
-    const reviews = data.reviews;
-    const photos = data.photos;
+
+    const [service, setService] = useState({});
+    const [photos, setPhotos] = useState([]);
+    const [reviews, setReviews] = useState([]);
+    const [rating, setRating] = useState(0.0);
+
+    useEffect(() => {
+        /**
+         * Get the service details
+         * @returns {Promise<void>}
+         */
+        const getService = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8080/api/service/findById?id=${id}`
+                );
+                if (response.data.returnCode === "0") {
+                    setService(response.data);
+                    /**
+                     * Setting the photos array
+                     */
+                    setPhotos(response.data.photos);
+                    setRating(response.data.numberOfRatings !== "0"
+                        ? parseFloat(response.data.totalRating) / parseFloat(response.data.numberOfRatings)
+                        : 0.0
+                    )
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getService()
+
+        /**
+         * Get the reviews list
+         */
+        const getReviews = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8080/api/review/getReviewList?serviceId=${id}`
+                );
+                if (response.data.returnCode === "0") {
+                    setReviews(response.data.reviews);
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getReviews()
+    }, [])
 
     const getTemplateRows = (reviews) => {
         return Math.ceil(reviews.length / 2);
@@ -153,75 +204,93 @@ const Service = () => {
     return (
         <Container>
             {
-                openServiceRequestModal && (
+                service && (
                     <>
-                        <ServiceRequestForm
-                            open={openServiceRequestModal}
-                            onClose={() => setOpenServiceRequestModal(false)}
-                            data={data}
-                        />
-                    </>
-                )
-            }
-            {
-                !openServiceRequestModal && (
-                    <>
-                        <Navbar/>
-                        <Main>
-                            <Sidebar/>
-                            <ServiceContainer>
-                                <Contents>
-                                    <TopDetails>
-                                        <LeftTopContainer>
-                                            <Title>{data.serviceName}</Title>
-                                            <Rating>
-                                                <TextRating>{data.rating}</TextRating>
-                                                <StarRating properties={
-                                                    {
-                                                        rating: data.rating
-                                                    }
-                                                }/>
-                                            </Rating>
-                                            <Location>
-                                                <LocationOn/>
-                                                <LocationText>{data.location}</LocationText>
-                                            </Location>
-                                        </LeftTopContainer>
-                                        <RightTopContainer>
-                                            <SubTitle>Cost: £{data.price}</SubTitle>
-                                            <CreateServiceRequestButton onClick={() => setOpenServiceRequestModal(true)}>
-                                                Create a service request
-                                            </CreateServiceRequestButton>
-                                        </RightTopContainer>
-                                    </TopDetails>
-                                </Contents>
-                                <Contents>
-                                    <MiddleContainer>
-                                        <SubTitle>Description</SubTitle>
-                                        <MiddleContainerText>{data.description}</MiddleContainerText>
-                                        <Hr/>
-                                    </MiddleContainer>
-                                    <MiddleContainer>
-                                        <SubTitle>Timings</SubTitle>
-                                        <MiddleContainerText>{data.timings}</MiddleContainerText>
-                                        <Hr/>
-                                    </MiddleContainer>
-                                    <MiddleContainer>
-                                        <SubTitle>Photos</SubTitle>
-                                        <PhotoSlider photos={photos}/>
-                                    </MiddleContainer>
-                                </Contents>
-                                <Contents>
-                                    <SubTitle>Reviews & Ratings</SubTitle>
-                                    <ReviewGrid rows={getTemplateRows(reviews)}>
-                                        {reviews.map(item => (
-                                            <Review key={item.id} item={item}/>
-                                        ))}
-                                    </ReviewGrid>
-                                </Contents>
-                            </ServiceContainer>
-                        </Main>
-                        <Footer/>
+                        {
+                            openServiceRequestModal && (
+                                <>
+                                    <ServiceRequestForm
+                                        open={openServiceRequestModal}
+                                        onClose={() => setOpenServiceRequestModal(false)}
+                                        data={service}
+                                    />
+                                </>
+                            )
+                        }
+                        {
+                            !openServiceRequestModal && (
+                                <>
+                                    <Navbar/>
+                                    <Main>
+                                        <Sidebar/>
+                                        <ServiceContainer>
+                                            <Contents>
+                                                <TopDetails>
+                                                    <LeftTopContainer>
+                                                        <Title>{service.name}</Title>
+                                                        <Rating>
+                                                            <TextRating>{rating}</TextRating>
+                                                            <StarRating properties={
+                                                                {
+                                                                    rating: rating
+                                                                }
+                                                            }/>
+                                                        </Rating>
+                                                        <Location>
+                                                            <LocationOn/>
+                                                            <LocationText>{service.location}</LocationText>
+                                                        </Location>
+                                                    </LeftTopContainer>
+                                                    <RightTopContainer>
+                                                        <SubTitle>Cost: £{service.price}</SubTitle>
+                                                        <CreateServiceRequestButton onClick={() => setOpenServiceRequestModal(true)}>
+                                                            Create a service request
+                                                        </CreateServiceRequestButton>
+                                                    </RightTopContainer>
+                                                </TopDetails>
+                                            </Contents>
+                                            <Contents>
+                                                <MiddleContainer>
+                                                    <SubTitle>Description</SubTitle>
+                                                    <MiddleContainerText>{service.description}</MiddleContainerText>
+                                                    <Hr/>
+                                                </MiddleContainer>
+                                                <MiddleContainer>
+                                                    <SubTitle>Timings</SubTitle>
+                                                    <MiddleContainerText>{service.availability}</MiddleContainerText>
+                                                    <Hr/>
+                                                </MiddleContainer>
+                                                {
+                                                    photos && photos.length > 0 && (
+                                                        <>
+                                                            <MiddleContainer>
+                                                                <SubTitle>Photos</SubTitle>
+                                                                <PhotoSlider photos={photos}/>
+                                                            </MiddleContainer>
+                                                        </>
+                                                    )
+                                                }
+                                            </Contents>
+                                            {
+                                                reviews && reviews.length > 0 && (
+                                                    <>
+                                                        <Contents>
+                                                            <SubTitle>Reviews & Ratings</SubTitle>
+                                                            <ReviewGrid rows={getTemplateRows(reviews)}>
+                                                                {reviews.map(item => (
+                                                                    <Review key={item.id} item={item}/>
+                                                                ))}
+                                                            </ReviewGrid>
+                                                        </Contents>
+                                                    </>
+                                                )
+                                            }
+                                        </ServiceContainer>
+                                    </Main>
+                                    <Footer/>
+                                </>
+                            )
+                        }
                     </>
                 )
             }

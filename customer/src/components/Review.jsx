@@ -68,11 +68,11 @@ const Review = ({item}) => {
             <Details>
                 <Name>
                     <AccountCircleRounded/>
-                    <DetailsText>{item.username}</DetailsText>
+                    <DetailsText>{item.customerName}</DetailsText>
                 </Name>
                 <Date>
                     <CalendarMonthOutlined/>
-                    <DetailsText>{item.date}</DetailsText>
+                    <DetailsText>{item.timeStamp}</DetailsText>
                 </Date>
             </Details>
             <Details>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Carousel from "react-elastic-carousel";
 import Photo from "./Photo";
@@ -21,10 +21,23 @@ const PhotoSlider = ({photos}) => {
         { width: 1200, itemsToShow: 4 }
     ];
 
+    const [photoList, setPhotoList] = useState([]);
+
+    useEffect(() => {
+        let tempList = [];
+        for (let i = 0; i < photos.length; i++) {
+            tempList.push({
+                id: i,
+                img: photos[i]
+            })
+        }
+        setPhotoList(tempList)
+    }, [])
+
     return (
         <Container>
             <Carousel breakPoints={breakPoints}>
-                {photos.map((photo) => (
+                {photoList.map((photo) => (
                     <Photo photo={photo} key={photo.id}/>
                 ))}
             </Carousel>
