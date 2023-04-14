@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {serviceRequests} from "../data";
 import { DataGrid } from "@material-ui/data-grid";
 import {VisibilityOutlined} from "@material-ui/icons";
 import {getColorCodeForStatus} from "../utils";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
 const Container = styled.div `
   display: flex;
@@ -46,8 +47,6 @@ const Icon = styled.div `
 
 const ServiceRequestList = ({properties}) => {
 
-    const data = serviceRequests
-
     const columns = [
         {
             field: "action", headerName: "Action", width: 125,
@@ -64,7 +63,6 @@ const ServiceRequestList = ({properties}) => {
             },
         },
         { field: "serviceName", headerName: "Service Name", width: 250 },
-        { field: "serviceProvider", headerName: "Service Provider", width: 250 },
         {
             field: "status", headerName: "Status", width: 250,
             renderCell: (params) => {
@@ -74,19 +72,58 @@ const ServiceRequestList = ({properties}) => {
                     </Status>
                 )
             }
-        }
+        },
+        { field: "date", headerName: "Date", width: 250 },
+        { field: "price", headerName: "Price", width: 250 }
     ];
+
+    const [serviceRequests, setServiceRequests] = useState([]);
+    const user = useSelector((state) => state.user.currentUser);
+    const id = user.uid
+
+    useEffect(() => {
+        const getServiceRequests = async () => {
+            try {
+                let requestData = '';
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/serviceRequest/getServiceRequestList?customerId='+id,
+                    headers: { },
+                    data : requestData
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setServiceRequests(response.data.serviceRequestList)
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getServiceRequests()
+    }, [id]);
+
 
     return (
         <Container height={properties.height}>
-            <DataGridContainer>
-                <DataGrid
-                    rows={data}
-                    columns={columns}
-                    pageSize={properties.pageSize}
-                    disableSelectionOnClick
-                />
-            </DataGridContainer>
+            {
+                serviceRequests && (
+                    <>
+                        <DataGridContainer>
+                            <DataGrid
+                                rows={serviceRequests}
+                                columns={columns}
+                                pageSize={properties.pageSize}
+                                disableSelectionOnClick
+                            />
+                        </DataGridContainer>
+                    </>
+                )
+            }
         </Container>
     );
 };
