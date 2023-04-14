@@ -21,7 +21,8 @@ function App() {
                       <>
                           <Route path="/" element={<Home/>} />
                           <Route path="/services" element={<Services/>} />
-                          <Route path="/view/serviceRequests" element={<ViewServiceRequests/>} />
+                          <Route path="/services/:category" element={<Services/>} />
+                          <Route path="/requests" element={<ViewServiceRequests/>} />
                           <Route path="/service/:id" element={<Service />} />
                           <Route path="/request/:id" element={<ServiceRequest />} />
                           <Route path="/notifications" element={<Notifications/>} />

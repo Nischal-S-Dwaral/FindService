@@ -78,24 +78,26 @@ const ContentText = styled.div `
  * @returns {JSX.Element} - Service details card for the service list
  */
 const ServiceItem = ({item}) => {
-    console.log(item)
+
+    const imageUrl = item.photos.length > 0 ? item.photos[0] :
+        "https://st2.depositphotos.com/1265075/7860/i/600/depositphotos_78608878-stock-photo-business-quality-customer-survey-feedback.jpg";
     return (
         <Link to={`/service/${item.id}`} style={{ textDecoration: 'none',color: "black" }}>
             <Container>
                 <LeftContainer>
                     <ImageContainer>
-                        <Image src={item.img}/>
+                        <Image src={imageUrl}/>
                     </ImageContainer>
                 </LeftContainer>
                 <RightContainer>
                     <RightTopContainer>
                         <Title>
-                            {item.serviceName}
+                            {item.name}
                         </Title>
                         <Content>
                             <StarRating properties={
                                 {
-                                    rating: item.rating
+                                    rating: item.totalRating
                                 }
                             }/>
                         </Content>
@@ -105,7 +107,7 @@ const ServiceItem = ({item}) => {
                         </Content>
                         <Content>
                             <AccessTime/>
-                            <ContentText>{item.timings}</ContentText>
+                            <ContentText>{item.availability}</ContentText>
                         </Content>
                         <Content>
                             <DescriptionOutlined/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 const Container = styled.div `
   flex: 1;
@@ -44,16 +45,18 @@ const Image = styled.img `
 
 /**
  * @author Nischal S D
- * @param item - Information about the each category. It contains the name of the category and the image of the icon for the category.
+ * @param item - Information about the category. It contains the name of the category and the image of the icon for the category.
  * @returns A category card.
  */
 const CategoryItem = ({item}) => {
     return (
         <Container>
-            <Info>
-                <Image src={item.img}/>
-            </Info>
-            <Title>{item.title}</Title>
+            <Link to={"/services/" + item.value} style={{ textDecoration: 'none',color: "black" }}>
+                <Info>
+                    <Image src={item.img}/>
+                </Info>
+                <Title>{item.title}</Title>
+            </Link>
         </Container>
     );
 };

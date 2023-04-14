@@ -6,36 +6,43 @@ export const categories = [
         id: 1,
         img: "https://cdn-icons-png.flaticon.com/128/994/994928.png",
         title: "Cleaning",
+        value: "cleaning"
     },
     {
         id: 2,
         img: "https://cdn-icons-png.flaticon.com/128/4215/4215117.png",
         title: "Baby Sitting",
+        value: "babySitting"
     },
     {
         id: 3,
         img: "https://cdn-icons-png.flaticon.com/128/6485/6485915.png",
         title: "Pest Control",
+        value: "pestControl"
     },
     {
         id: 4,
         img: "https://cdn-icons-png.flaticon.com/128/9746/9746852.png",
         title: "Plumbing",
+        value: "plumbing"
     },
     {
         id: 5,
         img: "https://cdn-icons-png.flaticon.com/128/3713/3713314.png",
         title: "Electrical Repairs",
+        value: "electricalRepairs"
     },
     {
         id: 6,
         img: "https://cdn-icons-png.flaticon.com/128/1940/1940993.png",
         title: "Beauty",
+        value: "beauty"
     },
     {
         id: 7,
         img: "https://cdn-icons-png.flaticon.com/128/3357/3357272.png",
         title: "Others",
+        value: "others"
     }
 ]
 

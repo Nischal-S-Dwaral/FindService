@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import ServiceItem from "../components/ServiceItem";
-import {serviceDetails} from "../data";
 import {mobile} from "../responsive";
+import {useLocation} from "react-router-dom";
+import ServiceList from "../components/ServiceList";
 
 const Container = styled.div `
 `;
@@ -64,14 +64,16 @@ const Select = styled.select `
 const Option = styled.option `
 `;
 
-const ServiceList = styled.div `
-`;
-
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - returns the service list page
  */
 const Services = () => {
+
+    const location = useLocation();
+    const category = location.pathname.split("/")[2];
+    const [filterCategory, setFilterCategory] = useState(category);
+    const [filterLocation, setFilterLocation] = useState("");
 
     return (
         <Container>
@@ -87,7 +89,7 @@ const Services = () => {
                             <FilterText>
                                 Filter Services:
                             </FilterText>
-                            <Select>
+                            <Select onChange={(e)=> setFilterCategory(e.target.value)}>
                                 <Option disabled selected>Service Category</Option>
                                 <Option value="cleaning">Cleaning</Option>
                                 <Option value="babySitting">Baby Sitting</Option>
@@ -97,7 +99,7 @@ const Services = () => {
                                 <Option value="beauty">Beauty</Option>
                                 <Option value="others">Others</Option>
                             </Select>
-                            <Select>
+                            <Select onChange={(e)=> setFilterLocation(e.target.value)}>
                                 <Option disabled selected>Location</Option>
                                 <Option value="london">London</Option>
                                 <Option value="manchester">Manchester</Option>
@@ -111,11 +113,7 @@ const Services = () => {
                             </Select>
                         </Filter>
                     </FilterContainer>
-                    <ServiceList>
-                        {serviceDetails.map(item => (
-                            <ServiceItem item={item} key={item.id}/>
-                        ))}
-                    </ServiceList>
+                    <ServiceList filterCategory={filterCategory} filterLocation={filterLocation}/>
                 </ServiceContainer>
             </Main>
             <Footer/>
