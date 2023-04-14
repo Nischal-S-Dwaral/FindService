@@ -71,7 +71,7 @@ const Home = () => {
                     <Hr/>
                     <ServiceRequestsTitleContainer>
                         <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
-                        <Link to="/view/serviceRequests">
+                        <Link to="/requests">
                             <SeeAllServiceRequestsLink>
                                 <UnfoldMoreOutlined/>
                                 Show More
