@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import PreviousComment from "./PreviousComment";
-import axios from "axios";
 import {useSelector} from "react-redux";
+import {addMoreDetailsComment, getMoreDetailsComments} from "../api/MoreDetailsComments";
 
 const Container = styled.div ``;
 
@@ -64,61 +64,35 @@ const MoreDetailsCommentSection = ({properties}) => {
     const [addComment, setAddComment] = useState(false);
     const [commentText, setCommentText] = useState("");
 
-    useEffect(() => {
+    useEffect( () => {
 
-        const getMoreDetailsComments = async () => {
-            try {
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/commentServiceRequest/getByID?serviceRequestId='+serviceRequestId,
-                    headers: { }
-                };
-
-                const response = await axios.request(config)
-
-                if (response.data.returnCode === "0") {
-                    setMoreDetailsComments(response.data.commentList)
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
+        async function fetchData() {
+            const apiResponse = await getMoreDetailsComments(serviceRequestId)
+            if (apiResponse != null) {
+                setMoreDetailsComments(apiResponse)
+            } else {
+                console.log("Error while getting more details")
             }
         }
-        getMoreDetailsComments()
+        fetchData().then(() => setCommentText(""))
     }, [serviceRequestId, addComment]);
 
     const handleSubmitButtonClick = async (event) => {
         event.preventDefault(); // prevents the refresh of the page
 
-        try {
-            let data = JSON.stringify({
+        async function fetchData() {
+            const apiResponse = await addMoreDetailsComment({
                 "serviceRequestId": serviceRequestId,
                 "name": user.username,
                 "text": commentText
-            });
-
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'http://localhost:8080/api/commentServiceRequest/add',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data : data
-            };
-
-            const response = await axios.request(config)
-
-            if (response.data.returnCode === "0") {
-                setAddComment(true);
+            })
+            if (apiResponse != null) {
+                setAddComment(apiResponse);
             } else {
-                console.log(response.data);
+                console.log("Error while getting more details")
             }
-        } catch (error) {
-            console.log(error);
         }
+        fetchData().then(() => setCommentText(""))
     }
 
     return (

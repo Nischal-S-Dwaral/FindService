@@ -3,11 +3,8 @@ import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "../redux/userRedux";
-import {persistor} from "../redux/store";
 import { useNavigate } from "react-router-dom";
-import { signOut } from 'firebase/auth';
-import {auth} from "../firebase"
+import {logout} from "../api/Logout";
 
 const Container =styled.div `
   height: 60px;
@@ -180,11 +177,9 @@ const Navbar = () => {
         event.preventDefault(); // prevents the refresh of the page
 
         try {
-            signOut(auth)
-            dispatch(logout());
-            persistor.purge();
-
-            navigate("/login", { replace: true });
+            logout(dispatch).then(() =>
+                navigate("/login", { replace: true })
+            )
         } catch (error) {
             console.log("Error while logging out: ", error);
         }

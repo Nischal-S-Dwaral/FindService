@@ -21,7 +21,7 @@ const userRedux = createSlice({
             state.errorMessage = action.payload;
             state.error = true;
         },
-        logout: (state) => {
+        processLogout: (state) => {
             state.currentUser = null;
             state.errorMessage = null;
             state.error = false;
@@ -29,5 +29,5 @@ const userRedux = createSlice({
     }
 });
 
-export const {processStart, processSuccess, processFailure, logout} = userRedux.actions;
+export const {processStart, processSuccess, processFailure, processLogout} = userRedux.actions;
 export default userRedux.reducer;
