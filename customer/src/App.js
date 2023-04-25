@@ -8,6 +8,7 @@ import Service from "./pages/Service";
 import ServiceRequest from "./pages/ServiceRequest";
 import Notifications from "./pages/Notifications";
 import {useSelector} from "react-redux";
+import Review from "./pages/Review";
 
 function App() {
     const user = useSelector((state) => state.user.currentUser);
@@ -26,6 +27,7 @@ function App() {
                           <Route path="/service/:id" element={<Service />} />
                           <Route path="/request/:id" element={<ServiceRequest />} />
                           <Route path="/notifications" element={<Notifications/>} />
+                          <Route path="/review/:id" element={<Review />} />
                       </>
                   )
               }

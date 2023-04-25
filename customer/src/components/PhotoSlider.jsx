@@ -32,7 +32,7 @@ const PhotoSlider = ({photos}) => {
             })
         }
         setPhotoList(tempList)
-    }, [])
+    }, [photos])
 
     return (
         <Container>

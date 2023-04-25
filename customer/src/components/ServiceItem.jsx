@@ -79,7 +79,7 @@ const ContentText = styled.div `
  */
 const ServiceItem = ({item}) => {
 
-    const imageUrl = item.photos.length > 0 ? item.photos[0] :
+    const imageUrl = item.photos && item.photos.length > 0 ? item.photos[0] :
         "https://st2.depositphotos.com/1265075/7860/i/600/depositphotos_78608878-stock-photo-business-quality-customer-survey-feedback.jpg";
     const rating = item.numberOfRatings !== "0"
         ? parseFloat(item.totalRating) / parseFloat(item.numberOfRatings)

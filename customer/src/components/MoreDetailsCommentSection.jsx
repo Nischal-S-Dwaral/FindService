@@ -48,7 +48,6 @@ const Button = styled.button `
   margin: 10px 0;
   border-radius: 15px;
   transition: all 0.5s ease;
-  
 `;
 
 /**
