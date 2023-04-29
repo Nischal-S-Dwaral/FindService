@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {login} from "../api/Login";
+import {googleLogin, login} from "../api/Login";
+import GoogleButton from 'react-google-button'
 
 const Container = styled.div `
   width: 100vw;
@@ -97,6 +98,11 @@ const Login = () => {
         login(dispatch, {email, password});
     }
 
+    const handleGoogleLoginButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+        googleLogin(dispatch);
+    }
+
     return (
         <Container>
             <Wrapper>
@@ -115,6 +121,10 @@ const Login = () => {
                     <Link to={"/register"} style={{ textDecoration: 'none',color: "black" }}>
                         <Button>REGISTER</Button>
                     </Link>
+                    <GoogleButton
+                        style={{ width: "100%", borderRadius: "15px", transition: "all 0.5s ease"}}
+                        onClick={handleGoogleLoginButtonClick}
+                    />
                 </Form>
             </Wrapper>
         </Container>
