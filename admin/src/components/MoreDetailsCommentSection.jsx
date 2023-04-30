@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import PreviousComment from "./PreviousComment";
+import {useSelector} from "react-redux";
+import {addMoreDetailsComment, getMoreDetailsComments} from "../api/MoreDetailsComments";
 
 const Container = styled.div ``;
 
@@ -56,13 +58,49 @@ const Button = styled.button `
  */
 const MoreDetailsCommentSection = ({properties}) => {
 
-    const previousMoreDetailsComments = properties.moreDetailsComments
+    //const previousMoreDetailsComments = properties.moreDetailsComments
+    const serviceProviderId = properties.serviceProviderId
+    const [moreDetailsComments, setMoreDetailsComments] = useState([]);
+    const user = useSelector((state) => state.user.currentUser);
+    const [addComment, setAddComment] = useState(false);
+    const [commentText, setCommentText] = useState("");
+
+      useEffect( () => {
+
+        async function fetchData() {
+            const apiResponse = await getMoreDetailsComments(serviceProviderId)
+            if (apiResponse != null) {
+                setMoreDetailsComments(apiResponse)
+            } else {
+                console.log("Error while getting more details")
+            }
+        }
+        fetchData().then(() => setCommentText(""))
+      }, [serviceProviderId, addComment]);
+
+    const handleSubmitButtonClick = async (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+
+        async function fetchData() {
+            const apiResponse = await addMoreDetailsComment({
+                "serviceProviderId": serviceProviderId,
+                "name": user.username,
+                "text": commentText
+            })
+            if (apiResponse != null) {
+                setAddComment(apiResponse);
+            } else {
+                console.log("Error while getting more details")
+            }
+        }
+        fetchData().then(() => setCommentText(""))
+    }
 
     return (
         <Container>
             <Main>
                 <PreviousCommentsContainer>
-                    {previousMoreDetailsComments.map(item => (
+                    {moreDetailsComments.map(item => (
                         <>
                             <PreviousComment key={item.id} item={item}/>
                             <Hr/>
@@ -74,8 +112,9 @@ const MoreDetailsCommentSection = ({properties}) => {
                         <TextArea
                             id="comment" cols={40} rows={10}
                             name="commentText"
-                            placeholder="Please provide your comment..."/>
-                        <Button>SUBMIT COMMENT</Button>
+                            placeholder="Please provide your comment..."
+                            onChange={(e)=> setCommentText(e.target.value)}/>
+                        <Button onClick={handleSubmitButtonClick}>SUBMIT COMMENT</Button>
                     </AddCommentForm>
                 </AddCommentContainer>
             </Main>

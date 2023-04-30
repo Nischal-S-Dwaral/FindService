@@ -1,12 +1,12 @@
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import {serviceProvidersDetails} from "../data";
 import {mobile} from "../responsive";
 import ServiceProviderItem from "../components/ServiceProviderItem";
 import {useLocation} from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div `
 `;
@@ -88,14 +88,54 @@ const ServiceProvider = () => {
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const data = serviceProvidersDetails[id-1];
-    const services = data.services;
+    console.log('serviceprovider id --> ', id)
 
-    console.log("service provider ----> ")
-    
-    const [deleted, setDeleted] = useState(false);
+    const [services, setServices] = useState([]);
 
-    console.log("deleted00000" + deleted)
+    const handleDelete = async (event) => {
+      event.preventDefault(); // prevents the refresh of the page
+      const url = `http://localhost:8080/api/serviceProvider/delete?id=${id}`;
+      
+            fetch(url, {
+              method: 'DELETE'
+            })
+            .then(response => {
+              // handle the response
+              console.log('deleted')
+              window.location.reload();
+            })
+            .catch(error => {
+              // handle the error
+              console.log(error);
+            });  
+    }
+
+    useEffect(() => {
+
+    const getServices = async () => {
+          try {
+              let requestData = '';
+              let config = {
+                  method: 'get',
+                  maxBodyLength: Infinity,
+                  url: 'http://localhost:8080/api/service/getServiceListByServiceProvider?serviceProviderId='+id,
+                  headers: { },
+                  data : requestData
+              };
+
+              const response = await axios.request(config)
+
+              if (response.data.returnCode === "0") {
+                  setServices(response.data.serviceList)
+              } else {
+                  console.log(response.data);
+              }
+          } catch (error) {
+              console.log(error);
+          }
+      }
+      getServices()
+  }, [id]);
 
     return (
         <Container>
@@ -103,15 +143,17 @@ const ServiceProvider = () => {
             <Main>
             <Sidebar/>
                 <ServiceProviderContainer>
-                    <Contents>
+                  {
+                    services && services.length > 0 && (
+                      <Contents>
                         <TopDetails>
                             <LeftTopContainer>
-                                <Title>Service Provider -  {data.name}</Title>
+                                <Title>Service Provider -  {services.serviceProviderId}</Title>
                             </LeftTopContainer>
                             <RightTopContainer>
-                                <DeleteButton onClick={() => setDeleted(true)}>
+                              <DeleteButton onClick={handleDelete} >
                                                 Delete
-                                </DeleteButton>
+                              </DeleteButton> 
                             </RightTopContainer>
                         </TopDetails>
                         <ServiceList>
@@ -120,13 +162,13 @@ const ServiceProvider = () => {
                                 ))}
                         </ServiceList>
                     </Contents>
-                    {/* <Title>
-                        Service Provider - {data.name}
-                    </Title>
-                    <DeleteButton onClick={() => setOpenServiceRequestModal(true)}>
-                                                Delete
-                    </DeleteButton> */}
-                    
+                    )
+                  } 
+                  {
+                    services.length === 0 && (
+                      <Title>There are no services for Service Provider {services.serviceProviderId}</Title>
+                    )
+                  }
                 </ServiceProviderContainer>
             </Main>
             <Footer/>

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {NonVerifiedServiceProviderDetails} from "../data";
 import { DataGrid } from "@material-ui/data-grid";
 import {VisibilityOutlined} from "@material-ui/icons";
 import {getColorCodeForStatus} from "../utils";
 import {Link} from "react-router-dom";
+import axios from "axios";
+import {useSelector} from "react-redux";
 
 const Container = styled.div `
   display: flex;
@@ -47,7 +49,7 @@ const Icon = styled.div `
 
 const NonVerifiedSPList = ({properties}) => {
 
-    const data = NonVerifiedServiceProviderDetails;
+    //const data = NonVerifiedServiceProviderDetails;
 
     const columns = [
         {
@@ -66,27 +68,65 @@ const NonVerifiedSPList = ({properties}) => {
         },
         { field: "name", headerName: "Service Provider", width: 250 },
         {
-            field: "status", headerName: "Status", width: 250,
+            field: "approvalStatus", headerName: "Status", width: 250,
             renderCell: (params) => {
                 return (
-                    <Status color={getColorCodeForStatus(params.row.status)}>
-                        {params.row.status}
+                    <Status color={getColorCodeForStatus(params.row.approvalStatus)}>
+                        {params.row.approvalStatus}
                     </Status>
                 )
             }
         }
     ];
 
+    const [nonverifiedServiceProviders, setNonverifiedServiceProviders] = useState([]);
+    const user = useSelector((state) => state.user.currentUser);
+    const status = 'Pending'
+    console.log('status ' + status)
+
+    useEffect(() => {
+        const getNonVerifiedServiceProviders = async () => {
+            try {
+                let requestData = '';
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/serviceProvider/getServiceProviderList?approvalStatus='+status,
+                    headers: {},
+                    data : requestData
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setNonverifiedServiceProviders(response.data.serviceProviderList)
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getNonVerifiedServiceProviders()
+    }, [status]);
+
     return (
         <Container height={properties.height}>
-            <DataGridContainer>
-                <DataGrid
-                    rows={data}
-                    columns={columns}
-                    pageSize={properties.pageSize}
-                    disableSelectionOnClick
-                />
-            </DataGridContainer>
+            {   
+                nonverifiedServiceProviders && (
+                    <>
+                <DataGridContainer>
+                    <DataGrid
+                        rows={nonverifiedServiceProviders}
+                        columns={columns}
+                        pageSize={properties.pageSize}
+                        disableSelectionOnClick
+                    />
+                </DataGridContainer>
+                </>
+                )
+            }
+
         </Container>
     );
 };

@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import {LocationOn} from "@material-ui/icons";
-import {serviceDetails} from "../data";
 import {mobile} from "../responsive";
 import StarRating from "../components/StarRating";
 import Review from "../components/Review";
+import axios from "axios";
 
 const Container = styled.div `
 `;
@@ -104,18 +104,6 @@ const Hr = styled.hr `
   margin: 10px 0;
 `;
 
-const CreateServiceRequestButton = styled.button `
-  color: white;
-  background-color: black;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 15px;
-  cursor: pointer;
-  ${mobile({
-    width: "100%",
-  })}
-`;
-
 const SubTitle = styled.h2 `
   font-weight: 700;
 `;
@@ -138,14 +126,50 @@ const ServicePage = () => {
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    const data = serviceDetails[id-1];
-    const reviews = data.reviews;
 
     const getTemplateRows = (reviews) => {
         return Math.ceil(reviews.length / 2);
     }
 
-    //const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
+    const [service, setService] = useState([]);
+    const [reviews, setReviews] = useState([]);
+
+    useEffect(() => {
+
+      const getService = async () => {
+          try {
+                const response = await axios.get(
+                    `http://localhost:8080/api/service/findById?id=${id}`
+                );
+
+              if (response.data.returnCode === "0") {
+                  setService(response.data)
+              } else {
+                  console.log(response.data);
+              }
+          } catch (error) {
+              console.log(error);
+          }
+      }
+      getService()
+
+      const getReviews = async () => {
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/review/getReviewList?serviceId=${id}`
+            );
+            if (response.data.returnCode === "0") {
+                setReviews(response.data.reviews);
+            } else {
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    getReviews()
+    }, [])
+
 
     return (
         <Container>
@@ -158,45 +182,51 @@ const ServicePage = () => {
                                 <Contents>
                                     <TopDetails>
                                         <LeftTopContainer>
-                                            <Title>{data.serviceName}</Title>
+                                            <Title>{service.name}</Title>
                                             <Rating>
-                                                <TextRating>{data.rating}</TextRating>
+                                                <TextRating>{service.numberOfRatings}</TextRating>
                                                 <StarRating properties={
                                                     {
-                                                        rating: data.rating
+                                                        rating: service.numberOfRatings
                                                     }
                                                 }/>
                                             </Rating>
                                             <Location>
                                                 <LocationOn/>
-                                                <LocationText>{data.location}</LocationText>
+                                                <LocationText>{service.location}</LocationText>
                                             </Location>
                                         </LeftTopContainer>
                                         <RightTopContainer>
-                                            <SubTitle>Cost: £{data.price}</SubTitle>
+                                            <SubTitle>Cost: £{service.price}</SubTitle>
                                         </RightTopContainer>
                                     </TopDetails>
                                 </Contents>
                                 <Contents>
                                     <MiddleContainer>
                                         <SubTitle>Description</SubTitle>
-                                        <MiddleContainerText>{data.description}</MiddleContainerText>
+                                        <MiddleContainerText>{service.description}</MiddleContainerText>
                                         <Hr/>
                                     </MiddleContainer>
-                                    <MiddleContainer>
+                                    {/* <MiddleContainer>
                                         <SubTitle>Timings</SubTitle>
                                         <MiddleContainerText>{data.timings}</MiddleContainerText>
                                         <Hr/>
-                                    </MiddleContainer>
+                                    </MiddleContainer> */}
                                 </Contents>
-                                <Contents>
-                                    <SubTitle>Reviews & Ratings</SubTitle>
-                                    <ReviewGrid rows={getTemplateRows(reviews)}>
-                                        {reviews.map(item => (
-                                            <Review key={item.id} item={item}/>
-                                        ))}
-                                    </ReviewGrid>
-                                </Contents>
+                                {
+                                  reviews && reviews.length > 0 && (
+                                    <>
+                                  <Contents>
+                                      <SubTitle>Reviews & Ratings</SubTitle>
+                                      <ReviewGrid rows={getTemplateRows(reviews)}>
+                                          {reviews.map(item => (
+                                              <Review key={item.id} item={item}/>
+                                          ))}
+                                      </ReviewGrid>
+                                  </Contents>
+                                  </>
+                                )
+                                }   
                             </ServiceContainer>
                         </Main>
                         <Footer/>

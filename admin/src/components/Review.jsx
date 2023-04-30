@@ -1,10 +1,9 @@
-import React,{useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {CalendarMonthOutlined} from "@mui/icons-material";
 import StarRating from "./StarRating";
 import {mobile} from "../responsive";
-import { Button } from '@material-ui/core';
 
 const Container = styled.div `
   margin-top: 5px;
@@ -77,18 +76,24 @@ const DeleteButton = styled.button `
  */
 const Review = ({item}) => {
 
-  const [deleted, setDeleted] = useState(false);
-  //const history = useHistory();
+  const id = item.id;
 
-  const handleDelete = async (id) => {
-    try {
-      //await axios.delete(`/api/records/${id}`);
-      setDeleted(true);
-      console.log("deleted")
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const handleDelete = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+    const url = `http://localhost:8080/api/review/delete?reviewId=${id}`;
+    
+          fetch(url, {
+            method: 'DELETE'
+          })
+          .then(response => {
+            // handle the response
+            window.location.reload();
+          })
+          .catch(error => {
+            // handle the error
+            console.log(error);
+          });  
+  }
 
     return (
         <Container>
@@ -101,7 +106,7 @@ const Review = ({item}) => {
                     <CalendarMonthOutlined/>
                     <DetailsText>{item.date}</DetailsText>
                 </Date>
-                <DeleteButton onClick={() => handleDelete(item.id)}>
+                <DeleteButton onClick={handleDelete} >
                                                 Delete
                 </DeleteButton>
             </Details>

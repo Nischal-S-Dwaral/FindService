@@ -29,18 +29,51 @@ const RejectButton = styled.button `
 // Main component that displays the buttons
 const ButtonContainer = () => {
 
-  const [deleted, setDeleted] = useState(false);
-  const [accepted, setAccepted] = useState(false);
-  const [rejected, setRejected] = useState(false);
+  const serviceProviderId = '3q6PJznKMjyAHb6R6g6T'; // replace with the actual review ID
+  const statusV = 'Verified'; // replace with the desired review status
+  const statusR = 'Rejected';
+
+  const dataR = { serviceProviderId, statusR };
+  const dataV = { serviceProviderId, statusV };
+
+  const handleRejectButtonClick = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+    fetch('http://localhost:8080/api/serviceProvider/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataR)
+    })
+    .then(response => {
+        window.location.reload();
+    })
+    .catch(error => {
+        // handle the error
+        console.log(error);
+    }); 
+  }
+
+  const handleAcceptButtonClick = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+    fetch('http://localhost:8080/api/serviceProvider/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataV)
+    })
+    .then(response => {
+        window.location.reload();
+    })
+    .catch(error => {
+        // handle the error
+        console.log(error);
+    }); 
+  }
 
   return (
     <div>
-      {/* <AcceptButton onClick={handleAccept} />
-      <RejectButton onClick={handleReject} /> */}
-      <AcceptButton onClick={() => setAccepted(true)}>
-                                                Accept
+      <AcceptButton onClick={handleAcceptButtonClick}>
+                                                Verify
       </AcceptButton>
-      <RejectButton onClick={() => setRejected(true)}>
+      <RejectButton onClick={handleRejectButtonClick}>
                                                 Reject
       </RejectButton>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {AccessTime, DescriptionOutlined, LocationOn} from "@material-ui/icons";
+import {DescriptionOutlined, LocationOn} from "@material-ui/icons";
 import {Link} from "react-router-dom";
 import {getColorCodeForStatus} from "../utils";
 
@@ -23,19 +23,6 @@ const Container = styled.div `
 
 const LeftContainer = styled.div `
   flex: 1;
-`;
-
-const ImageContainer = styled.div `
-  width: 25vw;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 15px 0 0 15px;
-`;
-
-const Image = styled.img `
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 `;
 
 const RightContainer = styled.div `
@@ -96,9 +83,9 @@ const VerifiedSPItem = ({item}) => {
         <Link to={`/serviceprovider/${item.id}`} style={{ textDecoration: 'none',color: "black" }}>
             <Container>
                 <LeftContainer>
-                    <ImageContainer>
+                    {/* <ImageContainer>
                         <Image src={item.img}/>
-                    </ImageContainer>
+                    </ImageContainer> */}
                 </LeftContainer>
                 <RightContainer>
                     <RightTopContainer>
@@ -107,18 +94,18 @@ const VerifiedSPItem = ({item}) => {
                         </Title>
                         <Content>
                             <LocationOn/>
-                            <ContentText>{item.location}</ContentText>
+                            <ContentText>{item.address}</ContentText>
                         </Content>
-                        <Content>
+                        {/* <Content>
                             <AccessTime/>
                             <ContentText>{item.timings}</ContentText>
-                        </Content>
+                        </Content> */}
                         <Content>
                             <DescriptionOutlined/>
                             <ContentText>{item.description}</ContentText>
                         </Content>
-                        <Contents background={getColorCodeForStatus(item.status)} border="black">
-                          <SubTitle>Approved</SubTitle>
+                        <Contents background={getColorCodeForStatus(item.approvalStatus)} border="black">
+                          <SubTitle>{item.approvalStatus}</SubTitle>
                         </Contents>
                     </RightTopContainer>
                 </RightContainer>

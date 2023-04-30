@@ -56,13 +56,13 @@ const TopDetails = styled.div `
  * @author Nischal S D
  * @returns {JSX.Element} - returns the service list page
  */
-const VerifiedSP = () => {
+const RejectedSP = () => {
 
-  const [verifiedServiceProviders, setVerifiedServiceProviders] = useState([]);
-  const status = 'Verified'
+  const [rejectedServiceProviders, setRejectedServiceProviders] = useState([]);
+  const status = 'Rejected'
 
   useEffect(() => {
-    const getVerifiedServiceProviders = async () => {
+    const getRejectedServiceProviders = async () => {
         try {
             let requestData = '';
             let config = {
@@ -76,7 +76,7 @@ const VerifiedSP = () => {
             const response = await axios.request(config)
 
             if (response.data.returnCode === "0") {
-              setVerifiedServiceProviders(response.data.serviceProviderList)
+                setRejectedServiceProviders(response.data.serviceProviderList)
             } else {
                 console.log(response.data);
             }
@@ -84,7 +84,7 @@ const VerifiedSP = () => {
             console.log(error);
         }
     }
-    getVerifiedServiceProviders()
+    getRejectedServiceProviders()
   }, [status]);
 
     return (
@@ -94,7 +94,7 @@ const VerifiedSP = () => {
             <Sidebar/>
                 <ServiceProviderContainer>
                 {
-                  verifiedServiceProviders && verifiedServiceProviders.length > 0 && (
+                  rejectedServiceProviders && rejectedServiceProviders.length > 0 && (
                     <>
                   <Contents>
                     <TopDetails>
@@ -103,7 +103,7 @@ const VerifiedSP = () => {
                       </Title>
                     </TopDetails>
                     <ServiceProviderList>
-                        {verifiedServiceProviders.map(item => (
+                        {rejectedServiceProviders.map(item => (
                              <VerifiedSPItem item={item} key={item.id}/>
                         ))}
                     </ServiceProviderList>
@@ -122,4 +122,4 @@ const VerifiedSP = () => {
     );
 };
 
-export default VerifiedSP;
+export default RejectedSP;

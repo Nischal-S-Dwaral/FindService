@@ -97,7 +97,7 @@ const Sidebar = () => {
                                 </Icon>
                             </ListItem>
                         </Link>
-                        <Link to="/" style={{ textDecoration: 'none',color: "black" }}>
+                        <Link to="/rejectedSP" style={{ textDecoration: 'none',color: "black" }}>
                             <ListItem>
                                 <Icon>
                                   <CircleNotifications />

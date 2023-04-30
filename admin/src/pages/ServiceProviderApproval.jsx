@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {useLocation} from "react-router-dom";
-import {NonVerifiedServiceProviderDetails} from "../data";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import Sidebar from "../components/Sidebar";
@@ -9,6 +8,9 @@ import Footer from "../components/Footer";
 import {getColorCodeForStatus} from "../utils";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
 import ButtonContainer from '../components/ButtonContainer';
+import axios from "axios";
+import {useSelector} from "react-redux";
+import {addMoreDetailsComment, getMoreDetailsComments} from "../api/MoreDetailsComments";
 
 const Container = styled.div ``;
 
@@ -97,6 +99,30 @@ const ContentText = styled.div `
   width: 45vw;
 `;
 
+const AcceptButton = styled.button `
+  color: white;
+  background-color: black;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  ${mobile({
+    width: "100%",
+  })}
+`;
+
+const RejectButton = styled.button `
+  color: white;
+  background-color: black;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  ${mobile({
+    width: "100%",
+  })}
+`;
+
 
 /**
  * @author Nischal S D
@@ -106,9 +132,99 @@ const ContentText = styled.div `
 const ServiceProviderApproval = () => {
 
     const location = useLocation();
-    const id = location.pathname.split("/")[2];
-    const data = NonVerifiedServiceProviderDetails[id-1];
-    console.log('check data ' , data)
+    const serviceProviderId = location.pathname.split("/")[2];
+    const [serviceProvider, setServiceProvider] = useState({});
+
+    const user = useSelector((state) => state.user.currentUser);
+    const adminId = user.id;
+    const adminName =  user.name;
+    const updateStatus = 'Verified';
+
+    const dataV = { serviceProviderId, updateStatus};
+    const dataR = { "serviceProviderId": serviceProviderId,
+                    "updateStatus": "Rejected"}
+
+    //const serviceProviderId = properties.serviceProviderId
+    const [moreDetailsComments, setMoreDetailsComments] = useState([]);
+    const [addComment, setAddComment] = useState(false);
+    const [commentText, setCommentText] = useState("");
+
+    useEffect(() => {
+
+      const getServiceProvider = async () => {
+          try {
+              let requestData = '';
+              let config = {
+                  method: 'get',
+                  maxBodyLength: Infinity,
+                  url: 'http://localhost:8080/api/serviceProvider/findById?id='+serviceProviderId,
+                  headers: { },
+                  data : requestData
+              };
+
+              const response = await axios.request(config)
+
+              if (response.data.returnCode === "0") {
+                  setServiceProvider(response.data)
+              } else {
+                  console.log(response.data);
+              }
+          } catch (error) {
+              console.log(error);
+          }
+      }
+      getServiceProvider()
+  }, [serviceProviderId]);
+
+  const handleSubmitButtonClick = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+
+    async function fetchData() {
+        const apiResponse = await addMoreDetailsComment({
+            "serviceProviderId": serviceProviderId,
+            "name": user.username,
+            "text": commentText
+        })
+        if (apiResponse != null) {
+            setAddComment(apiResponse);
+        } else {
+            console.log("Error while getting more details")
+        }
+    }
+    fetchData().then(() => setCommentText(""))
+  }
+
+  const handleAcceptButtonClick = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+    fetch('http://localhost:8080/api/serviceProvider/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataV)
+    })
+    .then(response => {
+        window.location.reload();
+    })
+    .catch(error => {
+        // handle the error
+        console.log(error);
+    }); 
+  }
+
+  const handleRejectButtonClick = async (event) => {
+    event.preventDefault(); // prevents the refresh of the page
+    fetch('http://localhost:8080/api/serviceProvider/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataR)
+    })
+    .then(response => {
+        window.location.reload();
+    })
+    .catch(error => {
+        // handle the error
+        console.log(error);
+    }); 
+  }
 
     return (
         <Container>
@@ -118,28 +234,31 @@ const ServiceProviderApproval = () => {
                 <ServiceProviderContainer>
                     <Contents>
                         <LeftContainer>
-                            <ImageContainer>
-                                <Image src={data.img}/>
-                            </ImageContainer>
+                            {/* <ImageContainer>
+                                <Image src={serviceProvider.img}/>
+                            </ImageContainer> */}
                         </LeftContainer>
                         <RightContainer>
                             <SubTitle>Service Provider</SubTitle>
-                            <TopContainerText>Name: {data.name}</TopContainerText>
-                            <TopContainerText>Status: {data.status}</TopContainerText>
+                            <TopContainerText>Name: {serviceProvider.name}</TopContainerText>
+                            <TopContainerText>Status: {serviceProvider.approvalStatus}</TopContainerText>
                             <Hr/>
                         </RightContainer>
                         <TopContainer>
                             <SubTitle>Description</SubTitle>
-                            <TopContainerText>{data.description}</TopContainerText>
+                            <TopContainerText>{serviceProvider.description}</TopContainerText>
                         </TopContainer>
                     </Contents>
-                    <Contents background={getColorCodeForStatus(data.status)} border="black"> 
+                    <Contents border="black"> 
                         <LeftContainer>
                           <SubTitle>Accept Request: </SubTitle>
                         </LeftContainer>
                         <RightContainer>
                           <RightTopContainer>
-                            <ButtonContainer/>
+                          <AcceptButton onClick={handleAcceptButtonClick}>
+                                                Verify</AcceptButton>
+                          <RejectButton onClick={handleRejectButtonClick}>
+                                                Reject</RejectButton>
                           </RightTopContainer>
                         </RightContainer>
                     </Contents> 
@@ -148,9 +267,9 @@ const ServiceProviderApproval = () => {
                         <SubTitle>More Details</SubTitle>
                         <MoreDetailsCommentSection properties={
                             {
-                                customerId: data.customerId,
-                                customerName: data.customerName,
-                                moreDetailsComments: data.moreDetailsComments
+                                adminId: adminId,
+                                adminName: adminName,
+                                serviceProviderId: serviceProviderId
                             }
                         }/>
                     </Contents>

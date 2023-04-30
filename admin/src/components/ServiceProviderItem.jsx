@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import {DescriptionOutlined, LocationOn} from "@material-ui/icons";
 import {Link} from "react-router-dom";
 
 
@@ -13,23 +12,6 @@ const Container = styled.div `
   transition: all 0.5s ease;
   margin-bottom: 15px;
   box-shadow: 0 10px 15px rgba(0,0,0,.1);
-`;
-
-const LeftContainer = styled.div `
-  flex: 1;
-`;
-
-const ImageContainer = styled.div `
-  width: 25vw;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 15px 0 0 15px;
-`;
-
-const Image = styled.img `
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 `;
 
 const RightContainer = styled.div `
@@ -76,12 +58,12 @@ const ServiceProviderItem = ({item}) => {
                 <RightContainer>
                     <RightTopContainer>
                         <Title>
-                          Service Name: {item.serviceName}
+                          Service Name: {item.name}
                         </Title>
                         <SubTitle>Description</SubTitle>
                           <ContainerText>{item.description}</ContainerText>
                         <SubTitle> Review Summary</SubTitle>
-                          <ContainerText>{item.reviewSummary}</ContainerText>
+                          <ContainerText>{item.totalRating}</ContainerText>
                     </RightTopContainer>
                 </RightContainer>                
             </Container>
