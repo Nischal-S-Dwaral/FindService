@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import Categories from "../components/Categories";
 import ServiceRequestList from "../components/ServiceRequestList";
-import ServiceItem from "../components/ServiceItem";
 import {Link} from "react-router-dom";
 import {UnfoldMoreOutlined} from "@material-ui/icons";
-import {serviceDetails, serviceProvider} from "../data";
-import PreApproval from '../components/PreApproval';
 import ServiceProviderApproval from './ServiceProviderApproval';
+import {useSelector} from "react-redux";
+import ServiceList from '../components/ServiceList';
+import axios from "axios";
 
 const Container = styled.div `
 `;
@@ -23,6 +22,7 @@ const HomeContainer = styled.div `
   flex: 4;
   height: 100%;
   overflow: hidden;
+  margin: 15px;
 `;
 
 const ServiceRequestsTitleContainer = styled.div `
@@ -44,8 +44,7 @@ const SeeAllServiceRequestsLink = styled.div `
   display: flex;
   align-items: center;
 `;
-const ServiceList = styled.div `
-`;
+
 const Title = styled.h1 `
   font-weight: 800;
   padding: 0 30px;
@@ -56,16 +55,46 @@ const Title = styled.h1 `
  * @returns {JSX.Element} - Home Page of the website
  */
 const Home = () => {
-  const currentSP = serviceProvider[1]; //get current logged in SP status
-  const status = currentSP.status;
-  const spId = currentSP.id;
-  
-  if(status!=="Approved") {
+  const user = useSelector((state) => state.user.currentUser);
+  const status = user.status;
+  const spId = user.uid;
+
+  const [approvalStatus, setStatus] = useState('');
+
+  useEffect(() => {
+    const getServiceProvider = async () => {
+      try {
+        let data = '';
+
+        let config = {
+          method: 'get',
+          maxBodyLength: Infinity,
+          url: 'http://localhost:8080/api/serviceProvider/findBySPid?id=' + spId,
+          headers: {},
+          data: data
+        };
+
+        const response = await axios.request(config)
+
+        if (response.data.returnCode === "0") {
+          setStatus(response.data.approvalStatus);
+        } else {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getServiceProvider();
+  });
+
+ 
+  if(approvalStatus !== 'Verified') {
     return (
         <Container>
             <Navbar/>
             <Main>
-                <Sidebar/>
+               
                 <HomeContainer>
                   
                   
@@ -78,7 +107,7 @@ const Home = () => {
         </Container>
     );
   }
-  else{
+else if(approvalStatus === 'Verified'){
  return (
         <Container>
             <Navbar/>
@@ -88,11 +117,8 @@ const Home = () => {
                   
                   
                   <Title>Our Services</Title>
-                    <ServiceList>
-                        {serviceDetails.map(item => (
-                            <ServiceItem item={item} key={item.id}/>
-                        ))}
-                    </ServiceList>
+                    <ServiceList />
+                     
                     <ServiceRequestsTitleContainer>
                         <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
                         <Link to="/view/serviceRequests">

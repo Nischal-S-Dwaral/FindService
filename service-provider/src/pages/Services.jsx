@@ -5,17 +5,25 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import ServiceItem from "../components/ServiceItem";
 import {serviceDetails} from "../data";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
 `;
 
 const Main = styled.div `
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const ServiceContainer = styled.div `
   flex: 4;
   margin: 30px;
+  ${mobile({
+    padding: "0px",
+    marginTop: "10px"
+  })}
 `;
 
 const Title = styled.h1 `
@@ -30,17 +38,27 @@ const FilterContainer = styled.div `
 const Filter = styled.div `
   margin-bottom: 20px;
   margin-top: 20px;
+  ${mobile({
+    display: "flex",
+    flexDirection: "column"
+  })}
 `;
 
 const FilterText = styled.span `
   font-weight: 600;
   font-size: 20px;
   margin-right: 20px;
+  ${mobile({
+    marginBottom: "10px"
+  })}
 `;
 
 const Select = styled.select `
   padding: 10px;
   margin-right: 20px;
+  ${mobile({
+    marginBottom: "10px"
+  })}
 `;
 
 const Option = styled.option `

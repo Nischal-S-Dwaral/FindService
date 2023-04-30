@@ -1,21 +1,18 @@
-import React, {useState} from 'react';
-import {useLocation,useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import {AddIcon} from "@material-ui/icons";
 
-import {serviceDetails} from "../data";
-import { padding } from '@mui/system';
+import axios from "axios";
+import { updateService } from "../api/Services"
 
-
-
-const Main = styled.div `
+const Main = styled.div`
   display: flex;
 `;
 
 
-const CreateServiceRequestButton = styled.button `
+const CreateServiceRequestButton = styled.button`
   color: white;
   background-color: black;
   padding: 10px;
@@ -24,24 +21,24 @@ const CreateServiceRequestButton = styled.button `
   cursor: pointer;
 `;
 
-const SubTitle = styled.h2 `
+const SubTitle = styled.h2`
   font-weight: 700;
 `;
 
-const ReviewGrid = styled.div `
+const ReviewGrid = styled.div`
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat({$props.columns}, 1fr);
 `;
-const Container = styled.div `
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
   align-items: center;
   justify-content: center;
 `;
 
-const Wrapper = styled.div `
+const Wrapper = styled.div`
   padding: 20px;
   width: 60%;
   background-color: #f5f1f1;
@@ -49,22 +46,22 @@ const Wrapper = styled.div `
   margin: 30px;
 `;
 
-const Title = styled.h1 `
+const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
   text-align: center;
 `;
 
-const Form = styled.form `
+const Form = styled.form`
   display: grid;
 `;
 
-const Input = styled.input `
+const Input = styled.input`
   flex: 1;
   margin: 5px 10px 0 0;
   padding: 10px;
 `;
-const Textarea = styled.textarea `
+const Textarea = styled.textarea`
   flex: 1;
   margin: 5px 10px 0 0;
   padding: 10px;
@@ -72,7 +69,7 @@ const Textarea = styled.textarea `
 `;
 
 
-const Button = styled.button `
+const Button = styled.button`
 width: 50%;
 border: none;
 padding: 15px 20px;
@@ -85,15 +82,15 @@ transition: all 0.5s ease 0s;
     transform: scale(1.1);
   }
 `;
-const Select = styled.select `
+const Select = styled.select`
   padding: 10px;
   margin-right: 20px;
 `;
 
-const Option = styled.option `
+const Option = styled.option`
 `;
 
-const Label = styled.label `
+const Label = styled.label`
   margin: 20px 10px 0 0;
 `;
 /**
@@ -103,45 +100,94 @@ const Label = styled.label `
 const EditService = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const data = serviceDetails[id-1];
+  // const data = serviceDetails[id-1];
   const navigate = useNavigate();
- 
-  
-    return (
-        <Container>
-           <Navbar/>
+
+  const [service, setService] = useState({});
+
+  const [serviceTitle, setServiceTitle] = useState("");
+  const [serviceDesc, setServiceDesc] = useState("");
+  const [serviceAvailability, setServiceAvailability] = useState("");
+  const [servicePrice, setServicePrice] = useState("");
+  const [serviceLocations, setServiceLocations] = useState("");
+
+  useEffect(() => {
+
+    const getService = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/service/findById?id=${id}`
+        );
+        if (response.data.returnCode === "0") {
+          setService(response.data);
+          setServiceAvailability(response.data.availability)
+          setServiceLocations(response.data.location)
+            setServicePrice(response.data.price)
+            setServiceDesc(response.data.description)
+            setServiceTitle(response.data.name)
+            
+        } else {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getService()
+  }, [id]);
+
+
+  const handleSubmitButtonClick = async (event) => {
+    event.preventDefault();
+    //console.log(servicePhotos)
+
+
+    const apiResponse = await updateService({
+      "serviceId": id,
+
+      "location": serviceLocations,
+      "description": serviceDesc,
+      "price": servicePrice,
+      "availability": serviceAvailability
+    })
+    if (apiResponse != null) {
+      console.log("Service added successfully!")
+      navigate(`/`)
+    } else {
+      console.log("Error while getting more details")
+    }
+
+  }
+
+  return (
+
+    <Container>
+      {
+        service && (
+          <>
+            <Navbar />
             <Main>
-            <Sidebar/>
-          <Wrapper>
-          <Title>Fill up the details to create new service</Title>
-            <Form>
-            <Label>Service Title </Label>            <Input type="text" defaultValue={data.serviceName} />
-            <Label>Service Description</Label>            <Textarea type="text" defaultValue={data.description}/>
-            <Label>Category</Label>          
-            <Select>
-                <Option disabled defaultChecked>Service Category</Option>
-                <Option value="cleaning">Cleaning</Option>
-                <Option value="babySitting">Baby Sitting</Option>
-                <Option value="pestControl">Pest Control</Option>
-                <Option value="plumbing">Plumbing</Option>
-                <Option value="electricalRepairs">Electrical Repairs</Option>
-                <Option value="beauty">Beauty</Option>
-                <Option value="others">Others</Option>
-            </Select>
-            <div style={{margin: "20px 10px 0 0"}}><Label>Add Image</Label> <input type="file" multiple /></div>
-            <Label>Timings</Label> <Input type="text" defaultValue={data.timings}/>
-            <Label>Price</Label> <Input type="text" defaultValue={data.price}/>
-            <Label>Areas/Cities of service</Label> <Input type="text" defaultValue={data.location}/>
-            <div style={{display:'flex', padding:'10px'}}>
-              <Button>Save</Button>
-              <Button onClick={(e)=> navigate(`/service/${id}`)}>Cancel</Button>
-            </div>
-            </Form>
-            </Wrapper>
+              <Sidebar />
+              <Wrapper>
+                <Title>Fill up the details to create new service</Title>
+                <Form>
+                  <Label>Service Title </Label>            <Input type="text" disabled defaultValue={service.name} />
+                  <Label>Service Description</Label>            <Textarea type="text" defaultValue={service.description} onChange={(e) => setServiceDesc(e.target.value)} />
+                  <Label>Availability</Label> <Input type="text" defaultValue={service.availability} onChange={(e) => setServiceAvailability(e.target.value)} />
+                  <Label>Price</Label> <Input type="text" defaultValue={service.price} onChange={(e) => setServicePrice(e.target.value)} />
+                  <Label>Location</Label> <Input type="text" defaultValue={service.location} onChange={(e) => setServiceLocations(e.target.value)} />
+                  <div style={{ display: 'flex', padding: '10px' }}>
+                    <Button onClick={handleSubmitButtonClick}>Save</Button>
+                    <Button onClick={(e) => navigate(`/service/${id}`)}>Cancel</Button>
+                  </div>
+
+                </Form>
+              </Wrapper>
             </Main>
-          
-        </Container>
-    );
+          </>
+        )}
+    </Container>
+  );
 };
 
 export default EditService;

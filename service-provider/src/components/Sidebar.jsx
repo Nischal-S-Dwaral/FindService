@@ -75,25 +75,13 @@ const Sidebar = () => {
                                 </Icon>
                             </ListItem>
                         </Link>
-                        <ListItem>
-                            <Icon>
-                               <AccountCircleRounded />
-                                Profile
-                            </Icon>
-                        </ListItem>
+                        
                     </List>
                 </Menu>
                 <Menu>
                     <Title>Quick Menu</Title>
                     <List>
-                        <Link to="/services" style={{ textDecoration: 'none',color: "black" }}>
-                            <ListItem>
-                                <Icon>
-                                    <HomeRepairService />
-                                    Services
-                                </Icon>
-                            </ListItem>
-                        </Link>
+                       
                         <Link to="/addService" style={{ textDecoration: 'none',color: "black" }}>
                             <ListItem>
                                 <Icon>

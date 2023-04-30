@@ -4,13 +4,16 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import ServiceRequestList from "../components/ServiceRequestList";
-
+import {mobile} from "../responsive";
 const Container = styled.div `
   margin-bottom: 20px;
 `;
 
 const Main = styled.div `
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const ViewServiceRequestsContainer = styled.div `

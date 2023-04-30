@@ -1,13 +1,12 @@
-import React, {useState} from 'react';
-import {useLocation} from "react-router-dom";
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import {AddIcon} from "@material-ui/icons";
+import axios from "axios";
+import {addService} from "../api/Services"
 
-import {serviceDetails} from "../data";
-
-
+import { useSelector } from "react-redux";
 
 const Main = styled.div `
   display: flex;
@@ -72,15 +71,13 @@ const Textarea = styled.textarea `
 
 
 const Button = styled.button `
-  width: 100%;
-  border: none;
-  padding: 15px 20px;
-  background-color: forestgreen;
-  color: black;
-  cursor: pointer;
-  margin: 10px 0;
-  border-radius: 15px;
-  transition: all 0.5s ease;
+width: 100%;
+padding: 15px 20px;
+background-color: #dde1dd;
+color: black;
+cursor: pointer;
+margin: 10px;
+transition: all 0.5s ease 0s;
 
   &:hover {
     transform: scale(1.1);
@@ -102,19 +99,93 @@ const Label = styled.label `
  * @returns {JSX.Element} - returns the service details page
  */
 const AddService = () => {
-   
+   const navigate = useNavigate();
+   const user = useSelector((state) => state.user.currentUser);
+  const id = user.uid;
+
+  console.log(id)
+
+   const [serviceTitle, setServiceTitle] = useState("");
+   const [serviceDesc, setServiceDesc] = useState("");
+   const [serviceCat, setServiceCat] = useState("");
+   const [servicePhotos, setServicePhotos] = useState();
+   const [serviceAvailability, setServiceAvailability] = useState("");
+   const [servicePrice, setServicePrice] = useState("");
+   const [serviceLocations, setServiceLocations] = useState("");
+
+   const handleSubmitButtonClick = async (event) => {
+    event.preventDefault();
+    console.log(servicePhotos)
+    let bodyFormData = new FormData();
+    bodyFormData.append("title", serviceTitle);
+    bodyFormData.append("description", serviceDesc);
+    bodyFormData.append("category", serviceCat);
+    bodyFormData.append("serviceProviderId",id);
+    //bodyFormData.append("photos", servicePhotos);
+    bodyFormData.append("availability", serviceAvailability);
+    bodyFormData.append("price", servicePrice);
+    bodyFormData.append("location", serviceLocations);
+    
+    for(let i=0; i<servicePhotos.length; i++){
+      console.log(servicePhotos[i].name)
+      bodyFormData.append("photos",servicePhotos[i])
+    }
+
+    for(const val of bodyFormData.values()){
+      console.log(val);
+    }
+    
+      const apiResponse = await addService(bodyFormData)
+      if (apiResponse != null) {
+        console.log("Service added successfully!")
+        navigate(`/`)
+    } else {
+        console.log("Error while getting more details")
+    }
+    
+   }
+
+   useEffect(() => {
+    const getServiceProvider = async () => {
+        try {
+          let data = '';
+
+          let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:8080/api/serviceProvider/findBySPid?id='+id,
+            headers: { },
+            data : data
+          };
+          
+          const response = await axios.request(config)
+
+            if (response.data.returnCode === "0") {
+              console.log(response.data.address)
+                setServiceLocations(response.data.address);
+            } else {
+                console.log(response.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+   getServiceProvider();
+});
     return (
         <Container>
            <Navbar/>
             <Main>
             <Sidebar/>
           <Wrapper>
+            { serviceLocations && (
+              <>
           <Title>Fill up the details to create new service</Title>
             <Form>
-            <Label>Service Title </Label>            <Input type="text" />
-            <Label>Service Description</Label>            <Textarea type="text"/>
+            <Label>Service Title </Label>    <Input type="text" onChange={(e) => setServiceTitle(e.target.value)} />
+            <Label>Service Description</Label>          <Textarea type="text" onChange={(e) => setServiceDesc(e.target.value)}/>
             <Label>Category</Label>          
-            <Select>
+            <Select onChange={(e) => setServiceCat(e.target.value)}>
                 <Option disabled selected>Service Category</Option>
                 <Option value="cleaning">Cleaning</Option>
                 <Option value="babySitting">Baby Sitting</Option>
@@ -124,12 +195,18 @@ const AddService = () => {
                 <Option value="beauty">Beauty</Option>
                 <Option value="others">Others</Option>
             </Select>
-            <div style={{margin: "20px 10px 0 0"}}><Label>Add Image</Label> <input type="file" multiple /></div>
-            <Label>Timings</Label> <Input type="text"/>
-            <Label>Price</Label> <Input type="text"/>
-            <Label>Areas/Cities of service</Label> <Input type="text"/>
+            <div style={{margin: "20px 10px 0 0"}}><Label>Add Image</Label> <input type="file" multiple accept="image/png , image/jpeg" onChange={(e) => setServicePhotos(e.target.files)} /></div>
+            <Label>Availability</Label> <Input type="text" onChange={(e) => setServiceAvailability(e.target.value)}/>
+            <Label>Price</Label> <Input type="text" onChange={(e) => setServicePrice(e.target.value)}/>
+            <Label>Locations</Label> <Input type="text" value ={serviceLocations} disabled={true}/>
             </Form>
+            <div style={{display:'flex', padding:'10px'}}>
+              <Button onClick={handleSubmitButtonClick}>Save</Button>
+              <Button onClick={(e)=> navigate(`/home/`)}>Cancel</Button>
+            </div>
+            </>)}
             </Wrapper>
+            
             </Main>
           
         </Container>

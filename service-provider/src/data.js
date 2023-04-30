@@ -450,6 +450,15 @@ export const serviceProvider = [
     }
 ];
 
+export const customer = [
+    {
+        customerId: 1,
+        customerName: "Snehal",
+        customerMail: "snehal@test.com",
+        customerNumber: "+44 783381825",
+        customerAddress: "Southampton"
+    }
+]
 export const customerRequest = [
     {
         id: 1,

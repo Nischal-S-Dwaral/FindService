@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {auth} from "../firebase"
-import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {login} from "../api/Login";
 
 const Container = styled.div `
   width: 100vw;
@@ -30,7 +30,10 @@ const Title = styled.h1 `
   font-weight: 300;
   text-align: center;
 `;
-
+const Error = styled.p `
+  font-size: 14px;
+  color: red;
+`;
 const Form = styled.form `
   display: flex;
   flex-direction: column;
@@ -60,7 +63,7 @@ const Button = styled.button `
   }
 `;
 
-const Link = styled.a `
+const LinkText = styled.a `
   margin: 5px 0;
   font-size: 12px;
   text-decoration: underline;
@@ -80,35 +83,42 @@ const Hr = styled.hr `
  * @returns {JSX.Element} - Login Page with form
  */
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const signIn = (e) =>{
-    e.preventDefault();
-    
-    signInWithEmailAndPassword(auth, email,password)
-    .then((userCred) => {
-      const user = userCred.user;
-      console.log(user);
-      navigate("/"); //Go to home
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const dispatch = useDispatch();
+
+  let {error, errorMessage} = useSelector(state => state.user);
+
+  const handleLoginButtonClick = (event) => {
+      event.preventDefault(); // prevents the refresh of the page
+      login(dispatch, {email, password});
   }
 
     return (
         <Container>
             <Wrapper>
                 <Title>SIGN IN</Title>
-                <Form onSubmit={signIn}>
-                    <Input type="text" value={email} onChange={(e)=> setEmail(e.target.value)}  placeholder="Username" />
+                <Form>
+                    {/* <Input type="text" value={email} onChange={(e)=> setEmail(e.target.value)}  placeholder="Username" />
                     <Input type="password" value={password} onChange={(e)=> setPassword(e.target.value)}  placeholder="Password" />
                     <Button>LOGIN</Button>
                     <Link>DON'T REMEMBER YOUR PASSWORD?</Link>
                     <Hr/>
-                    <Button>REGISTER</Button>
+                    <Button>REGISTER</Button> */}
+                    <Input type="text" placeholder="Username"
+                           onChange={(e)=> setEmail(e.target.value)}
+                    />
+                    <Input type="password" placeholder="Password"
+                           onChange={(p) => setPassword(p.target.value)}
+                    />
+                    <Button onClick={handleLoginButtonClick}>LOGIN</Button>
+                    <LinkText>DON'T REMEMBER YOUR PASSWORD?</LinkText>
+                    {error && <Error>{errorMessage}</Error>}
+                    <Hr/>
+                    <Link to={"/register"} style={{ textDecoration: 'none',color: "black" }}>
+                        <Button>REGISTER</Button>
+                    </Link>
                 </Form>
             </Wrapper>
         </Container>

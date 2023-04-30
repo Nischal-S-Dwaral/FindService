@@ -40,9 +40,9 @@ const PreviousComment = ({item}) => {
                             <AccountCircleRounded/>
                         </Details>
                         <Details>
-                            <CommenterName>{item.sender}</CommenterName>
+                            <CommenterName>{item.name}</CommenterName>
                             <CommentTimeStamp>{item.timestamp}</CommentTimeStamp>
-                            <CommentText>{item.commentText}</CommentText>
+                            <CommentText>{item.text}</CommentText>
                         </Details>
                     </>
                 )

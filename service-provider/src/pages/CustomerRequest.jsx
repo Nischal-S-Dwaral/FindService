@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { customerRequest, NonVerifiedServiceProviderDetails } from "../data";
+import { customer, customerRequest, NonVerifiedServiceProviderDetails } from "../data";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import Sidebar from "../components/Sidebar";
@@ -123,6 +123,7 @@ const CustomerRequest = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const data = customerRequest[id - 1];
+  const cust = customer[0];//hardcoded for now, should be mapped from custId of request
   console.log('check data ', data)
   const [accepted, setAccepted] = useState(false);
   const [rejected, setRejected] = useState(false);
@@ -145,6 +146,11 @@ const CustomerRequest = () => {
               <Hr />
             </RightContainer>
             <TopContainer>
+            <SubTitle>Customer Details</SubTitle>
+            <TopContainerText>Name: {cust.customerName}</TopContainerText>
+            <TopContainerText>Email: {cust.customerMail}</TopContainerText>
+            <TopContainerText>Contact Number: {cust.customerNumber}</TopContainerText>
+            <Hr />
               <SubTitle>Description</SubTitle>
               <TopContainerText>{data.description}</TopContainerText><Hr />
               <SubTitle>Requested Date</SubTitle>
@@ -166,7 +172,7 @@ const CustomerRequest = () => {
                   <Button disabled={(data.status !== 'Pending Review' || data.status === 'Completed' || data.status === 'Rejected')} onClick={() => setAccepted(true)}>
                     Accept
                   </Button>
-                  <Button disabled={(data.status === 'Pending Review' || data.status === 'Accepted' || data.status === 'Completed')} onClick={() => setRejected(true)}>
+                  <Button disabled={( data.status === 'Accepted' || data.status === 'Completed')} onClick={() => setRejected(true)}>
                     Reject
                   </Button>
                   <Button disabled={(data.status !== 'Accepted' || data.status !== 'Pending Review' || data.status === 'Rejected')} onClick={() => setAccepted(true)}>

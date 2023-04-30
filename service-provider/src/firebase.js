@@ -1,18 +1,19 @@
 import { initializeApp } from "firebase/app";
-import {getAuth} from "firebase/auth"
+import { getAuth } from "firebase/auth"
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAp0GwKfRAQlCDQyK6TPwa0CzpGtPLSGsQ",
-  authDomain: "findservice-eb3bd.firebaseapp.com",
-  projectId: "findservice-eb3bd",
-  storageBucket: "findservice-eb3bd.appspot.com",
-  messagingSenderId: "656020877960",
-  appId: "1:656020877960:web:9d23cebc6f050be70b653d"
+const firebase = {
+    apiKey: "AIzaSyCkOeHP7xAAsOGWHOqh1SAiBpF_ehZdjXg",
+    authDomain: "findservice-4922d.firebaseapp.com",
+    databaseURL: "https://findservice-4922d-default-rtdb.firebaseio.com",
+    projectId: "findservice-4922d",
+    storageBucket: "findservice-4922d.appspot.com",
+    messagingSenderId: "587869185863",
+    appId: "1:587869185863:web:be56ce746518fbf3580e62",
+    measurementId: "G-3454CG3ZGD"
 };
 
-
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebase);
 const auth = getAuth(app);
 
 export{app, auth}

@@ -1,25 +1,28 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import {serviceRequests} from "../data";
+import { serviceRequests } from "../data";
 import { DataGrid } from "@material-ui/data-grid";
-import {EditOutlined, VisibilityOutlined} from "@material-ui/icons";
+import { EditOutlined, VisibilityOutlined } from "@material-ui/icons";
 import AddService from '../pages/AddService';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-const Container = styled.div `
+const Container = styled.div`
   display: flex;
   height: ${props => props.height}vh;
   width: 100%;
   margin-bottom: 20px;
 `;
 
-const DataGridContainer = styled.div `
+const DataGridContainer = styled.div`
   width: 100%;
   height: 100%;
   margin: 0 30px;
 `;
 
-const Status = styled.div `
+const Status = styled.div`
   border: none;
   border-radius: 10px;
   padding: 5px;
@@ -33,7 +36,7 @@ const Status = styled.div `
   justify-content: center;
 `;
 
-const Icon = styled.div `
+const Icon = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -45,9 +48,9 @@ const Icon = styled.div `
   margin-right: 10px;
 `;
 
-const ServiceRequestList = ({properties}) => {
+const ServiceRequestList = ({ properties }) => {
 
-    const data = serviceRequests
+
     const navigate = useNavigate('');
     const getColorCodeForStatus = (status) => {
         switch (status) {
@@ -67,7 +70,7 @@ const ServiceRequestList = ({properties}) => {
     const columns = [
         { field: "id", headerName: "Request ID", width: 150 },
         { field: "serviceName", headerName: "Service Name", width: 200 },
-        
+
         {
             field: "status", headerName: "Status", width: 250,
             renderCell: (params) => {
@@ -82,39 +85,70 @@ const ServiceRequestList = ({properties}) => {
             field: "action", headerName: "Action", width: 250,
             renderCell: (params) => {
                 return (
-                   
-                        <><Icon onClick={() => {navigate("/AddService");    console.log(params.data.id)}}>
-                        <VisibilityOutlined />
-                    </Icon>
-                    <Icon>
+
+                    <>
+                        <Link to={'/CustomerRequest/' + params.row.id}>
+                            <Icon>
+
+                                <VisibilityOutlined />
+                            </Icon>
+                        </Link>
+                        {/* <Icon>
                             <EditOutlined />
-                        </Icon></>
-                    
+                        </Icon></> */}
+                    </>
                 );
             },
         },
     ];
-    const handleRowClick = (
-        params, // GridRowParams
-        event, // MuiEvent<React.MouseEvent<HTMLElement>>
-        details, // GridCallbackDetails
-      ) => {
-        navigate("/customerRequest/"+params.row.id);
-      };
+    const [serviceRequests, setServiceRequests] = useState([]);
+    const user = useSelector((state) => state.user.currentUser);
+    const id = user.uid
+
+    useEffect(() => {
+        const getServiceRequests = async () => {
+            try {
+                let requestData = '';
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/serviceRequest/getServiceRequestList?serviceProviderId=' + id,
+                    headers: {},
+                    data: requestData
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setServiceRequests(response.data.serviceRequestList)
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getServiceRequests()
+    }, [id]);
+
     return (
         <Container height={properties.height}>
-            
-            <DataGridContainer>
-                <DataGrid
-                    rows={data}
-                    columns={columns}
-                    pageSize={properties.pageSize}
-                    disableSelectionOnClick
-                    onRowClick={handleRowClick}
-                />
-            </DataGridContainer>
-           
+            {
+                serviceRequests && (
+                    <>
+                        <DataGridContainer>
+                            <DataGrid
+                                rows={serviceRequests}
+                                columns={columns}
+                                pageSize={properties.pageSize}
+                                disableSelectionOnClick
+
+                            />
+                        </DataGridContainer>
+                    </>
+                )}
         </Container>
+
     );
 };
 

@@ -7,13 +7,20 @@ import Service from "./pages/Service";
 import Services from "./pages/Services";
 import ViewServiceRequests from "./pages/ViewServiceRequests";
 import ServiceProviderApproval from "./pages/ServiceProviderApproval";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import CustomerRequest from "./pages/CustomerRequest";
+import {useSelector} from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state.user.currentUser);
   return (
       <Router>
         <Routes>
+        <Route path="/login" element={user ? <Navigate to="/" replace /> :  <Login />} />
+        <Route path="/register" element={user ? <Navigate to="/" replace /> :  <Register />} />
+        {
+          user && (
+             <>
         <Route path="/register" element={<Register/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/" element={<Home/>} />
@@ -24,7 +31,8 @@ function App() {
         <Route path="/view/serviceRequests" element={<ViewServiceRequests/>} />
         <Route path="/serviceproviderapproval/:id" element={<ServiceProviderApproval />} />
         <Route path="/customerRequest/:id" element={<CustomerRequest />} />
-              
+              </>
+          )}
               
         </Routes>
       </Router>
