@@ -10,6 +10,8 @@
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
+    "@reach/combobox": "^0.18.0",
+    "@react-google-maps/api": "^2.18.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -28,7 +30,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

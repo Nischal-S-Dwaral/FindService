@@ -73,7 +73,6 @@ const Services = () => {
     const location = useLocation();
     const category = location.pathname.split("/")[2];
     const [filterCategory, setFilterCategory] = useState(category);
-    const [filterLocation, setFilterLocation] = useState("");
 
     return (
         <Container>
@@ -99,21 +98,9 @@ const Services = () => {
                                 <Option value="beauty">Beauty</Option>
                                 <Option value="others">Others</Option>
                             </Select>
-                            <Select onChange={(e)=> setFilterLocation(e.target.value)}>
-                                <Option disabled selected>Location</Option>
-                                <Option value="london">London</Option>
-                                <Option value="manchester">Manchester</Option>
-                                <Option value="southampton">Southampton</Option>
-                                <Option value="leeds">Leeds</Option>
-                                <Option value="nottingham">Nottingham</Option>
-                                <Option value="glasgow">Glasgow</Option>
-                                <Option value="bristol">Bristol</Option>
-                                <Option value="edinburgh">Edinburgh</Option>
-                                <Option value="others">Others</Option>
-                            </Select>
                         </Filter>
                     </FilterContainer>
-                    <ServiceList filterCategory={filterCategory} filterLocation={filterLocation}/>
+                    <ServiceList filterCategory={filterCategory}/>
                 </ServiceContainer>
             </Main>
             <Footer/>

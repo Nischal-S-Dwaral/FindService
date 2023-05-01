@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import ServiceItem from "./ServiceItem";
 import axios from "axios";
+import ServicesMap from "./ServicesMap";
 
 const Container = styled.div `
 `;
@@ -9,7 +10,7 @@ const Container = styled.div `
 const ErrorMessage = styled.h2 `
 `;
 
-const ServiceList = ({filterCategory, filterLocation}) => {
+const ServiceList = ({filterCategory}) => {
 
     const [services, setServices] = useState([]);
     const [showServices, setShowServices] = useState(true);
@@ -43,6 +44,7 @@ const ServiceList = ({filterCategory, filterLocation}) => {
             {
                 showServices && (
                     <>
+                        <ServicesMap services={services}/>
                         {services.map(item => (
                             <ServiceItem item={item} key={item.id}/>
                         ))}

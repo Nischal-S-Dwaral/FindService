@@ -159,6 +159,7 @@ const Button = styled.button `
  */
 const Navbar = () => {
   let {currentUser} = useSelector(state => state.user);
+  const username = currentUser.username ? currentUser.username : "user";
   const [openDropdown, setOpenDropdown] = useState(false);
   
   const dispatch = useDispatch();
@@ -190,14 +191,14 @@ const Navbar = () => {
                   <Logo>FIND A SERVICE</Logo>
               </Left>
               <Right>
-                  <MenuItemText>Hello, {currentUser.username}</MenuItemText>
+                  <MenuItemText>Hello, {username}</MenuItemText>
                   <MenuItem>
                       <AccountCircleRounded onClick={() => {setOpenDropdown(!openDropdown)}}/>
                       <ProfileDropdown active={openDropdown}>
                           <DropdownTopContainer>
-                              <LetterImage>{currentUser.username.charAt(0).toUpperCase()}</LetterImage>
+                              <LetterImage>{username.charAt(0).toUpperCase()}</LetterImage>
                               <DropdownRightContainer>
-                                  <UserName>{currentUser.username}</UserName>
+                                  <UserName>{username}</UserName>
                                   <UserEmail>{currentUser.email}</UserEmail>
                               </DropdownRightContainer>
                           </DropdownTopContainer>

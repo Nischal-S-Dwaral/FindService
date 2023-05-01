@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useNavigate } from "react-router-dom"
-import { auth } from "../firebase"
-import { display } from '@mui/system';
-import { useDispatch, useSelector } from "react-redux";
-import { register, updatingProfile, createServiceProvider } from "../api/Register";
+import { useDispatch } from "react-redux";
+import { register, updatingProfile } from "../api/Register";
+import { Autocomplete } from '@react-google-maps/api';
 
 const Container = styled.div`
   width: 100vw;
@@ -40,7 +37,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   flex: 1;
-
+  width: 94%;
   margin: 20px 10px 0 0;
   padding: 10px;
 `;
@@ -83,12 +80,34 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState("");
 
-  const [companyName, setCompanyName] = useState('');
-  const [addr1, setAddr1] = useState('');
-  const [addr2, setAddr2] = useState('');
-  const [country, setCountry] = useState('');
-  const [postcode, setPostCode] = useState('');
+  const [address, setAddress] = useState('');
+  const [position, setPosition] = useState('');
   const [description, setDescription] = useState('');
+  const [autocomplete, setAutocomplete] = useState(null);
+
+  const options = {
+    autocompleteOptions: {
+      container: {
+        width: '100%'
+      },
+    },
+  };
+
+  const onLoad = (autocomplete) => {
+    setAutocomplete(autocomplete);
+  };
+
+  const onPlaceChanged = () => {
+    if (autocomplete !== null) {
+      const place = autocomplete.getPlace();
+      setAddress(place.formatted_address);
+      setPosition(
+          place.geometry.location.lat() + ','+ place.geometry.location.lng()
+      )
+    } else {
+      console.log('Autocomplete is not loaded yet!');
+    }
+  };
 
   const dispatch = useDispatch();
 
@@ -102,28 +121,10 @@ function Register() {
       return setError("Passwords do not match")
     }
     else {
-      const addr =  addr1 +" , "+ addr2 + " , " + country + " - " + postcode;
-      const id = register(dispatch, { email, password, username, addr, description}).then(() => {
-       //updatingProfile({ username })
-       console.log(id)
-      //  const apiResponse = createServiceProvider({
-      //      "email":email,
-      //      "id": id,
-      //      "address": addr,
-      //      "name":username,
-      //      "description": description
-      //    })
-      //    if (apiResponse != null) {
-      //      console.log("Serviceprovider created!")
-      //    } else {
-      //      console.log("Error while creating Serviceprovider")
-      //    }
-        
-          
-        
+      const id = register(dispatch, { email, password, username, address, description, position}).then(() => {
         updatingProfile({ username })   
     })
-  };
+  }
 };
 
   return (
@@ -131,31 +132,19 @@ function Register() {
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-
-          {/* <Input type="text" placeholder="Company Name"
-            onChange={(e) => setCompanyName(e.target.value)}
-          /> */}
           <Input type="email" placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input type="text" placeholder="Username"
             onChange={(e) => setUsername(e.target.value)}
           />
-          {/* <Textarea placeholder="Address" /> */}
-          <Input type="text" placeholder="Address Line 1"
-            onChange={(e) => setAddr1(e.target.value)}
-          />
-          <Input type="text" placeholder="Address Line 2"
-            onChange={(e) => setAddr2(e.target.value)}
-          />
-          <div style={{ display: "flex" }}>
-            <Input type="text" placeholder="Country"
-              onChange={(e) => setCountry(e.target.value)}
-            />
-            <Input type="text" placeholder="Postcode" maxLength={8}
-              onChange={(e) => setPostCode(e.target.value)}
-            />
-          </div>
+          <Autocomplete
+              onLoad={onLoad}
+              onPlaceChanged={onPlaceChanged}
+              options={options}
+          >
+            <Input type="text" placeholder="Address"/>
+          </Autocomplete>
           <Textarea placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
           />

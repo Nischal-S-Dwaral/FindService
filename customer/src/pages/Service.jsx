@@ -193,7 +193,7 @@ const Service = () => {
             }
         }
         getReviews()
-    })
+    },[id])
 
     const getTemplateRows = (reviews) => {
         return Math.ceil(reviews.length / 2);

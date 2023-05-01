@@ -24,9 +24,10 @@ export const register = async (dispatch, user) => {
         const apiResponse = await createServiceProvider({
             "email": user.email,
             "id": response.user.uid,
-            "address": user.addr,
+            "address": user.address,
             "name":user.username,
-            "description": user.description
+            "description": user.description,
+            "position": user.position
           })
           if (apiResponse != null) {
             console.log("Serviceprovider created!")
