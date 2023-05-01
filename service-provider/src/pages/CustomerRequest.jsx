@@ -1,15 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
-import { customer, customerRequest, NonVerifiedServiceProviderDetails } from "../data";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import { getColorCodeForStatus } from "../utils";
-import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
-import ButtonContainer from '../components/ButtonContainer';
-import { GridOverlay } from '@material-ui/data-grid';
+import axios from "axios";
+import MoreDetailsRequestSection from "../components/MoreDetailsRequestSection";
+import { useSelector } from "react-redux";
+import { updateRequestStatus } from '../api/Request';
 
 const Container = styled.div``;
 
@@ -122,43 +121,82 @@ const CustomerRequest = () => {
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  const data = customerRequest[id - 1];
-  const cust = customer[0];//hardcoded for now, should be mapped from custId of request
-  console.log('check data ', data)
+  //const data = customerRequest[id - 1];
+  //const cust = customer[0];//hardcoded for now, should be mapped from custId of request
+  const user = useSelector((state) => state.user.currentUser);
+
   const [accepted, setAccepted] = useState(false);
   const [rejected, setRejected] = useState(false);
   const [completed, setCompleted] = useState(false);
 
+  const [serviceRequest,setServiceRequest] = useState({});
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+   
+    const getRequestDetails = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/serviceRequest/getByID?id=${id}`
+        );
+        if (response.data.returnCode === "0") {
+          setServiceRequest(response.data.serviceRequest)
+          setStatus(response.data.serviceRequest.status)
+        } else {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getRequestDetails()
   
+  },[status,id]);
+  
+  const updateRequest = async (statusText) => {
+    const apiResponse = await updateRequestStatus({
+      "serviceRequestId": id,
+      "updatedStatus": statusText
+    })
+    if (apiResponse != null) {
+      setStatus(status);
+    } else {
+      console.log("Error while getting more details")
+    } 
+  }
+  
+
+
   return (
     <Container>
       <Navbar />
       <Main>
         <Sidebar />
+        {serviceRequest.serviceName && <>
         <CustomerRequestContainer>
           <Contents>
 
             <RightContainer>
               <SubTitle>Customer Request</SubTitle>
-              <TopContainerText>Requested Service Name: {data.serviceName}</TopContainerText>
-              <TopContainerText>Category: {data.category}</TopContainerText>
-              <TopContainerText>Status: {data.status}</TopContainerText> 
+              <TopContainerText>Requested Service Name: {serviceRequest.serviceName}</TopContainerText>
+              <TopContainerText>Category: {serviceRequest.serviceCategory}</TopContainerText>
+              <TopContainerText>Status: <b>{status}</b></TopContainerText> 
               <Hr />
             </RightContainer>
             <TopContainer>
             <SubTitle>Customer Details</SubTitle>
-            <TopContainerText>Name: {cust.customerName}</TopContainerText>
-            <TopContainerText>Email: {cust.customerMail}</TopContainerText>
-            <TopContainerText>Contact Number: {cust.customerNumber}</TopContainerText>
-            <Hr />
+            <TopContainerText>Name: {serviceRequest.customerName}</TopContainerText>
+           
               <SubTitle>Description</SubTitle>
-              <TopContainerText>{data.description}</TopContainerText><Hr />
+              <TopContainerText>{serviceRequest.description}</TopContainerText>
               <SubTitle>Requested Date</SubTitle>
-              <TopContainerText>{data.requestDate}</TopContainerText><Hr />
+              <TopContainerText>{serviceRequest.date}</TopContainerText>
               <SubTitle>Requested Time</SubTitle>
-              <TopContainerText>{data.requestTime}</TopContainerText><Hr />
+              <TopContainerText>{serviceRequest.time}</TopContainerText>
               <SubTitle>Address</SubTitle>
-              <TopContainerText>{data.address}</TopContainerText>
+              <TopContainerText>{serviceRequest.address}</TopContainerText>
+              <SubTitle>Price</SubTitle>
+              <TopContainerText>{serviceRequest.price}</TopContainerText>
             </TopContainer>
           </Contents>
           <Contents>
@@ -169,13 +207,16 @@ const CustomerRequest = () => {
               <RightTopContainer>
                 <div>
                   
-                  <Button disabled={(data.status !== 'Pending Review' || data.status === 'Completed' || data.status === 'Rejected')} onClick={() => setAccepted(true)}>
+                  <Button disabled={(serviceRequest.status === 'Accepted'|| serviceRequest.status === 'Completed' || serviceRequest.status === 'Rejected')} 
+                  onClick={() => updateRequest("Accepted")}>
                     Accept
                   </Button>
-                  <Button disabled={( data.status === 'Accepted' || data.status === 'Completed')} onClick={() => setRejected(true)}>
+                  <Button disabled={( serviceRequest.status === 'Accepted' || serviceRequest.status === 'Completed')}
+                   onClick={() => updateRequest("Rejected")}>
                     Reject
                   </Button>
-                  <Button disabled={(data.status !== 'Accepted' || data.status !== 'Pending Review' || data.status === 'Rejected')} onClick={() => setAccepted(true)}>
+                  <Button disabled={(serviceRequest.status === 'Pending' || serviceRequest.status === 'Rejected')} 
+                  onClick={() => updateRequest("Completed")}>
                     Completed
                   </Button>
                 </div>
@@ -183,18 +224,19 @@ const CustomerRequest = () => {
             </RightContainer>
           </Contents>
 
-          <Contents>
+           <Contents>
             <SubTitle>More Details</SubTitle>
-            <MoreDetailsCommentSection properties={
+            <MoreDetailsRequestSection properties={
               {
-                customerId: data.customerId,
-                customerName: data.customerName,
-                moreDetailsComments: data.moreDetailsComments
+                serviceRequestId: id,
+                serviceProviderName: user.username
               }
             } />
-          </Contents>
+          </Contents> 
 
         </CustomerRequestContainer>
+        </>
+        }
       </Main>
       <Footer />
     </Container>
