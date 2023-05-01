@@ -91,6 +91,7 @@ const ServiceProvider = () => {
     console.log('serviceprovider id --> ', id)
 
     const [services, setServices] = useState([]);
+    const [serviceProvider, setServiceProviderName] = useState([]);
 
     const handleDelete = async (event) => {
       event.preventDefault(); // prevents the refresh of the page
@@ -127,6 +128,8 @@ const ServiceProvider = () => {
 
               if (response.data.returnCode === "0") {
                   setServices(response.data.serviceList)
+                  setServiceProviderName(response.data.serviceProviderName)
+                  console.log('service provider name ', response.data.serviceProviderName)
               } else {
                   console.log(response.data);
               }
@@ -148,7 +151,7 @@ const ServiceProvider = () => {
                       <Contents>
                         <TopDetails>
                             <LeftTopContainer>
-                                <Title>Service Provider -  {services.serviceProviderId}</Title>
+                                <Title>Service Provider - {serviceProvider}</Title>
                             </LeftTopContainer>
                             <RightTopContainer>
                               <DeleteButton onClick={handleDelete} >

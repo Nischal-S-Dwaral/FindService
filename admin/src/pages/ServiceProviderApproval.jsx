@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {useLocation} from "react-router-dom";
+//import {useLocation, Redirect } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import Sidebar from "../components/Sidebar";
@@ -148,6 +149,7 @@ const ServiceProviderApproval = () => {
     const [moreDetailsComments, setMoreDetailsComments] = useState([]);
     const [addComment, setAddComment] = useState(false);
     const [commentText, setCommentText] = useState("");
+    const [shouldRedirect, setShouldRedirect] = useState(false);
 
     useEffect(() => {
 
@@ -157,7 +159,7 @@ const ServiceProviderApproval = () => {
               let config = {
                   method: 'get',
                   maxBodyLength: Infinity,
-                  url: 'http://localhost:8080/api/serviceProvider/findById?id='+serviceProviderId,
+                  url: 'http://localhost:8080/api/serviceProvider/findBySPid?id='+serviceProviderId,
                   headers: { },
                   data : requestData
               };
@@ -203,12 +205,20 @@ const ServiceProviderApproval = () => {
     })
     .then(response => {
         window.location.reload();
+        //history.push('/verifiedSP');
+        // if (response.ok) {
+        //   setShouldRedirect(true);
+        // }
     })
     .catch(error => {
         // handle the error
         console.log(error);
     }); 
   }
+
+  // if (shouldRedirect) {
+  //   return <Redirect to="/verifiedSP" />;
+  // }
 
   const handleRejectButtonClick = async (event) => {
     event.preventDefault(); // prevents the refresh of the page
@@ -231,13 +241,11 @@ const ServiceProviderApproval = () => {
             <Navbar/>
             <Main>
                 <Sidebar/>
-                <ServiceProviderContainer>
+                {
+                  serviceProvider && (
+                    <>
+                    <ServiceProviderContainer>
                     <Contents>
-                        <LeftContainer>
-                            {/* <ImageContainer>
-                                <Image src={serviceProvider.img}/>
-                            </ImageContainer> */}
-                        </LeftContainer>
                         <RightContainer>
                             <SubTitle>Service Provider</SubTitle>
                             <TopContainerText>Name: {serviceProvider.name}</TopContainerText>
@@ -275,6 +283,9 @@ const ServiceProviderApproval = () => {
                     </Contents>
                     
                 </ServiceProviderContainer>  
+                    </>
+                  )
+                }
             </Main>
             <Footer/>
         </Container>

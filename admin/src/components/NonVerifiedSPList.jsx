@@ -81,7 +81,7 @@ const NonVerifiedSPList = ({properties}) => {
 
     const [nonverifiedServiceProviders, setNonverifiedServiceProviders] = useState([]);
     const user = useSelector((state) => state.user.currentUser);
-    const status = 'Pending'
+    const status = 'Pending Verification'
     console.log('status ' + status)
 
     useEffect(() => {

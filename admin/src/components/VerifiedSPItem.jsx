@@ -6,12 +6,12 @@ import {getColorCodeForStatus} from "../utils";
 
 const Container = styled.div `
   display: flex;
-  height: 200px;
+  height: 100px;
   border: 0.01px groove black;
-  border-radius: 15px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.5s ease;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   box-shadow: 0 10px 15px rgba(0,0,0,.1);
 
   &:hover {
@@ -22,16 +22,16 @@ const Container = styled.div `
 `;
 
 const LeftContainer = styled.div `
-  flex: 1;
+  flex: 0.5;
 `;
 
 const RightContainer = styled.div `
-  flex: 2;
-  margin: 15px;
+  flex: 1;
+  margin: 10px;
 `;
 
 const RightTopContainer = styled.div `
-  top: 0;
+  top: 1;
 `;
 
 const Title = styled.h2 `
@@ -52,14 +52,14 @@ const Content = styled.div `
 const Contents = styled.div `
   border: ${props => (props.border === "black" ? "3px solid black": "0.01px groove lightgrey")};
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   padding: 10px;
   background-color: ${props => (props.background ? props.background : "none")};
   width: 12%;
 `;
 
 const ContentText = styled.div `
-  margin-left: 5px;
+  margin-left: 8px;
   font-size: 16px;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -69,7 +69,7 @@ const ContentText = styled.div `
 
 const SubTitle = styled.h3 `
   font-weight: 700;
-  margin-right: 10px;
+  margin-right: 12px;
 `;
 
 /**
@@ -89,24 +89,22 @@ const VerifiedSPItem = ({item}) => {
                 </LeftContainer>
                 <RightContainer>
                     <RightTopContainer>
-                        <Title>
-                            {item.name}
-                        </Title>
+                        <Content>
+                          <Title>
+                              {item.name}
+                          </Title>
+                          <Contents background={getColorCodeForStatus(item.approvalStatus)} border="black">
+                            <SubTitle>{item.approvalStatus}</SubTitle>
+                          </Contents>
+                        </Content> 
                         <Content>
                             <LocationOn/>
                             <ContentText>{item.address}</ContentText>
                         </Content>
-                        {/* <Content>
-                            <AccessTime/>
-                            <ContentText>{item.timings}</ContentText>
-                        </Content> */}
                         <Content>
                             <DescriptionOutlined/>
                             <ContentText>{item.description}</ContentText>
                         </Content>
-                        <Contents background={getColorCodeForStatus(item.approvalStatus)} border="black">
-                          <SubTitle>{item.approvalStatus}</SubTitle>
-                        </Contents>
                     </RightTopContainer>
                 </RightContainer>
             </Container>

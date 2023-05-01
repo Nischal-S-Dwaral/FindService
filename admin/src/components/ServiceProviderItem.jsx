@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
+import StarRating from '../components/StarRating';
 
 
 const Container = styled.div `
@@ -62,8 +63,13 @@ const ServiceProviderItem = ({item}) => {
                         </Title>
                         <SubTitle>Description</SubTitle>
                           <ContainerText>{item.description}</ContainerText>
-                        <SubTitle> Review Summary</SubTitle>
-                          <ContainerText>{item.totalRating}</ContainerText>
+                          <SubTitle> Review Summary</SubTitle>
+                          {/* <ContainerText>{item.totalRating}</ContainerText> */}
+                          {/* <StarRating propertiees>{item.totalRating}</StarRating> */}
+                          Rating: {item.totalRating}<StarRating properties= {
+                            {rating : item.totalRating}
+                          }/>
+                          ({item.numberOfRatings})
                     </RightTopContainer>
                 </RightContainer>                
             </Container>

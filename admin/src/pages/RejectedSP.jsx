@@ -99,7 +99,7 @@ const RejectedSP = () => {
                   <Contents>
                     <TopDetails>
                       <Title>
-                          Verified Service Providers
+                          Rejected Service Providers
                       </Title>
                     </TopDetails>
                     <ServiceProviderList>
@@ -111,8 +111,8 @@ const RejectedSP = () => {
                   </>
                     )
                   }  
-                  {verifiedServiceProviders.length === 0 && (
-                    <Title>There are no Verified Service Providers!</Title>
+                  {rejectedServiceProviders.length === 0 && (
+                    <Title>There are no Rejected Service Providers!</Title>
                   )}
 
                 </ServiceProviderContainer>

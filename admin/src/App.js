@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ServiceProviderApproval from "./pages/ServiceProviderApproval";
 import VerifiedSP from "./pages/VerifiedSP";
+import RejectedSP from "./pages/RejectedSP";
 import ServiceProvider from "./pages/ServiceProvider";
 import ServicePage from "./pages/ServicePage";
 import {useSelector} from "react-redux";
