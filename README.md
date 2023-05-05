@@ -28,6 +28,7 @@ To install and run this application locally, follow these steps:
 
 - Clone this repository to your local machine
 - Navigate to the project directory in your terminal
+- Run 'cd customer' to go to the customer part of the project.
 - Run 'yarn install to install all the necessary dependencies
 - Create a Firebase project and enable authentication and Firestore
 - Add your Firebase configuration to a Firebase config file in the root of the project
