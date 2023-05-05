@@ -9,11 +9,16 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import { UnfoldMoreOutlined } from "@material-ui/icons";
 const Container = styled.div`
   display: flex;
   height: ${props => props.height}vh;
   width: 100%;
   margin-bottom: 20px;
+`;
+
+const RequestContainer = styled.div`
+    display: block;
 `;
 
 const DataGridContainer = styled.div`
@@ -47,6 +52,29 @@ const Icon = styled.div`
   justify-content: center;
   margin-right: 10px;
 `;
+const ErrorMessage = styled.h2`
+    margin: 30px;
+    text-align: center;
+`;
+const ServiceRequestsTitleContainer = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+`;
+
+const ServiceRequestsTitle = styled.h1`
+  font-weight: 800;
+  padding: 0 15px 0 30px;
+`;
+
+const SeeAllServiceRequestsLink = styled.div`
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+`;
 
 const ServiceRequestList = ({ properties }) => {
 
@@ -55,11 +83,11 @@ const ServiceRequestList = ({ properties }) => {
     const getColorCodeForStatus = (status) => {
         switch (status) {
             case "Accepted":
-                return "dodgerblue";
+                return "rgb(113 159 204)";
             case "Rejected":
-                return "#ff0000";
+                return "rgb(198 72 72)";
             case "Pending Review":
-                return "yellow";
+                return "rgb(232 232 37)";
             case "Completed":
                 return "forestgreen";
             default:
@@ -132,23 +160,50 @@ const ServiceRequestList = ({ properties }) => {
     }, [id]);
 
     return (
-        <Container height={properties.height}>
+
+        <RequestContainer>
             {
                 serviceRequests && (
                     <>
-                        <DataGridContainer>
-                            <DataGrid
-                                rows={serviceRequests}
-                                columns={columns}
-                                pageSize={properties.pageSize}
-                                disableSelectionOnClick
+                        <ServiceRequestsTitleContainer>
+                            <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
+                            <Link to="/view/serviceRequests">
+                                <SeeAllServiceRequestsLink>
+                                    <UnfoldMoreOutlined />
+                                    Show More
+                                </SeeAllServiceRequestsLink>
+                            </Link>
+                        </ServiceRequestsTitleContainer>
+                    </>)}
+            <Container height={properties.height}>
+                {
+                    serviceRequests && (
+                        <>
 
-                            />
-                        </DataGridContainer>
-                    </>
-                )}
-        </Container>
+                            <DataGridContainer>
+                                <DataGrid
+                                    rows={serviceRequests}
+                                    columns={columns}
+                                    pageSize={properties.pageSize}
+                                    disableSelectionOnClick
 
+                                />
+                            </DataGridContainer>
+                        </>
+                    )}
+                {
+                    !serviceRequests && (
+                        <>
+                        <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
+                    
+                            <ErrorMessage>
+                                You do not have any service requests at the moment.
+                            </ErrorMessage>
+                        </>
+                    )
+                }
+            </Container>
+        </RequestContainer>
     );
 };
 

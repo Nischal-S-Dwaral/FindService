@@ -118,16 +118,7 @@ else if(approvalStatus === 'Verified'){
                   
                   <Title>Our Services</Title>
                     <ServiceList />
-                     
-                    <ServiceRequestsTitleContainer>
-                        <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
-                        <Link to="/view/serviceRequests">
-                            <SeeAllServiceRequestsLink>
-                                <UnfoldMoreOutlined/>
-                                Show More
-                            </SeeAllServiceRequestsLink>
-                        </Link>
-                    </ServiceRequestsTitleContainer>
+                    
                     <ServiceRequestList properties={
                         {
                             height: 35,

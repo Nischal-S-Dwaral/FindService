@@ -43,7 +43,7 @@ const ViewServiceRequests = () => {
                 <Sidebar/>
                 <ViewServiceRequestsContainer>
                     <TitleContainer>
-                        <Title>Service Requests</Title>
+                        {/* <Title>Service Requests</Title> */}
                     </TitleContainer>
                     <ServiceRequestList properties={
                         {

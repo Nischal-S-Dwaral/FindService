@@ -96,7 +96,7 @@ const Hr = styled.hr`
 `;
 
 const UpdateServiceButton = styled.div`
-  
+  color: blue;
   padding: 0 10px;
   font-size: 16px;
   cursor: pointer;

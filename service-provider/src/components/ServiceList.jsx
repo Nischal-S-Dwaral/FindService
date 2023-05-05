@@ -8,6 +8,8 @@ const Container = styled.div `
 `;
 
 const ErrorMessage = styled.h2 `
+    margin: 30px;
+    text-align: center;
 `;
 
 const ServiceList = () => {
@@ -63,7 +65,8 @@ const ServiceList = () => {
                 !showServices && (
                     <>
                         <ErrorMessage>
-                            You have not created any Services.
+                            You have not created any Services.<><br></br></>
+                            Get started by adding new services. Click on Add Service from Menu.
                         </ErrorMessage>
                     </>
                 )
