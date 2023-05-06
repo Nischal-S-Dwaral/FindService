@@ -10,27 +10,6 @@ import { updateService } from "../api/Services"
 const Main = styled.div`
   display: flex;
 `;
-
-
-const CreateServiceRequestButton = styled.button`
-  color: white;
-  background-color: black;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 15px;
-  cursor: pointer;
-`;
-
-const SubTitle = styled.h2`
-  font-weight: 700;
-`;
-
-const ReviewGrid = styled.div`
-  display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat({$props.columns}, 1fr);
-`;
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -100,7 +79,6 @@ const Label = styled.label`
 const EditService = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  // const data = serviceDetails[id-1];
   const navigate = useNavigate();
 
   const [service, setService] = useState({});
@@ -139,12 +117,9 @@ const EditService = () => {
 
   const handleSubmitButtonClick = async (event) => {
     event.preventDefault();
-    //console.log(servicePhotos)
-
 
     const apiResponse = await updateService({
       "serviceId": id,
-
       "location": serviceLocations,
       "description": serviceDesc,
       "price": servicePrice,
@@ -156,7 +131,6 @@ const EditService = () => {
     } else {
       console.log("Error while getting more details")
     }
-
   }
 
   return (

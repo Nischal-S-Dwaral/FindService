@@ -81,21 +81,6 @@ const RightTopContainer = styled.div`
   top: 0;
 `;
 
-const Content = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  width: 100%;
-`;
-
-const ContentText = styled.div`
-  margin-left: 5px;
-  font-size: 16px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 45vw;
-`;
 const Button = styled.button`
   color: white;
   background-color: black;
@@ -121,14 +106,7 @@ const CustomerRequest = () => {
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  //const data = customerRequest[id - 1];
-  //const cust = customer[0];//hardcoded for now, should be mapped from custId of request
   const user = useSelector((state) => state.user.currentUser);
-
-  const [accepted, setAccepted] = useState(false);
-  const [rejected, setRejected] = useState(false);
-  const [completed, setCompleted] = useState(false);
-
   const [serviceRequest,setServiceRequest] = useState({});
   const [status, setStatus] = useState("");
 
@@ -164,8 +142,6 @@ const CustomerRequest = () => {
       console.log("Error while getting more details")
     } 
   }
-  
-
 
   return (
     <Container>

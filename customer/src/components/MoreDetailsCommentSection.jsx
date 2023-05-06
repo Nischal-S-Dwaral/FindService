@@ -83,7 +83,8 @@ const MoreDetailsCommentSection = ({properties}) => {
             const apiResponse = await addMoreDetailsComment({
                 "serviceRequestId": serviceRequestId,
                 "name": user.username,
-                "text": commentText
+                "text": commentText,
+                "fromServiceProvider": false
             })
             if (apiResponse != null) {
                 setAddComment(apiResponse);

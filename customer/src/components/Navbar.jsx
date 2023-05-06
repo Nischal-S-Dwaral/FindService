@@ -3,8 +3,10 @@ import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {mobile} from "../responsive";
 import {useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {logout} from "../api/Logout";
+import {CircleNotifications} from "@mui/icons-material";
+import {Badge} from "@material-ui/core";
 
 const Container =styled.div `
   height: 60px;
@@ -195,6 +197,13 @@ const Navbar = () => {
                     <Logo>FIND A SERVICE</Logo>
                 </Left>
                 <Right>
+                    <Link to="/notifications" style={{ textDecoration: 'none',color: "black" }}>
+                        <MenuItem>
+                            <Badge badgeContent={5} color="primary" overlap="rectangular">
+                                <CircleNotifications/>
+                            </Badge>
+                        </MenuItem>
+                    </Link>
                     <MenuItemText>Hello, {currentUser.username}</MenuItemText>
                     <MenuItem>
                         <AccountCircleRounded onClick={() => {setOpenDropdown(!openDropdown)}}/>

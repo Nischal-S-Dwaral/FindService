@@ -3,8 +3,7 @@ import styled from "styled-components";
 import {
     HomeRepairService,
     HomeOutlined,
-    ListAltOutlined,
-    CircleNotifications
+    ListAltOutlined
 } from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {mobile} from "../responsive";
@@ -84,14 +83,6 @@ const Sidebar = () => {
                                 <Icon>
                                     <HomeOutlined />
                                     Home
-                                </Icon>
-                            </ListItem>
-                        </Link>
-                        <Link to="/notifications" style={{ textDecoration: 'none',color: "black" }}>
-                            <ListItem>
-                                <Icon>
-                                    <CircleNotifications />
-                                    Notifications
                                 </Icon>
                             </ListItem>
                         </Link>

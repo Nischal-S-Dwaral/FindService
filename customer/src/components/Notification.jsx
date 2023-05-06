@@ -44,8 +44,8 @@ const Notification = ({item}) => {
                                     <NotificationsActiveOutlined/>
                                 </Details>
                                 <Details>
-                                    <NotificationText>{item.notificationText}</NotificationText>
-                                    <NotificationTimestamp>{item.notificationTimeStamp}</NotificationTimestamp>
+                                    <NotificationText>{item.message}</NotificationText>
+                                    <NotificationTimestamp>{item.timestamp}</NotificationTimestamp>
                                 </Details>
                             </Main>
                         </Link>

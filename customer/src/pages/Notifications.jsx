@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-import {notificationData} from "../data";
 import Notification from "../components/Notification";
-import NonClickableNotification from "../components/NonClickableNotification";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
 const Container = styled.div ``;
 
@@ -69,50 +69,107 @@ const SubNotificationContainer = styled.div `
  */
 const Notifications = () => {
 
-    const data = notificationData
-    const updateServiceRequestNotifications = data.updatesServiceRequest
-    const reviewRequestNotifications = data.reviewRequest
-    const generalNotifications = data.general
+    const user = useSelector((state) => state.user.currentUser);
+
+    const [notifications, setNotifications] = useState()
+    const [updateServiceRequestNotifications, setUpdateServiceRequestNotifications] = useState([])
+    const [reviewRequestNotifications, setReviewRequestNotifications] = useState([])
+    const [generalNotifications, setGeneralNotifications] = useState([])
+
+    useEffect(() => {
+        /**
+         * Get the notification data
+         */
+        const getNotificationData = async () => {
+
+            try {
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/notification/getByID?customerId=Wr0OtFpBPYMbvFxhvRMaEnjH9ad2',
+                    headers: { }
+                };
+
+                const response = await axios.request(config)
+
+                if (response.data.returnCode === "0") {
+                    setNotifications(response.data)
+                    setGeneralNotifications(response.data.general)
+                    setReviewRequestNotifications(response.data.reviewRequest)
+                    setUpdateServiceRequestNotifications(response.data.updatesServiceRequest)
+                } else {
+                    console.log(response.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getNotificationData()
+    }, [])
 
     return (
         <Container>
             <Navbar/>
             <Main>
                 <Sidebar/>
-                <NotificationContainer>
-                    <Title>Notifications</Title>
-                    <ContentsContainer>
-                        <Contents>
-                            <Subtitle>Updates- Service Request</Subtitle>
-                            <Hr/>
-                            <SubNotificationContainer>
-                                {updateServiceRequestNotifications.map( item => (
-                                    <>
-                                        <Notification key={item.id} item={item} />
-                                    </>
-                                ))}
-                            </SubNotificationContainer>
-                        </Contents>
-                        <Contents>
-                            <Subtitle>Review Requests</Subtitle>
-                            <Hr/>
-                            {reviewRequestNotifications.map( item => (
-                                <>
-                                    <Notification key={item.id} item={item} />
-                                </>
-                            ))}
-                        </Contents>
-                        <Contents>
-                            <Subtitle>General</Subtitle>
-                            <Hr/>
-                            {generalNotifications.map( item => (
-                                <>
-                                    <NonClickableNotification key={item.id} item={item} />
-                                </>
-                            ))}
-                        </Contents>
-                    </ContentsContainer>
-                </NotificationContainer>
+                {
+                    notifications && (
+                        <>
+                            <NotificationContainer>
+                                <Title>Notifications</Title>
+                                <ContentsContainer>
+                                    {
+                                        updateServiceRequestNotifications.length > 0 && (
+                                            <>
+                                                <Contents>
+                                                    <Subtitle>Updates- Service Request</Subtitle>
+                                                    <Hr/>
+                                                    <SubNotificationContainer>
+                                                        {updateServiceRequestNotifications.map( item => (
+                                                            <>
+                                                                <Notification key={item.id} item={item} />
+                                                            </>
+                                                        ))}
+                                                    </SubNotificationContainer>
+                                                </Contents>
+                                            </>
+                                        )
+                                    }
+                                    {
+                                        reviewRequestNotifications.length > 0 && (
+                                            <>
+                                                <Contents>
+                                                    <Subtitle>Review Requests</Subtitle>
+                                                    <Hr/>
+                                                    {reviewRequestNotifications.map( item => (
+                                                        <>
+                                                            <Notification key={item.id} item={item} />
+                                                        </>
+                                                    ))}
+                                                </Contents>
+                                            </>
+                                        )
+                                    }
+                                    {
+                                        generalNotifications.length > 0 && (
+                                            <>
+                                                <Contents>
+                                                    <Subtitle>General</Subtitle>
+                                                    <Hr/>
+                                                    {generalNotifications.map( item => (
+                                                        <>
+                                                            <Notification key={item.id} item={item} />
+                                                        </>
+                                                    ))}
+                                                </Contents>
+                                            </>
+                                        )
+                                    }
+                                </ContentsContainer>
+                            </NotificationContainer>
+                        </>
+                    )
+                }
             </Main>
             <Footer/>
         </Container>
