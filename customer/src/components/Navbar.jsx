@@ -7,6 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {logout} from "../api/Logout";
 import {CircleNotifications} from "@mui/icons-material";
 import {Badge} from "@material-ui/core";
+import axios from "axios";
 
 const Container =styled.div `
   height: 60px;
@@ -167,12 +168,33 @@ const Navbar = () => {
 
     let {currentUser} = useSelector(state => state.user);
     const [openDropdown, setOpenDropdown] = useState(false);
+    const [notifications, setNotifications] = useState(0)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         window.scrollTo(0, 0);
+
+        const getNotificationsCount = async () => {
+            let config = {
+                method: 'get',
+                maxBodyLength: Infinity,
+                url: 'http://localhost:8080/api/notification/getUnseenNotificationsCount?customerId=Wr0OtFpBPYMbvFxhvRMaEnjH9ad2',
+                headers: { }
+            };
+
+            axios.request(config)
+                .then((response) => {
+                    if (response.data.returnCode === "0") {
+                        setNotifications(response.data.notificationCount)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+        getNotificationsCount()
     }, []);
 
     const handleLogoutButtonClick = (event) => {
@@ -199,7 +221,7 @@ const Navbar = () => {
                 <Right>
                     <Link to="/notifications" style={{ textDecoration: 'none',color: "black" }}>
                         <MenuItem>
-                            <Badge badgeContent={5} color="primary" overlap="rectangular">
+                            <Badge badgeContent={notifications} color="primary" overlap="rectangular">
                                 <CircleNotifications/>
                             </Badge>
                         </MenuItem>
