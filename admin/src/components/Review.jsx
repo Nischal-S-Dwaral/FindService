@@ -12,6 +12,11 @@ const Container = styled.div `
   padding: 10px;
   border-radius: 10px;
   width: 95%;
+  display: flex;
+  flex-direction: column;
+  ${mobile({
+    width: "95%",
+  })}
 `;
 
 const Details = styled.div `
@@ -58,15 +63,20 @@ const ReviewText = styled.div `
 `;
 
 const DeleteButton = styled.button `
+  width: 100%;
+  border: none;
+  padding: 15px 20px;
+  background-color: red;
   color: white;
-  background-color: black;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 15px;
   cursor: pointer;
-  ${mobile({
-    width: "100%",
-  })}
+  margin: 10px 0;
+  border-radius: 15px;
+  transition: all 0.5s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    transform-origin: center
+  }
 `;
 
 /**
@@ -85,8 +95,7 @@ const Review = ({item}) => {
           fetch(url, {
             method: 'DELETE'
           })
-          .then(response => {
-            // handle the response
+          .then(() => {
             window.location.reload();
           })
           .catch(error => {
@@ -100,15 +109,13 @@ const Review = ({item}) => {
             <Details>
                 <Name>
                     <AccountCircleRounded/>
-                    <DetailsText>{item.username}</DetailsText>
+                    <DetailsText>{item.customerName}</DetailsText>
                 </Name>
                 <Date>
                     <CalendarMonthOutlined/>
-                    <DetailsText>{item.date}</DetailsText>
+                    <DetailsText>{item.timeStamp}</DetailsText>
                 </Date>
-                <DeleteButton onClick={handleDelete} >
-                                                Delete
-                </DeleteButton>
+
             </Details>
             <Details>
                 <RatingText>Rating:</RatingText>
@@ -121,6 +128,9 @@ const Review = ({item}) => {
             <ReviewText>
                 {item.comment}
             </ReviewText>
+            <DeleteButton onClick={handleDelete}>
+                Delete
+            </DeleteButton>
         </Container>
     );
 };

@@ -5,11 +5,12 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import {mobile} from "../responsive";
 import ServiceProviderItem from "../components/ServiceProviderItem";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const Container = styled.div `
 `;
+
 const Main = styled.div `
   display: flex;
   ${mobile({
@@ -21,17 +22,12 @@ const ServiceProviderContainer = styled.div `
   flex: 4;
   margin: 30px;
   ${mobile({
-    padding: "0px",
-    marginTop: "10px"
+    margin: "15px"
   })}
 `;
 
 const Title = styled.h1 `
   font-weight: 800;
-  padding: 0 15px 0 30px;
-  ${mobile({
-    padding: "0 0 0 20px",
-  })}
 `;
 
 const ServiceList = styled.div `
@@ -52,9 +48,9 @@ const DeleteButton = styled.button `
 const RightTopContainer = styled.div `
   flex: 1;
   display: flex;
-  align-items: center;
   flex-direction: column;
   justify-content: space-around;
+  align-items: flex-end;
   ${mobile({
     alignItems: "flex-start",
   })}
@@ -77,6 +73,12 @@ const Contents = styled.div `
   border-radius: 15px;
   margin-bottom: 15px;
   padding: 10px;
+  ${mobile({
+    border: "none",
+    borderRadius: "0",
+    marginBottom: "0",
+    padding: "0"
+  })}
 `;
 
 
@@ -88,22 +90,20 @@ const ServiceProvider = () => {
 
     const location = useLocation();
     const id = location.pathname.split("/")[2];
-    console.log('serviceprovider id --> ', id)
 
     const [services, setServices] = useState([]);
     const [serviceProvider, setServiceProviderName] = useState([]);
+    const navigate = useNavigate();
 
     const handleDelete = async (event) => {
       event.preventDefault(); // prevents the refresh of the page
       const url = `http://localhost:8080/api/serviceProvider/delete?id=${id}`;
-      
+
             fetch(url, {
               method: 'DELETE'
             })
-            .then(response => {
-              // handle the response
-              console.log('deleted')
-              window.location.reload();
+            .then(() => {
+                navigate("/", { replace: true })
             })
             .catch(error => {
               // handle the error
@@ -129,7 +129,6 @@ const ServiceProvider = () => {
               if (response.data.returnCode === "0") {
                   setServices(response.data.serviceList)
                   setServiceProviderName(response.data.serviceProviderName)
-                  console.log('service provider name ', response.data.serviceProviderName)
               } else {
                   console.log(response.data);
               }
@@ -155,21 +154,21 @@ const ServiceProvider = () => {
                             </LeftTopContainer>
                             <RightTopContainer>
                               <DeleteButton onClick={handleDelete} >
-                                                Delete
+                                  DELETE
                               </DeleteButton> 
                             </RightTopContainer>
                         </TopDetails>
                         <ServiceList>
-                                {services.map(item => (
-                                    <ServiceProviderItem item={item} key={item.id}/>
-                                ))}
+                            {
+                                services.length === 0 && (
+                                    <Title>There are no services for Service Provider {services.serviceProviderId}</Title>
+                                )
+                            }
+                            {services.map(item => (
+                                <ServiceProviderItem item={item} key={item.id}/>
+                            ))}
                         </ServiceList>
                     </Contents>
-                    )
-                  } 
-                  {
-                    services.length === 0 && (
-                      <Title>There are no services for Service Provider {services.serviceProviderId}</Title>
                     )
                   }
                 </ServiceProviderContainer>

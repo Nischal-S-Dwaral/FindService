@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from "styled-components";
 import PreviousComment from "./PreviousComment";
 import {useSelector} from "react-redux";
@@ -58,12 +58,13 @@ const Button = styled.button `
  */
 const MoreDetailsCommentSection = ({properties}) => {
 
-    //const previousMoreDetailsComments = properties.moreDetailsComments
     const serviceProviderId = properties.serviceProviderId
     const [moreDetailsComments, setMoreDetailsComments] = useState([]);
     const user = useSelector((state) => state.user.currentUser);
     const [addComment, setAddComment] = useState(false);
     const [commentText, setCommentText] = useState("");
+
+    const textAreaRef = useRef(null);
 
       useEffect( () => {
 
@@ -71,6 +72,8 @@ const MoreDetailsCommentSection = ({properties}) => {
             const apiResponse = await getMoreDetailsComments(serviceProviderId)
             if (apiResponse != null) {
                 setMoreDetailsComments(apiResponse)
+                setCommentText("")
+                textAreaRef.current.value = ''; // clear textarea field
             } else {
                 console.log("Error while getting more details")
             }
@@ -113,7 +116,8 @@ const MoreDetailsCommentSection = ({properties}) => {
                             id="comment" cols={40} rows={10}
                             name="commentText"
                             placeholder="Please provide your comment..."
-                            onChange={(e)=> setCommentText(e.target.value)}/>
+                            onChange={(e)=> setCommentText(e.target.value)}
+                            ref={textAreaRef}/>
                         <Button onClick={handleSubmitButtonClick}>SUBMIT COMMENT</Button>
                     </AddCommentForm>
                 </AddCommentContainer>

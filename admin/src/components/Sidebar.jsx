@@ -1,10 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import {
-  HomeRepairService,
-  AccountCircleRounded,
   HomeOutlined,
-  ListAltOutlined,
   CircleNotifications
 } from "@mui/icons-material";
 
@@ -14,7 +11,6 @@ import {mobile} from "../responsive";
 const Container = styled.div `
   flex: 1;
   overflow: hidden;
-  overflow-y: hidden;
 `;
 
 const Wrapper = styled.div `

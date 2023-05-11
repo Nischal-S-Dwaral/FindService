@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {NonVerifiedServiceProviderDetails} from "../data";
 import { DataGrid } from "@material-ui/data-grid";
 import {VisibilityOutlined} from "@material-ui/icons";
 import {getColorCodeForStatus} from "../utils";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import {useSelector} from "react-redux";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   display: flex;
@@ -19,6 +18,9 @@ const DataGridContainer = styled.div `
   width: 100%;
   height: 100%;
   margin: 0 30px;
+  ${mobile({
+    margin: 0
+  })}
 `;
 
 const Status = styled.div `
@@ -49,8 +51,6 @@ const Icon = styled.div `
 
 const NonVerifiedSPList = ({properties}) => {
 
-    //const data = NonVerifiedServiceProviderDetails;
-
     const columns = [
         {
             field: "action", headerName: "Action", width: 125,
@@ -66,14 +66,7 @@ const NonVerifiedSPList = ({properties}) => {
                 );
             },
         },
-        { field: "name", headerName: "Service Provider", width: 250,
-        renderCell: (params) => {
-            return (
-                <Status color={getColorCodeForStatus(params.row.name)}>
-                    {params.row.name}
-                </Status>
-            )
-        } },
+        { field: "name", headerName: "Service Provider", width: 250},
         {
             field: "approvalStatus", headerName: "Status", width: 250,
             renderCell: (params) => {
@@ -86,10 +79,8 @@ const NonVerifiedSPList = ({properties}) => {
         }
     ];
 
-    const [nonverifiedServiceProviders, setNonverifiedServiceProviders] = useState([]);
-    const user = useSelector((state) => state.user.currentUser);
+    const [nonVerifiedServiceProviders, setNonVerifiedServiceProviders] = useState([]);
     const status = 'Pending Verification'
-    console.log('status ' + status)
 
     useEffect(() => {
         const getNonVerifiedServiceProviders = async () => {
@@ -106,7 +97,7 @@ const NonVerifiedSPList = ({properties}) => {
                 const response = await axios.request(config)
 
                 if (response.data.returnCode === "0") {
-                    setNonverifiedServiceProviders(response.data.serviceProviderList)
+                    setNonVerifiedServiceProviders(response.data.serviceProviderList)
                     console.log(response.data);
                 } else {
                     console.log(response.data);
@@ -121,11 +112,11 @@ const NonVerifiedSPList = ({properties}) => {
     return (
         <Container height={properties.height}>
             {   
-                nonverifiedServiceProviders && (
+                nonVerifiedServiceProviders && (
                     <>
                 <DataGridContainer>
                     <DataGrid
-                        rows={nonverifiedServiceProviders}
+                        rows={nonVerifiedServiceProviders}
                         columns={columns}
                         pageSize={properties.pageSize}
                         disableSelectionOnClick

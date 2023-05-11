@@ -21,17 +21,12 @@ const ServiceProviderContainer = styled.div `
   flex: 4;
   margin: 30px;
   ${mobile({
-    padding: "0px",
-    marginTop: "10px"
+    margin: "15px"
   })}
 `;
 
 const Title = styled.h1 `
   font-weight: 800;
-  padding: 0 15px 0 30px;
-  ${mobile({
-    padding: "0 0 0 20px",
-  })}
 `;
 
 const ServiceProviderList = styled.div `
@@ -42,6 +37,12 @@ const Contents = styled.div `
   border-radius: 15px;
   margin-bottom: 15px;
   padding: 10px;
+  ${mobile({
+    border: "none",
+    borderRadius: "0",
+    marginBottom: "0",
+    padding: "0"
+  })}
 `;
 
 const TopDetails = styled.div `

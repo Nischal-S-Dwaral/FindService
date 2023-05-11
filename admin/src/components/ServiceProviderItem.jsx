@@ -3,10 +3,9 @@ import styled from "styled-components";
 import {Link} from "react-router-dom";
 import StarRating from '../components/StarRating';
 
-
 const Container = styled.div `
   display: flex;
-  height: 200px;
+  height: 100%;
   border: 0.01px groove black;
   border-radius: 15px;
   cursor: pointer;
@@ -15,21 +14,13 @@ const Container = styled.div `
   box-shadow: 0 10px 15px rgba(0,0,0,.1);
 `;
 
-const RightContainer = styled.div `
-  flex: 2;
+const Main = styled.div `
   margin: 15px;
-`;
-
-const RightTopContainer = styled.div `
-  top: 0;
 `;
 
 const Title = styled.h2 `
   margin-bottom: 5px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 45vw;
+  width: 75vw;
 `;
 
 const ContainerText = styled.p `
@@ -41,10 +32,13 @@ const SubTitle = styled.h2 `
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  width: 25vw;
+  width: 75vw;
   font-size: 20px;
 `;
 
+const ReviewSummary = styled.div `
+  display: flex;
+`;
 
 /**
  * @author Nischal S D
@@ -56,22 +50,21 @@ const ServiceProviderItem = ({item}) => {
     return (
         <Link to={`/service/${item.id}`} style={{ textDecoration: 'none',color: "black" }}>
             <Container>
-                <RightContainer>
-                    <RightTopContainer>
-                        <Title>
-                          Service Name: {item.name}
-                        </Title>
-                        <SubTitle>Description</SubTitle>
-                          <ContainerText>{item.description}</ContainerText>
-                          <SubTitle> Review Summary</SubTitle>
-                          {/* <ContainerText>{item.totalRating}</ContainerText> */}
-                          {/* <StarRating propertiees>{item.totalRating}</StarRating> */}
-                          Rating: {item.totalRating}<StarRating properties= {
+                <Main>
+                    <Title>
+                        Service Name: {item.name}
+                    </Title>
+                    <SubTitle>Description</SubTitle>
+                    <ContainerText>{item.description}</ContainerText>
+                    <SubTitle> Review Summary</SubTitle>
+                    <ReviewSummary>
+                        <ContainerText>Rating: </ContainerText>
+                        <StarRating properties= {
                             {rating : item.totalRating}
-                          }/>
-                          ({item.numberOfRatings})
-                    </RightTopContainer>
-                </RightContainer>                
+                        }/>
+                        <ContainerText>({item.numberOfRatings})</ContainerText>
+                    </ReviewSummary>
+                </Main>
             </Container>
         </Link>
     );

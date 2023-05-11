@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-//import {useLocation, Redirect } from "react-router-dom";
 import {useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
-import {getColorCodeForStatus} from "../utils";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
-import ButtonContainer from '../components/ButtonContainer';
 import axios from "axios";
 import {useSelector} from "react-redux";
-import {addMoreDetailsComment, getMoreDetailsComments} from "../api/MoreDetailsComments";
 
 const Container = styled.div ``;
 
@@ -62,19 +58,6 @@ const LeftContainer = styled.div `
   flex: 1;
 `;
 
-const ImageContainer = styled.div `
-  width: 25vw;
-  height: 100%;
-  overflow: hidden;
-  border-radius: 15px 0 0 15px;
-`;
-
-const Image = styled.img `
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-`;
-
 const RightContainer = styled.div `
   flex: 2;
   margin: 5px;
@@ -82,22 +65,6 @@ const RightContainer = styled.div `
 
 const RightTopContainer = styled.div `
   top: 0;
-`;
-
-const Content = styled.div `
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  width: 100%;
-`;
-
-const ContentText = styled.div `
-  margin-left: 5px;
-  font-size: 16px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 45vw;
 `;
 
 const AcceptButton = styled.button `
@@ -145,12 +112,6 @@ const ServiceProviderApproval = () => {
     const dataR = { "serviceProviderId": serviceProviderId,
                     "updateStatus": "Rejected"}
 
-    //const serviceProviderId = properties.serviceProviderId
-    const [moreDetailsComments, setMoreDetailsComments] = useState([]);
-    const [addComment, setAddComment] = useState(false);
-    const [commentText, setCommentText] = useState("");
-    const [shouldRedirect, setShouldRedirect] = useState(false);
-
     useEffect(() => {
 
       const getServiceProvider = async () => {
@@ -177,33 +138,14 @@ const ServiceProviderApproval = () => {
       }
       getServiceProvider()
   }, [serviceProviderId]);
-
-  const handleSubmitButtonClick = async (event) => {
-    event.preventDefault(); // prevents the refresh of the page
-
-    async function fetchData() {
-        const apiResponse = await addMoreDetailsComment({
-            "serviceProviderId": serviceProviderId,
-            "name": user.username,
-            "text": commentText
-        })
-        if (apiResponse != null) {
-            setAddComment(apiResponse);
-        } else {
-            console.log("Error while getting more details")
-        }
-    }
-    fetchData().then(() => setCommentText(""))
-  }
-
-  const handleAcceptButtonClick = async (event) => {
+    const handleAcceptButtonClick = async (event) => {
     event.preventDefault(); // prevents the refresh of the page
     fetch('http://localhost:8080/api/serviceProvider/updateStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataV)
     })
-    .then(response => {
+    .then(() => {
         window.location.href = '/verifiedSP';
     })
     .catch(error => {
@@ -219,7 +161,7 @@ const ServiceProviderApproval = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataR)
     })
-    .then(response => {
+    .then(()=> {
         window.location.href = '/rejectedSP';
     })
     .catch(error => {

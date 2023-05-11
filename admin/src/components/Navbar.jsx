@@ -47,7 +47,8 @@ const Logo = styled.h1 `
   font-weight: bold;
   color: white;
   ${mobile({
-    opacity: 0
+    opacity: 0,
+    width: "90px"
   })}
 `;
 
@@ -56,7 +57,10 @@ const Right = styled.div `
   display: flex;
   align-items: center;
   justify-content: flex-end;
-`
+  ${mobile({
+    flex: 3
+  })}
+`;
 
 const MenuItem = styled.div `
   font-size: 16px;
@@ -72,9 +76,6 @@ const MenuItemText = styled.div `
   margin-left: 25px;
   color: white;
   font-weight: bold;
-  ${mobile({
-    opacity: 0
-  })}
 `;
 
 const ProfileDropdown = styled.div `
