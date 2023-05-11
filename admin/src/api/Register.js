@@ -25,7 +25,6 @@ export const register = async (dispatch, user) => {
                 })
             })
     } catch (error) {
-        console.log("This is in the error: ", error);
         dispatch(processFailure(error.code))
     }
 }

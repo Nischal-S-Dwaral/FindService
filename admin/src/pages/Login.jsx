@@ -98,7 +98,7 @@ const Login = () => {
 
     const handleLoginButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
-        login(dispatch, {email, password});
+        login(dispatch, {email, password}).then(() => {});
     }
 
     return (
