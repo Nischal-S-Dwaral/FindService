@@ -1,6 +1,6 @@
 import {processFailure, processStart, processSuccess} from "../redux/userRedux";
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { updateProfile } from 'firebase/auth';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {updateProfile} from 'firebase/auth';
 import {auth} from "../firebase"
 
 /**
@@ -12,20 +12,19 @@ import {auth} from "../firebase"
 export const register = async (dispatch, user) => {
     dispatch(processStart());
     try {
-        const response = await createUserWithEmailAndPassword(auth, user.email, user.password)
-        dispatch(processSuccess({
-            uid : response.user.uid,
-            email : response.user.email,
-            username : user.username
-        }));
+        await createUserWithEmailAndPassword(auth, user.email, user.password)
+            .then(createdUser => {
+                updateProfile(createdUser.user, {
+                    displayName: user.username
+                }).then(() => {
+                    dispatch(processSuccess({
+                        uid: createdUser.user.uid,
+                        email: createdUser.user.email,
+                        username: user.username
+                    }));
+                })
+            })
     } catch (error) {
-        console.log("This is in the error: ", error);
         dispatch(processFailure(error.code))
     }
-}
-
-export const updatingProfile = async (user) => {
-    await updateProfile(auth.currentUser, {
-        displayName: user.username
-    })
 }

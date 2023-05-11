@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import Notification from "../components/Notification";
-import {useSelector} from "react-redux";
 import axios from "axios";
 
 const Container = styled.div ``;
@@ -14,7 +13,7 @@ const Main = styled.div `
   display: flex;
   ${mobile({
     flexDirection: "column",
-})}
+  })}
 `;
 
 const NotificationContainer = styled.div `
@@ -22,18 +21,26 @@ const NotificationContainer = styled.div `
   height: 100%;
   overflow: hidden;
   margin: 30px;
+  ${mobile({
+    margin: "15px",
+  })}
 `;
 
 const ContentsContainer = styled.div `
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const Contents = styled.div `
-  flex: 1;
   border: 0.01px groove lightgrey;
   border-radius: 15px;
   padding: 10px;
   margin: 10px;
+  ${mobile({
+    margin: "0",
+  })}
 `;
 
 const Title = styled.h1 `
@@ -68,8 +75,6 @@ const SubNotificationContainer = styled.div `
  * @constructor
  */
 const Notifications = () => {
-
-    const user = useSelector((state) => state.user.currentUser);
 
     const [notifications, setNotifications] = useState()
     const [updateServiceRequestNotifications, setUpdateServiceRequestNotifications] = useState([])

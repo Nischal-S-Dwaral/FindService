@@ -24,6 +24,9 @@ const HomeContainer = styled.div `
   height: 100%;
   overflow: hidden;
   margin: 30px;
+  ${mobile({
+    margin: "15px",
+  })}
 `;
 
 const ServiceRequestsTitleContainer = styled.div `

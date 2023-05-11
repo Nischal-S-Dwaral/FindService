@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {register, updatingProfile} from "../api/Register";
+import {register} from "../api/Register";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   width: 100vw;
@@ -22,6 +23,9 @@ const Wrapper = styled.div `
   width: 40%;
   background-color: black;
   color: white;
+  ${mobile({
+    width: "85%",
+  })}
 `;
 
 const Title = styled.h1 `
@@ -95,7 +99,6 @@ const Register = () => {
             notMatchingPassword = true;
         } else {
             register(dispatch, {email, password, username}).then(() => {
-                updatingProfile({username})
             })
         }
     };

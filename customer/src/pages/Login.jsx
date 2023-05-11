@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {googleLogin, login} from "../api/Login";
 import GoogleButton from 'react-google-button'
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   width: 100vw;
@@ -24,6 +25,9 @@ const Wrapper = styled.div `
   width: 25%;
   background-color: black;
   color: white;
+  ${mobile({
+    width: "85%",
+  })}
 `;
 
 const Title = styled.h1 `
@@ -95,7 +99,7 @@ const Login = () => {
 
     const handleLoginButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
-        login(dispatch, {email, password});
+        login(dispatch, {email, password}).then(() => {});
     }
 
     const handleGoogleLoginButtonClick = (event) => {

@@ -50,7 +50,8 @@ const Logo = styled.h1 `
   font-weight: bold;
   color: white;
   ${mobile({
-    opacity: 0
+    opacity: 0,
+    width: "40px"
   })}
 `;
 
@@ -59,6 +60,9 @@ const Right = styled.div `
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  ${mobile({
+    flex: 3
+  })}
 `
 
 const MenuItem = styled.div `
@@ -75,9 +79,6 @@ const MenuItemText = styled.div `
   margin-left: 25px;
   color: white;
   font-weight: bold;
-  ${mobile({
-    opacity: 0
-  })}
 `;
 
 const ProfileDropdown = styled.div `
@@ -87,7 +88,7 @@ const ProfileDropdown = styled.div `
   background-color: #e0dbdb;
   border-radius: 10px;
   padding: 10px 15px;
-  width: 200px;
+  width: 250px;
   color: black;
   border: 1px solid #837272;
   z-index: 1;
@@ -136,6 +137,8 @@ const DropdownRightContainer = styled.div `
   flex: 2;
   display: flex;
   flex-direction: column;
+  white-space: normal;
+  overflow: hidden;
 `;
 
 const UserName = styled.h3 ``;
