@@ -204,21 +204,13 @@ const ServiceProviderApproval = () => {
       body: JSON.stringify(dataV)
     })
     .then(response => {
-        window.location.reload();
-        //history.push('/verifiedSP');
-        // if (response.ok) {
-        //   setShouldRedirect(true);
-        // }
+        window.location.href = '/verifiedSP';
     })
     .catch(error => {
         // handle the error
         console.log(error);
     }); 
   }
-
-  // if (shouldRedirect) {
-  //   return <Redirect to="/verifiedSP" />;
-  // }
 
   const handleRejectButtonClick = async (event) => {
     event.preventDefault(); // prevents the refresh of the page
@@ -228,7 +220,7 @@ const ServiceProviderApproval = () => {
       body: JSON.stringify(dataR)
     })
     .then(response => {
-        window.location.reload();
+        window.location.href = '/rejectedSP';
     })
     .catch(error => {
         // handle the error
@@ -263,8 +255,9 @@ const ServiceProviderApproval = () => {
                         </LeftContainer>
                         <RightContainer>
                           <RightTopContainer>
-                          <AcceptButton onClick={handleAcceptButtonClick}>
+                          <AcceptButton onClick={handleAcceptButtonClick}  style={{ marginRight: 14 }}>
                                                 Verify</AcceptButton>
+                          
                           <RejectButton onClick={handleRejectButtonClick}>
                                                 Reject</RejectButton>
                           </RightTopContainer>

@@ -66,7 +66,14 @@ const NonVerifiedSPList = ({properties}) => {
                 );
             },
         },
-        { field: "name", headerName: "Service Provider", width: 250 },
+        { field: "name", headerName: "Service Provider", width: 250,
+        renderCell: (params) => {
+            return (
+                <Status color={getColorCodeForStatus(params.row.name)}>
+                    {params.row.name}
+                </Status>
+            )
+        } },
         {
             field: "approvalStatus", headerName: "Status", width: 250,
             renderCell: (params) => {
@@ -100,6 +107,7 @@ const NonVerifiedSPList = ({properties}) => {
 
                 if (response.data.returnCode === "0") {
                     setNonverifiedServiceProviders(response.data.serviceProviderList)
+                    console.log(response.data);
                 } else {
                     console.log(response.data);
                 }

@@ -82,11 +82,6 @@ const VerifiedSPItem = ({item}) => {
     return (
         <Link to={`/serviceprovider/${item.id}`} style={{ textDecoration: 'none',color: "black" }}>
             <Container>
-                <LeftContainer>
-                    {/* <ImageContainer>
-                        <Image src={item.img}/>
-                    </ImageContainer> */}
-                </LeftContainer>
                 <RightContainer>
                     <RightTopContainer>
                         <Content>
