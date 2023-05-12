@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {CalendarMonthOutlined} from "@mui/icons-material";
 import StarRating from "./StarRating";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   margin-top: 5px;
@@ -34,6 +35,12 @@ const Date = styled.div `
 
 const DetailsText = styled.p `
   margin-left: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  ${mobile({
+    width: "30vw",
+  })}
 `;
 
 const RatingText = styled.p `
@@ -61,11 +68,11 @@ const Review = ({item}) => {
             <Details>
                 <Name>
                     <AccountCircleRounded/>
-                    <DetailsText>{item.username}</DetailsText>
+                    <DetailsText>{item.customerName}</DetailsText>
                 </Name>
                 <Date>
                     <CalendarMonthOutlined/>
-                    <DetailsText>{item.date}</DetailsText>
+                    <DetailsText>{item.timeStamp}</DetailsText>
                 </Date>
             </Details>
             <Details>

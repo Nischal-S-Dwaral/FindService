@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
@@ -120,8 +120,12 @@ const ReviewGrid = styled.div`
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(2, 1fr);
+  ${mobile({
+    gridTemplateColumns: "repeat(1, 1fr)",
+  })}
   grid-template-rows: repeat({$props.columns}, 1fr);
 `;
+
 const Icon = styled.div`
   width: 40px;
   height: 40px;
@@ -132,9 +136,7 @@ const Icon = styled.div`
   justify-content: center;
   margin-right: 10px;
 `;
-const IconText = styled.h2`
-  font-weight: bold;
-`;
+
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - returns the service details page
@@ -194,13 +196,10 @@ const Service = () => {
     }
     getReviews()
   },[id]);
-console.log(service.name);
+
   const getTemplateRows = (reviews) => {
     return Math.ceil(reviews.length / 2);
   }
-
-  const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
-
 
   return (
     <Container>
@@ -231,7 +230,7 @@ console.log(service.name);
                           <RightTopContainer>
                             <SubTitle>Cost: £{service.price}</SubTitle>
                           </RightTopContainer>
-                          <UpdateServiceButton onClick={(e) => navigate(`/editService/${id}`)}>
+                          <UpdateServiceButton onClick={() => navigate(`/editService/${id}`)}>
                             <Icon>
                               <Edit />
                               Update
