@@ -5,11 +5,14 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import axios from "axios";
 import {addService} from "../api/Services"
-
 import {useSelector} from "react-redux";
+import {mobile} from "../responsive";
 
 const Main = styled.div`
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const Container = styled.div`
@@ -25,6 +28,9 @@ const Wrapper = styled.div`
   background-color: #f5f1f1;
   flex: 4;
   margin: 30px;
+  ${mobile({
+    width: "75%",
+  })}
 `;
 
 const Title = styled.h1`

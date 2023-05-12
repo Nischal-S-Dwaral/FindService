@@ -5,7 +5,8 @@ const userRedux = createSlice({
     initialState: {
         currentUser: null,
         error: false,
-        errorMessage: null
+        errorMessage: null,
+        status: null
     },
     reducers: {
         processStart: (state) => {
@@ -25,9 +26,12 @@ const userRedux = createSlice({
             state.currentUser = null;
             state.errorMessage = null;
             state.error = false;
+        },
+        processVerified: (state, action) => {
+            state.status = action.payload
         }
     }
 });
 
-export const {processStart, processSuccess, processFailure, processLogout} = userRedux.actions;
+export const {processStart, processSuccess, processFailure, processLogout, processVerified} = userRedux.actions;
 export default userRedux.reducer;

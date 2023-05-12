@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from "styled-components";
 import {Facebook, Instagram, MailOutlined, Phone, Room, Twitter} from "@mui/icons-material";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   display: flex;
   background-color: black;
   justify-content: space-between;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const Left = styled.h1 `

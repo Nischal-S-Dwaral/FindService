@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { register, updatingProfile } from "../api/Register";
-import { Autocomplete } from '@react-google-maps/api';
+import {useDispatch} from "react-redux";
+import {register} from "../api/Register";
+import {Autocomplete} from '@react-google-maps/api';
+import {mobile} from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-          rgba(255,255,255,0.5), 
-          rgba(255,255,255,0.5)),
-  url("https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60") 
-  center;
+  background: linear-gradient(rgba(255, 255, 255, 0.5),
+  rgba(255, 255, 255, 0.5)),
+  url("https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZWxlY3RyaWNpYW58ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60") center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -23,6 +22,9 @@ const Wrapper = styled.div`
   width: 40%;
   background-color: black;
   color: white;
+  ${mobile({
+    width: "85%",
+  })}
 `;
 
 const Title = styled.h1`
@@ -74,91 +76,92 @@ const Button = styled.button`
  */
 function Register() {
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState("");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState("");
 
-  const [address, setAddress] = useState('');
-  const [position, setPosition] = useState('');
-  const [description, setDescription] = useState('');
-  const [autocomplete, setAutocomplete] = useState(null);
+    const [address, setAddress] = useState('');
+    const [position, setPosition] = useState('');
+    const [description, setDescription] = useState('');
+    const [autocomplete, setAutocomplete] = useState(null);
 
-  const options = {
-    autocompleteOptions: {
-      container: {
-        width: '100%'
-      },
-    },
-  };
+    const options = {
+        autocompleteOptions: {
+            container: {
+                width: '100%'
+            },
+        },
+    };
 
-  const onLoad = (autocomplete) => {
-    setAutocomplete(autocomplete);
-  };
+    const onLoad = (autocomplete) => {
+        setAutocomplete(autocomplete);
+    };
 
-  const onPlaceChanged = () => {
-    if (autocomplete !== null) {
-      const place = autocomplete.getPlace();
-      setAddress(place.formatted_address);
-      setPosition(
-          place.geometry.location.lat() + ','+ place.geometry.location.lng()
-      )
-    } else {
-      console.log('Autocomplete is not loaded yet!');
-    }
-  };
+    const onPlaceChanged = () => {
+        if (autocomplete !== null) {
+            const place = autocomplete.getPlace();
+            setAddress(place.formatted_address);
+            setPosition(
+                place.geometry.location.lat() + ',' + place.geometry.location.lng()
+            )
+        } else {
+            console.log('Autocomplete is not loaded yet!');
+        }
+    };
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  /**
+    /**
      * function to handle register button click
      */
-  const handleRegisterButtonClick = (event) => {
-    event.preventDefault(); // prevents the refresh of the page
+    const handleRegisterButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
 
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match")
-    }
-    else {
-      const id = register(dispatch, { email, password, username, address, description, position}).then(() => {
-        updatingProfile({ username })   
-    })
-  }
-};
+        if (password !== confirmPassword) {
+            return setError("Passwords do not match")
+        } else {
+            register(dispatch, {email, password, username, address, description, position}).then(() => {
+            })
+        }
+    };
 
-  return (
-    <Container>
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form>
-          <Input type="email" placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input type="text" placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Autocomplete
-              onLoad={onLoad}
-              onPlaceChanged={onPlaceChanged}
-              options={options}
-          >
-            <Input type="text" placeholder="Address"/>
-          </Autocomplete>
-          <Textarea placeholder="Description"
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-          <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
-          {error.length > 0 && <span style={{ color: "red" }}>{error}</span>}
-          <Agreement>
-            By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button onClick={handleRegisterButtonClick}>CREATE</Button>
-        </Form>
-      </Wrapper>
-    </Container>
-  );
+    return (
+        <Container>
+            <Wrapper>
+                <Title>CREATE AN ACCOUNT</Title>
+                <Form>
+                    <Input type="email" placeholder="Email"
+                           onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input type="text" placeholder="Username"
+                           onChange={(e) => setUsername(e.target.value)}
+                    />
+                    <Autocomplete
+                        onLoad={onLoad}
+                        onPlaceChanged={onPlaceChanged}
+                        options={options}
+                    >
+                        <Input type="text" placeholder="Address"/>
+                    </Autocomplete>
+                    <Textarea placeholder="Description"
+                              onChange={(e) => setDescription(e.target.value)}
+                    />
+                    <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                           placeholder="Password"/>
+                    <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
+                           placeholder="Confirm Password"/>
+                    {error.length > 0 && <span style={{color: "red"}}>{error}</span>}
+                    <Agreement>
+                        By creating an account, I consent to the processing of my personal data in accordance with
+                        the <b>PRIVACY POLICY</b>
+                    </Agreement>
+                    <Button onClick={handleRegisterButtonClick}>CREATE</Button>
+                </Form>
+            </Wrapper>
+        </Container>
+    );
 };
 
 export default Register;

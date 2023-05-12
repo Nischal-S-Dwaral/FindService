@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {login} from "../api/Login";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   width: 100vw;
@@ -23,6 +24,9 @@ const Wrapper = styled.div `
   width: 25%;
   background-color: black;
   color: white;
+  ${mobile({
+    width: "85%",
+  })}
 `;
 
 const Title = styled.h1 `
@@ -30,10 +34,7 @@ const Title = styled.h1 `
   font-weight: 300;
   text-align: center;
 `;
-const Error = styled.p `
-  font-size: 14px;
-  color: red;
-`;
+
 const Form = styled.form `
   display: flex;
   flex-direction: column;
@@ -78,34 +79,33 @@ const Hr = styled.hr `
   background-color: white;
 `;
 
+const Error = styled.span `
+  color: red;
+`;
+
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Login Page with form
  */
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-  let {error, errorMessage} = useSelector(state => state.user);
+    const dispatch = useDispatch();
 
-  const handleLoginButtonClick = (event) => {
-      event.preventDefault(); // prevents the refresh of the page
-      login(dispatch, {email, password});
-  }
+    let {error, errorMessage} = useSelector(state => state.user);
+
+    const handleLoginButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+        login(dispatch, {email, password}).then(() => {});
+    }
 
     return (
         <Container>
             <Wrapper>
                 <Title>SIGN IN</Title>
                 <Form>
-                    {/* <Input type="text" value={email} onChange={(e)=> setEmail(e.target.value)}  placeholder="Username" />
-                    <Input type="password" value={password} onChange={(e)=> setPassword(e.target.value)}  placeholder="Password" />
-                    <Button>LOGIN</Button>
-                    <Link>DON'T REMEMBER YOUR PASSWORD?</Link>
-                    <Hr/>
-                    <Button>REGISTER</Button> */}
                     <Input type="text" placeholder="Username"
                            onChange={(e)=> setEmail(e.target.value)}
                     />

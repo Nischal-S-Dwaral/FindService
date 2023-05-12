@@ -9,12 +9,16 @@ import { LocationOn, Edit } from "@material-ui/icons";
 import Review from "../components/Review";
 import PhotoSlider from "../components/PhotoSlider";
 import axios from "axios";
+import {mobile} from "../responsive";
 
 const Container = styled.div`
 `;
 
 const Main = styled.div`
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const ServiceContainer = styled.div`
@@ -22,6 +26,9 @@ const ServiceContainer = styled.div`
   height: 100%;
   overflow: hidden;
   margin: 30px;
+  ${mobile({
+    margin: "15px",
+  })}
 `;
 
 const Contents = styled.div`
@@ -34,6 +41,9 @@ const Contents = styled.div`
 const TopDetails = styled.div`
   margin-bottom: 10px;
   display: flex;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const LeftTopContainer = styled.div`
@@ -219,8 +229,6 @@ console.log(service.name);
                             </Location>
                           </LeftTopContainer>
                           <RightTopContainer>
-
-
                             <SubTitle>Cost: £{service.price}</SubTitle>
                           </RightTopContainer>
                           <UpdateServiceButton onClick={(e) => navigate(`/editService/${id}`)}>
@@ -273,7 +281,6 @@ console.log(service.name);
                     </ServiceContainer>
                   </Main>
                   <Footer />
-               
           </>
         )
       }

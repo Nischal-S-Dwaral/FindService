@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import ServiceRequestList from "../components/ServiceRequestList";
 import {mobile} from "../responsive";
+
 const Container = styled.div `
   margin-bottom: 20px;
 `;
@@ -18,17 +19,17 @@ const Main = styled.div `
 
 const ViewServiceRequestsContainer = styled.div `
   flex: 4;
+  margin: 30px;
 `;
 
 const TitleContainer = styled.div `
-  margin: 30px 0 10px 0;
   display: flex;
   align-items: center;
 `;
 
 const Title = styled.h1 `
   font-weight: 800;
-  padding: 0 15px 0 30px;
+  margin-bottom: 10px;
 `;
 
 /**
@@ -43,7 +44,7 @@ const ViewServiceRequests = () => {
                 <Sidebar/>
                 <ViewServiceRequestsContainer>
                     <TitleContainer>
-                        {/* <Title>Service Requests</Title> */}
+                        <Title>Service Requests</Title>
                     </TitleContainer>
                     <ServiceRequestList properties={
                         {

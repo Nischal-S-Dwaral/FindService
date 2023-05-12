@@ -58,8 +58,6 @@ const Button = styled.button`
  */
 const MoreDetailsCommentSection = ({ properties }) => {
 
-  //const previousMoreDetailsComments = properties.moreDetailsComments
-  //const serviceRequestId = properties.serviceRequestId
   const serviceProviderId = properties.serviceProviderId
   const [moreDetailsComments, setMoreDetailsComments] = useState([]);
   const user = useSelector((state) => state.user.currentUser);

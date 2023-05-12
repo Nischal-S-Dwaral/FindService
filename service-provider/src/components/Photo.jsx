@@ -3,12 +3,17 @@ import styled from "styled-components";
 import './CarouselStyle.css';
 
 const Container = styled.div `
-  width: 25vw;
+  width: 100%;
   height: 200px;
   overflow: hidden;
   border: 0.5px solid black;
   margin: 10px;
   border-radius: 10px;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 `;
 
 const Image = styled.img `

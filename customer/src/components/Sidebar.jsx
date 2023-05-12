@@ -11,7 +11,6 @@ import {mobile} from "../responsive";
 const Container = styled.div `
   flex: 1;
   overflow: hidden;
-  overflow-y: hidden;
 `;
 
 const Wrapper = styled.div `

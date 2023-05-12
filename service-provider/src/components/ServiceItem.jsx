@@ -65,6 +65,7 @@ const ContentText = styled.div `
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 45vw;
 `;
 
 const Description = styled.p `

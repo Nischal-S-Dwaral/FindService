@@ -46,6 +46,10 @@ const IconText = styled.h2 `
 const Logo = styled.h1 `
   font-weight: bold;
   color: white;
+  ${mobile({
+    opacity: 0,
+    width: "90px"
+  })}
 `;
 
 const Right = styled.div `
@@ -53,7 +57,10 @@ const Right = styled.div `
   display: flex;
   align-items: center;
   justify-content: flex-end;
-`
+  ${mobile({
+    flex: 3
+  })}
+`;
 
 const MenuItem = styled.div `
   font-size: 16px;
@@ -62,15 +69,13 @@ const MenuItem = styled.div `
   color: white;
   font-weight: bold;
 `;
+
 const MenuItemText = styled.div `
   font-size: 16px;
   cursor: pointer;
   margin-left: 25px;
   color: white;
   font-weight: bold;
-  ${mobile({
-    opacity: 0
-  })}
 `;
 
 const ProfileDropdown = styled.div `
@@ -158,57 +163,57 @@ const Button = styled.button `
  * @returns {JSX.Element} Navbar component, which is displayed at the top of all the pages
  */
 const Navbar = () => {
-  let {currentUser} = useSelector(state => state.user);
-  const username = currentUser.username ? currentUser.username : "user";
-  const [openDropdown, setOpenDropdown] = useState(false);
-  
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  useEffect(() => {
-      window.scrollTo(0, 0);
-  }, []);
+    let {currentUser} = useSelector(state => state.user);
+    const [openDropdown, setOpenDropdown] = useState(false);
 
-  const handleLogoutButtonClick = (event) => {
-      event.preventDefault(); // prevents the refresh of the page
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-      try {
-          logout(dispatch).then(() =>
-              navigate("/login", { replace: true })
-          )
-      } catch (error) {
-          console.log("Error while logging out: ", error);
-      }
-  }
-    
-        return (
-          <Container>
-          <Wrapper>
-              <Left>
-                  <Icon>
-                      <IconText>FS</IconText>
-                  </Icon>
-                  <Logo>FIND A SERVICE</Logo>
-              </Left>
-              <Right>
-                  <MenuItemText>Hello, {username}</MenuItemText>
-                  <MenuItem>
-                      <AccountCircleRounded onClick={() => {setOpenDropdown(!openDropdown)}}/>
-                      <ProfileDropdown active={openDropdown}>
-                          <DropdownTopContainer>
-                              <LetterImage>{username.charAt(0).toUpperCase()}</LetterImage>
-                              <DropdownRightContainer>
-                                  <UserName>{username}</UserName>
-                                  <UserEmail>{currentUser.email}</UserEmail>
-                              </DropdownRightContainer>
-                          </DropdownTopContainer>
-                          <Button onClick={handleLogoutButtonClick}>LOGOUT</Button>
-                      </ProfileDropdown>
-                  </MenuItem>
-              </Right>
-          </Wrapper>
-      </Container>
-  );
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const handleLogoutButtonClick = (event) => {
+        event.preventDefault(); // prevents the refresh of the page
+
+        try {
+            logout(dispatch).then(() =>
+                navigate("/login", { replace: true })
+            )
+        } catch (error) {
+            console.log("Error while logging out: ", error);
+        }
+    }
+
+    return (
+        <Container>
+            <Wrapper>
+                <Left>
+                    <Icon>
+                        <IconText>FS</IconText>
+                    </Icon>
+                    <Logo>FIND A SERVICE</Logo>
+                </Left>
+                <Right>
+                    <MenuItemText>Hello, {currentUser.username}</MenuItemText>
+                    <MenuItem>
+                        <AccountCircleRounded onClick={() => {setOpenDropdown(!openDropdown)}}/>
+                        <ProfileDropdown active={openDropdown}>
+                            <DropdownTopContainer>
+                                <LetterImage>{currentUser.username.charAt(0).toUpperCase()}</LetterImage>
+                                <DropdownRightContainer>
+                                    <UserName>{currentUser.username}</UserName>
+                                    <UserEmail>{currentUser.email}</UserEmail>
+                                </DropdownRightContainer>
+                            </DropdownTopContainer>
+                            <Button onClick={handleLogoutButtonClick}>LOGOUT</Button>
+                        </ProfileDropdown>
+                    </MenuItem>
+                </Right>
+            </Wrapper>
+        </Container>
+    );
 }
 
 export default Navbar;

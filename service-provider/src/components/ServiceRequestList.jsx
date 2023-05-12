@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
-import { serviceRequests } from "../data";
 import { DataGrid } from "@material-ui/data-grid";
-import { EditOutlined, VisibilityOutlined } from "@material-ui/icons";
-import AddService from '../pages/AddService';
+import { VisibilityOutlined } from "@material-ui/icons";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-import { UnfoldMoreOutlined } from "@material-ui/icons";
 const Container = styled.div`
   display: flex;
   height: ${props => props.height}vh;
@@ -17,14 +14,9 @@ const Container = styled.div`
   margin-bottom: 20px;
 `;
 
-const RequestContainer = styled.div`
-    display: block;
-`;
-
 const DataGridContainer = styled.div`
   width: 100%;
   height: 100%;
-  margin: 0 30px;
 `;
 
 const Status = styled.div`
@@ -52,28 +44,15 @@ const Icon = styled.div`
   justify-content: center;
   margin-right: 10px;
 `;
+
 const ErrorMessage = styled.h2`
     margin: 30px;
     text-align: center;
 `;
-const ServiceRequestsTitleContainer = styled.div`
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-`;
 
 const ServiceRequestsTitle = styled.h1`
   font-weight: 800;
-  padding: 0 15px 0 30px;
-`;
-
-const SeeAllServiceRequestsLink = styled.div`
-  background-color: black;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
+  margin-right: 10px;
 `;
 
 const ServiceRequestList = ({ properties }) => {
@@ -117,13 +96,9 @@ const ServiceRequestList = ({ properties }) => {
                     <>
                         <Link to={'/CustomerRequest/' + params.row.id}>
                             <Icon>
-
                                 <VisibilityOutlined />
                             </Icon>
                         </Link>
-                        {/* <Icon>
-                            <EditOutlined />
-                        </Icon></> */}
                     </>
                 );
             },
@@ -160,50 +135,33 @@ const ServiceRequestList = ({ properties }) => {
     }, [id]);
 
     return (
-
-        <RequestContainer>
+        <Container height={properties.height}>
             {
                 serviceRequests && (
                     <>
-                        <ServiceRequestsTitleContainer>
-                            <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
-                            <Link to="/view/serviceRequests">
-                                <SeeAllServiceRequestsLink>
-                                    <UnfoldMoreOutlined />
-                                    Show More
-                                </SeeAllServiceRequestsLink>
-                            </Link>
-                        </ServiceRequestsTitleContainer>
-                    </>)}
-            <Container height={properties.height}>
-                {
-                    serviceRequests && (
-                        <>
 
-                            <DataGridContainer>
-                                <DataGrid
-                                    rows={serviceRequests}
-                                    columns={columns}
-                                    pageSize={properties.pageSize}
-                                    disableSelectionOnClick
-
-                                />
-                            </DataGridContainer>
-                        </>
-                    )}
-                {
-                    !serviceRequests && (
-                        <>
+                        <DataGridContainer>
+                            <DataGrid
+                                rows={serviceRequests}
+                                columns={columns}
+                                pageSize={properties.pageSize}
+                                disableSelectionOnClick
+                            />
+                        </DataGridContainer>
+                    </>
+                )}
+            {
+                !serviceRequests && (
+                    <>
                         <ServiceRequestsTitle>Service Requests</ServiceRequestsTitle>
-                    
-                            <ErrorMessage>
-                                You do not have any service requests at the moment.
-                            </ErrorMessage>
-                        </>
-                    )
-                }
-            </Container>
-        </RequestContainer>
+                        <ErrorMessage>
+                            You do not have any service requests at the moment.
+                        </ErrorMessage>
+                    </>
+                )
+            }
+        </Container>
+
     );
 };
 

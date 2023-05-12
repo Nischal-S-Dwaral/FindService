@@ -6,7 +6,6 @@ import EditService from "./pages/EditService";
 import Service from "./pages/Service";
 import Services from "./pages/Services";
 import ViewServiceRequests from "./pages/ViewServiceRequests";
-import ServiceProviderApproval from "./pages/ServiceProviderApproval";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import CustomerRequest from "./pages/CustomerRequest";
 import {useSelector} from "react-redux";
@@ -29,7 +28,6 @@ function App() {
         <Route path="/service/:id" element={<Service />} />
         <Route path="/editService/:id" element={<EditService/>} />
         <Route path="/view/serviceRequests" element={<ViewServiceRequests/>} />
-        <Route path="/serviceproviderapproval/:id" element={<ServiceProviderApproval />} />
         <Route path="/customerRequest/:id" element={<CustomerRequest />} />
               </>
           )}

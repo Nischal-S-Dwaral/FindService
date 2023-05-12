@@ -1,20 +1,26 @@
 import React from 'react';
 import styled from "styled-components";
-import {HomeRepairService,AccountCircleRounded, HomeOutlined, ListAltOutlined,AddBoxRounded} from "@mui/icons-material";
+import {HomeOutlined, ListAltOutlined,AddBoxRounded} from "@mui/icons-material";
 import {Link} from "react-router-dom";
+import {mobile} from "../responsive";
 
 const Container = styled.div `
   flex: 1;
-  background-color: rgb(251, 251, 255);
-  position: sticky;
-  top: 50px;
-  height: 100vh;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
 const Wrapper = styled.div `
   padding: 20px;
   color: #555;
+  background-color: rgb(251, 251, 255);
+  top: 50px;
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  ${mobile({
+    display: "flex",
+    justifyContent: "space-evenly",
+    padding: "10px 0 0 0"
+  })}
 `;
 
 const Menu = styled.div `
