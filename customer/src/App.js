@@ -9,6 +9,7 @@ import ServiceRequest from "./pages/ServiceRequest";
 import Notifications from "./pages/Notifications";
 import {useSelector} from "react-redux";
 import Review from "./pages/Review";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
     const user = useSelector((state) => state.user.currentUser);
@@ -17,6 +18,7 @@ function App() {
           <Routes>
               <Route path="/login" element={user ? <Navigate to="/" replace /> :  <Login />} />
               <Route path="/register" element={user ? <Navigate to="/" replace /> :  <Register />} />
+              <Route path="/verifyEmail" element={user ? <Navigate to="/" replace /> :  <VerifyEmail />} />
               {
                   user && (
                       <>

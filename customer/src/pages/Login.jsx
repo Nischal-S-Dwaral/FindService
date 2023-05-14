@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import {googleLogin, login} from "../api/Login";
 import GoogleButton from 'react-google-button'
 import {mobile} from "../responsive";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {processStart} from "../redux/userRedux";
 
 const Container = styled.div `
   width: 100vw;
@@ -80,10 +82,6 @@ const Hr = styled.hr `
   background-color: white;
 `;
 
-const Error = styled.span `
-  color: red;
-`;
-
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Login Page with form
@@ -107,6 +105,10 @@ const Login = () => {
         googleLogin(dispatch);
     }
 
+    const handleErrorDialogClose = () => {
+        dispatch(processStart());
+    };
+
     return (
         <Container>
             <Wrapper>
@@ -120,7 +122,6 @@ const Login = () => {
                     />
                     <Button onClick={handleLoginButtonClick}>LOGIN</Button>
                     <LinkText>DON'T REMEMBER YOUR PASSWORD?</LinkText>
-                    {error && <Error>{errorMessage}</Error>}
                     <Hr/>
                     <Link to={"/register"} style={{ textDecoration: 'none',color: "black" }}>
                         <Button>REGISTER</Button>
@@ -130,6 +131,28 @@ const Login = () => {
                         onClick={handleGoogleLoginButtonClick}
                     />
                 </Form>
+                {
+                    error &&
+                    <Dialog
+                        open={error}
+                        onClose={handleErrorDialogClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            {"Error while logging into account!!"}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                {errorMessage}                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleErrorDialogClose} autoFocus>
+                                Agree
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                }
             </Wrapper>
         </Container>
     );

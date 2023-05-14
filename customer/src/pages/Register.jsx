@@ -3,6 +3,9 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../api/Register";
 import {mobile} from "../responsive";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {processStart} from "../redux/userRedux";
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div `
   width: 100vw;
@@ -68,10 +71,6 @@ const Button = styled.button `
   }
 `;
 
-const Error = styled.span `
-  color: red;
-`;
-
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Registration form
@@ -82,12 +81,12 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [notMatchingPassword, setNotMatchingPassword] = useState(false)
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     let {error, errorMessage} = useSelector(state => state.user);
-
-    let notMatchingPassword = false;
 
     /**
      * function to handle register button click
@@ -96,11 +95,19 @@ const Register = () => {
         event.preventDefault(); // prevents the refresh of the page
 
         if (password !== confirmPassword) {
-            notMatchingPassword = true;
+            setNotMatchingPassword(true);
         } else {
-            register(dispatch, {email, password, username}).then(() => {
+            register(dispatch, navigate, {email, password, username}).then(() => {
             })
         }
+    };
+
+    const handleErrorDialogClose = () => {
+        dispatch(processStart());
+    };
+
+    const handleNotMatchingPwdDialogClose = () => {
+        setNotMatchingPassword(false);
     };
 
     return (
@@ -127,8 +134,52 @@ const Register = () => {
                         onClick={handleRegisterButtonClick}>
                         CREATE
                     </Button>
-                    {error && <Error>{errorMessage}</Error>}
-                    {notMatchingPassword && <Error>The passwords are not matching</Error>}
+                    {
+                        error &&
+                        <Dialog
+                            open={error}
+                            onClose={handleErrorDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Error while creating account!!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {errorMessage}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleErrorDialogClose} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    }
+                    {
+                        notMatchingPassword &&
+                        <Dialog
+                            open={notMatchingPassword}
+                            onClose={handleNotMatchingPwdDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Error while creating account!!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {"The passwords don't match!!"}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleNotMatchingPwdDialogClose} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    }
                 </Form>
             </Wrapper>
         </Container>
