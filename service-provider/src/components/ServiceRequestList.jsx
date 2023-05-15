@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import { DataGrid } from "@material-ui/data-grid";
 import { VisibilityOutlined } from "@material-ui/icons";
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -57,8 +56,6 @@ const ServiceRequestsTitle = styled.h1`
 
 const ServiceRequestList = ({ properties }) => {
 
-
-    const navigate = useNavigate('');
     const getColorCodeForStatus = (status) => {
         switch (status) {
             case "Accepted":
@@ -75,21 +72,8 @@ const ServiceRequestList = ({ properties }) => {
     }
 
     const columns = [
-        { field: "id", headerName: "Request ID", width: 150 },
-        { field: "serviceName", headerName: "Service Name", width: 200 },
-
         {
-            field: "status", headerName: "Status", width: 250,
-            renderCell: (params) => {
-                return (
-                    <Status color={getColorCodeForStatus(params.row.status)}>
-                        {params.row.status}
-                    </Status>
-                )
-            }
-        },
-        {
-            field: "action", headerName: "Action", width: 250,
+            field: "action", headerName: "Action", width: 125,
             renderCell: (params) => {
                 return (
 
@@ -103,6 +87,19 @@ const ServiceRequestList = ({ properties }) => {
                 );
             },
         },
+        { field: "serviceName", headerName: "Service Name", width: 200 },
+        {
+            field: "status", headerName: "Status", width: 250,
+            renderCell: (params) => {
+                return (
+                    <Status color={getColorCodeForStatus(params.row.status)}>
+                        {params.row.status}
+                    </Status>
+                )
+            }
+        },
+        { field: "id", headerName: "Request ID", width: 250 },
+        { field: "date", headerName: "Date", width: 250 },
     ];
     const [serviceRequests, setServiceRequests] = useState([]);
     const user = useSelector((state) => state.user.currentUser);

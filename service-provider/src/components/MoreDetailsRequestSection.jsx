@@ -59,7 +59,6 @@ const Button = styled.button`
 const MoreDetailsRequestSection = ({ properties }) => {
 
   const serviceRequestId = properties.serviceRequestId
-  const name = properties.serviceProviderName
   const [moreDetailsComments, setMoreDetailsComments] = useState([]);
   const user = useSelector((state) => state.user.currentUser);
   const [addComment, setAddComment] = useState(false);
