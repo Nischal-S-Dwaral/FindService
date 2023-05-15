@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "../api/Register";
 import {mobile} from "../responsive";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {processStart} from "../redux/userRedux";
 
 const Container = styled.div `
   width: 100vw;
@@ -52,7 +54,7 @@ const Agreement = styled.span `
   margin: 20px 0;
 `;
 
-const Button = styled.button `
+const SubmitButton = styled.button `
   width: 100%;
   border: none;
   padding: 15px 20px;
@@ -68,10 +70,6 @@ const Button = styled.button `
   }
 `;
 
-const Error = styled.span `
-  color: red;
-`;
-
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Registration form
@@ -82,12 +80,11 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [notMatchingPassword, setNotMatchingPassword] = useState(false)
 
     const dispatch = useDispatch();
 
     let {error, errorMessage} = useSelector(state => state.user);
-
-    let notMatchingPassword = false;
 
     /**
      * function to handle register button click
@@ -96,11 +93,19 @@ const Register = () => {
         event.preventDefault(); // prevents the refresh of the page
 
         if (password !== confirmPassword) {
-            notMatchingPassword = true;
+            setNotMatchingPassword(true);
         } else {
             register(dispatch, {email, password, username}).then(() => {
             })
         }
+    };
+
+    const handleErrorDialogClose = () => {
+        dispatch(processStart());
+    };
+
+    const handleNotMatchingPwdDialogClose = () => {
+        setNotMatchingPassword(false);
     };
 
     return (
@@ -123,12 +128,56 @@ const Register = () => {
                     <Agreement>
                         By creating an account, I consent to the processing of my personal data in accordance with the <b>PRIVACY POLICY</b>
                     </Agreement>
-                    <Button
+                    <SubmitButton
                         onClick={handleRegisterButtonClick}>
                         CREATE
-                    </Button>
-                    {error && <Error>{errorMessage}</Error>}
-                    {notMatchingPassword && <Error>The passwords are not matching</Error>}
+                    </SubmitButton>
+                    {
+                        notMatchingPassword &&
+                        <Dialog
+                            open={notMatchingPassword}
+                            onClose={handleNotMatchingPwdDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Error while creating account!!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {"The passwords don't match!!"}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleNotMatchingPwdDialogClose} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    }
+                    {
+                        error &&
+                        <Dialog
+                            open={error}
+                            onClose={handleErrorDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Error while creating account!!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {errorMessage}
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <SubmitButton onClick={handleErrorDialogClose} autoFocus>
+                                    Agree
+                                </SubmitButton>
+                            </DialogActions>
+                        </Dialog>
+                    }
                 </Form>
             </Wrapper>
         </Container>

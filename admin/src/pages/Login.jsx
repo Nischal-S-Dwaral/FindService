@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
 import {login} from "../api/Login";
 import {mobile} from "../responsive";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {processStart} from "../redux/userRedux";
 
 const Container = styled.div `
   width: 100vw;
@@ -47,7 +48,7 @@ const Input = styled.input `
   padding: 10px;
 `;
 
-const Button = styled.button `
+const SubmitButton = styled.button `
   width: 100%;
   border: none;
   padding: 15px 20px;
@@ -71,18 +72,6 @@ const LinkText = styled.a `
   cursor: pointer;
 `;
 
-const Hr = styled.hr `
-  border: none;
-  width: 100%;
-  height: 1px;
-  color: white;
-  background-color: white;
-`;
-
-const Error = styled.span `
-  color: red;
-`;
-
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Login Page with form
@@ -101,6 +90,10 @@ const Login = () => {
         login(dispatch, {email, password}).then(() => {});
     }
 
+    const handleErrorDialogClose = () => {
+        dispatch(processStart());
+    };
+
     return (
         <Container>
             <Wrapper>
@@ -112,13 +105,30 @@ const Login = () => {
                     <Input type="password" placeholder="Password"
                            onChange={(p) => setPassword(p.target.value)}
                     />
-                    <Button onClick={handleLoginButtonClick}>LOGIN</Button>
+                    <SubmitButton onClick={handleLoginButtonClick}>LOGIN</SubmitButton>
                     <LinkText>DON'T REMEMBER YOUR PASSWORD?</LinkText>
-                    {error && <Error>{errorMessage}</Error>}
-                    <Hr/>
-                    <Link to={"/register"} style={{ textDecoration: 'none',color: "black" }}>
-                        <Button>REGISTER</Button>
-                    </Link>
+                    {
+                        error &&
+                        <Dialog
+                            open={error}
+                            onClose={handleErrorDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                {"Error while logging into account!!"}
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    {errorMessage}                            </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleErrorDialogClose} autoFocus>
+                                    Agree
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    }
                 </Form>
             </Wrapper>
         </Container>
