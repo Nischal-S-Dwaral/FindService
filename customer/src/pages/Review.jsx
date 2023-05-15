@@ -79,6 +79,9 @@ const Review = () => {
     const user = useSelector((state) => state.user.currentUser);
     const navigate = useNavigate();
 
+    const searchParams = new URLSearchParams(window.location.search);
+    const notificationId = searchParams.get('nid');
+
     const handleSubmitButtonClick = async (event) => {
         event.preventDefault(); // prevents the refresh of the page
 
@@ -87,7 +90,8 @@ const Review = () => {
                 "serviceId": serviceId,
                 "customerName": user.username,
                 "rating": rating,
-                "comment": commentText
+                "comment": commentText,
+                "notificationId": notificationId
             });
 
             let config = {

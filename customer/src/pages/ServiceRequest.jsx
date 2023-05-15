@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {categoryValueToText} from "../data";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import {getColorCodeForStatus} from "../utils";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
 import axios from "axios";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 const Container = styled.div ``;
 
@@ -37,6 +38,14 @@ const ServiceRequestContainer = styled.div `
 const TopContainer = styled.div `
 `;
 
+const TopTitleContainer = styled.div `
+  display: flex;
+  justify-content: space-between;
+  ${mobile({
+    flexDirection: "column",
+  })}
+`;
+
 const TopContainerText = styled.p `
   margin: 5px 0;
 `;
@@ -59,6 +68,15 @@ const Hr = styled.hr `
   margin: 10px 0;
 `;
 
+const DeleteButton = styled.button `
+  padding: 15px 20px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin: 10px 0;
+  border-radius: 15px;
+`;
+
 /**
  * @author Nischal S D
  * @returns {JSX.Element} - Page for the customer's service request
@@ -71,6 +89,9 @@ const ServiceRequest = () => {
 
     const [serviceRequest, setServiceRequest] = useState({});
     const [serviceCategoryText, setServiceCategoryText] = useState("");
+    const [deleteButtonDialog, setDeleteButtonDialog] = useState(false)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -101,6 +122,32 @@ const ServiceRequest = () => {
     }, [id]);
 
 
+    const handleDeleteButtonDialogOpen = () => {
+        setDeleteButtonDialog(true);
+    };
+
+    const handleDeleteButtonYesDialogClose = () => {
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:8080/api/serviceRequest/delete?id='+id,
+            headers: { }
+        };
+
+        axios.request(config)
+            .then(() => {
+                setDeleteButtonDialog(false);
+                navigate("/requests", { replace: true });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const handleDeleteButtonDialogClose = () => {
+        setDeleteButtonDialog(false);
+    };
+
     return (
         <Container>
             <Navbar/>
@@ -112,7 +159,10 @@ const ServiceRequest = () => {
                             <>
                                 <Contents>
                                     <TopContainer>
-                                        <Title>Request ID: {id}</Title>
+                                        <TopTitleContainer>
+                                            <Title>Request ID: {id}</Title>
+                                            <DeleteButton onClick={handleDeleteButtonDialogOpen}>DELETE</DeleteButton>
+                                        </TopTitleContainer>
                                         <Hr/>
                                     </TopContainer>
                                     <TopContainer>
@@ -150,6 +200,32 @@ const ServiceRequest = () => {
                                         }
                                     }/>
                                 </Contents>
+                                {
+                                    deleteButtonDialog &&
+                                    <Dialog
+                                        open={deleteButtonDialog}
+                                        onClose={handleDeleteButtonDialogClose}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">
+                                            {"Are you sure??"}
+                                        </DialogTitle>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-description">
+                                                {"Are you sure you want to delete this service request?"}
+                                            </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button onClick={handleDeleteButtonYesDialogClose} autoFocus>
+                                                YES
+                                            </Button>
+                                            <Button onClick={handleDeleteButtonDialogClose} autoFocus>
+                                                NO
+                                            </Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                }
                             </>
                         )
                     }

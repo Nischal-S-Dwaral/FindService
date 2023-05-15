@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import {NotificationsActiveOutlined} from "@material-ui/icons";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div ``;
 
@@ -42,7 +43,34 @@ const Notification = ({item}) => {
                 navigate(item.redirectUrl, { replace: true });
             }
         } else {
-            navigate(item.redirectUrl, { replace: true });
+            if (item.seen) {
+                navigate(item.redirectUrl, { replace: true });
+            } else {
+                let data = JSON.stringify({
+                    "notificationId": item.id,
+                    "seen": true
+                });
+
+                let config = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'http://localhost:8080/api/notification/updateStatus',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data : data
+                };
+
+                await axios.request(config)
+                    .then((response) => {
+                        if (response.data.returnCode === "0") {
+                            navigate(item.redirectUrl, { replace: true });
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         }
     };
 
