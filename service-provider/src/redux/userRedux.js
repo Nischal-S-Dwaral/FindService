@@ -26,6 +26,7 @@ const userRedux = createSlice({
             state.currentUser = null;
             state.errorMessage = null;
             state.error = false;
+            state.status = null
         },
         processVerified: (state, action) => {
             state.status = action.payload

@@ -7,7 +7,7 @@ import ServiceRequestList from "../components/ServiceRequestList";
 import {useDispatch, useSelector} from "react-redux";
 import ServiceList from '../components/ServiceList';
 import axios from "axios";
-import {processVerified} from "../redux/userRedux";
+import {processSuccess, processVerified} from "../redux/userRedux";
 import {mobile} from "../responsive";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
 import {Link} from "react-router-dom";
@@ -110,14 +110,13 @@ const Home = () => {
     const spId = user.uid;
     const status = useSelector((state) => state.user.status);
     const dispatch = useDispatch();
+    const [serviceProviderStatus, setServiceProviderStatus] = useState(status)
 
     let action = 'No Action Required';
 
     useEffect(() => {
-        console.log("Inside useEffect")
-        if (status !== "Verified") {
+        if (serviceProviderStatus !== "Verified") {
 
-            console.log("Inside condition of useEffect")
             const getServiceProvider = async () => {
                 try {
                     let data = '';
@@ -133,8 +132,15 @@ const Home = () => {
                     const response = await axios.request(config)
 
                     if (response.data.returnCode === "0") {
-                        console.log("Inside Response")
                         dispatch(processVerified(response.data.approvalStatus))
+                        setServiceProviderStatus(response.data.approvalStatus)
+                        dispatch(processSuccess({
+                            uid : response.data.id,
+                            email : response.data.email,
+                            username : response.data.name,
+                            status: response.data.approvalStatus,
+                            description: response.data.description
+                        }));
                     } else {
                         console.log(response.data);
                     }
@@ -143,17 +149,16 @@ const Home = () => {
                 }
             };
             getServiceProvider()
-            console.log("Ran useEffect")
         }
     });
 
-    if (status !== 'Verified') {
+    if (serviceProviderStatus !== 'Verified') {
 
         console.log("Inside not verified")
 
-        if (status === 'Rejected')
+        if (serviceProviderStatus === 'Rejected')
             action = 'Your request of registration has been rejected. No Action Required'
-        else if (status === 'Awaiting Further Details')
+        else if (serviceProviderStatus === 'Awaiting Further Details')
             action = 'Please provide the requested details below.'
 
         return (
@@ -172,7 +177,7 @@ const Home = () => {
                                 <SubTitle>Description</SubTitle>
                                 <TopContainerText>{user.description}</TopContainerText>
                                 <Hr/>
-                                <TopContainerText>Your current registration status is <b>{status}</b></TopContainerText>
+                                <TopContainerText>Your current registration status is <b>{serviceProviderStatus}</b></TopContainerText>
 
                             </TopContainer>
                         </Contents>
@@ -190,7 +195,7 @@ const Home = () => {
                 <Footer/>
             </Container>
         );
-    } else if (status === 'Verified') {
+    } else if (serviceProviderStatus === 'Verified') {
         return (
             <Container>
                 <Navbar/>
