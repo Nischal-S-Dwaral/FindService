@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import Notification from "../components/Notification";
 import axios from "axios";
+import {useSelector} from "react-redux";
 
 const Container = styled.div ``;
 
@@ -80,6 +81,7 @@ const Notifications = () => {
     const [updateServiceRequestNotifications, setUpdateServiceRequestNotifications] = useState([])
     const [reviewRequestNotifications, setReviewRequestNotifications] = useState([])
     const [generalNotifications, setGeneralNotifications] = useState([])
+    const user = useSelector((state) => state.user.currentUser);
 
     useEffect(() => {
         /**
@@ -91,7 +93,7 @@ const Notifications = () => {
                 let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/notification/getByID?customerId=Wr0OtFpBPYMbvFxhvRMaEnjH9ad2',
+                    url: 'http://localhost:8080/api/notification/getByID?customerId='+user.uid,
                     headers: { }
                 };
 
