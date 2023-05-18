@@ -107,7 +107,7 @@ const NonVerifiedSPList = ({properties}) => {
             }
         }
         getNonVerifiedServiceProviders()
-    }, [status]);
+    });
 
     return (
         <Container height={properties.height}>
