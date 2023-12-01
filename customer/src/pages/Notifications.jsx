@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import Notification from "../components/Notification";
-import axios from "axios";
-import {useSelector} from "react-redux";
+import {notificationData} from "../data";
 
 const Container = styled.div ``;
 
@@ -77,42 +76,10 @@ const SubNotificationContainer = styled.div `
  */
 const Notifications = () => {
 
-    const [notifications, setNotifications] = useState()
-    const [updateServiceRequestNotifications, setUpdateServiceRequestNotifications] = useState([])
-    const [reviewRequestNotifications, setReviewRequestNotifications] = useState([])
-    const [generalNotifications, setGeneralNotifications] = useState([])
-    const user = useSelector((state) => state.user.currentUser);
-
-    useEffect(() => {
-        /**
-         * Get the notification data
-         */
-        const getNotificationData = async () => {
-
-            try {
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/notification/getByID?customerId='+user.uid,
-                    headers: { }
-                };
-
-                const response = await axios.request(config)
-
-                if (response.data.returnCode === "0") {
-                    setNotifications(response.data)
-                    setGeneralNotifications(response.data.general)
-                    setReviewRequestNotifications(response.data.reviewRequest)
-                    setUpdateServiceRequestNotifications(response.data.updatesServiceRequest)
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getNotificationData()
-    }, [])
+    const notifications = notificationData;
+    const updateServiceRequestNotifications = notifications.updatesServiceRequest;
+    const reviewRequestNotifications = notifications.reviewRequest;
+    const generalNotifications = notifications.general;
 
     return (
         <Container>

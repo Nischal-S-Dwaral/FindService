@@ -2,9 +2,7 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {mobile} from "../responsive";
 import {categoryValueToText} from "../data";
-import axios from "axios";
-import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 const Container = styled.div `
   background-color: rgba(0,0,0,0.3);
@@ -112,9 +110,7 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
     const [address, setAddress] = useState("");
     const [description, setDescription] = useState("");
     let categoryText = categoryValueToText.get(data.category)
-
-    const user = useSelector((state) => state.user.currentUser);
-    const navigate = useNavigate();
+    const [demoModal, setDemoModal] = useState(false);
 
     const handleTimeChange = (event) => {
         const timeValue = event.target.value;
@@ -125,47 +121,22 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
 
     const handleCreateButtonClick = async (event) => {
         event.preventDefault(); // prevents the refresh of the page
-        try {
-            let postData = JSON.stringify({
-                "serviceId": data.id,
-                "customerId": user.uid,
-                "customerName": user.username,
-                "description": description,
-                "date": date,
-                "time": time,
-                "address": address
-            });
-
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'http://localhost:8080/api/serviceRequest/add',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data : postData
-            };
-
-            const response = await axios.request(config)
-
-            if (response.data.returnCode === "0") {
-                navigate("/requests", { replace: true });
-            } else {
-                console.log(response.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
+        setDemoModal(true);
     }
 
     if (!open) {
         return null;
     }
 
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
+
     return (
         <Container onClick={onClose}>
             <Wrapper onClick={(e) => {
-            e.stopPropagation();}
+                e.stopPropagation();}
             }>
                 <Header>
                     <Title>Create a Service Request</Title>
@@ -212,6 +183,24 @@ const ServiceRequestForm = ({ open, onClose, data }) => {
                     <Button onClick={handleCreateButtonClick}>CREATE</Button>
                 </Form>
             </Wrapper>
+            {
+                demoModal &&
+                <Dialog
+                    open={demoModal}
+                    onClose={handleDemoDialogClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        ALERT
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            This is just a demo!! Functionality disabled..
+                        </DialogContentText>
+                    </DialogContent>
+                </Dialog>
+            }
         </Container>
     );
 };

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
@@ -10,7 +10,7 @@ import Review from "../components/Review";
 import PhotoSlider from "../components/PhotoSlider";
 import ServiceRequestForm from "../components/ServiceRequestForm";
 import {mobile} from "../responsive";
-import axios from "axios";
+import {reviewsData, servicesListData} from "../data";
 
 const Container = styled.div `
 `;
@@ -144,59 +144,12 @@ const Service = () => {
     const location = useLocation();
     const id = location.pathname.split("/")[2];
 
-    const [service, setService] = useState({});
-    const [photos, setPhotos] = useState([]);
-    const [reviews, setReviews] = useState([]);
-    const [rating, setRating] = useState(0.0);
-
-    useEffect(() => {
-        /**
-         * Get the service details
-         * @returns {Promise<void>}
-         */
-        const getService = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8080/api/service/findById?id=${id}`
-                );
-                if (response.data.returnCode === "0") {
-                    setService(response.data);
-                    /**
-                     * Setting the photos array
-                     */
-                    setPhotos(response.data.photos);
-                    setRating(response.data.numberOfRatings !== "0"
-                        ? parseFloat(response.data.totalRating) / parseFloat(response.data.numberOfRatings)
-                        : 0.0
-                    )
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getService()
-
-        /**
-         * Get the reviews list
-         */
-        const getReviews = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8080/api/review/getReviewList?serviceId=${id}`
-                );
-                if (response.data.returnCode === "0") {
-                    setReviews(response.data.reviews);
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getReviews()
-    },[id])
+    const service = servicesListData[id];
+    const photos = service.photos;
+    const rating = service.numberOfRatings !== "0"
+            ? (parseFloat(service.totalRating) / parseFloat(service.numberOfRatings)).toFixed(2)
+            : 0.0;
+    const reviews = reviewsData[id];
 
     const getTemplateRows = (reviews) => {
         return Math.ceil(reviews.length / 2);

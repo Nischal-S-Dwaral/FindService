@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
-import {useLocation, useNavigate} from "react-router-dom";
-import {categoryValueToText} from "../data";
+import {useLocation} from "react-router-dom";
+import {categoryValueToText, serviceRequestData} from "../data";
 import Navbar from "../components/Navbar";
 import {mobile} from "../responsive";
 import Sidebar from "../components/Sidebar";
 import Footer from "../components/Footer";
 import {getColorCodeForStatus} from "../utils";
 import MoreDetailsCommentSection from "../components/MoreDetailsCommentSection";
-import axios from "axios";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 const Container = styled.div ``;
@@ -87,61 +86,22 @@ const ServiceRequest = () => {
     const location = useLocation();
     const id = location.pathname.split("/")[2];
 
-    const [serviceRequest, setServiceRequest] = useState({});
-    const [serviceCategoryText, setServiceCategoryText] = useState("");
+    const serviceRequest = serviceRequestData[id];
+    const serviceCategoryText = categoryValueToText.get(serviceRequest.serviceCategory);
+    const [demoModal, setDemoModal] = useState(false);
     const [deleteButtonDialog, setDeleteButtonDialog] = useState(false)
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-
-        const getServiceRequest = async () => {
-            try {
-                let requestData = '';
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/serviceRequest/getByID?id='+id,
-                    headers: { },
-                    data : requestData
-                };
-
-                const response = await axios.request(config)
-
-                if (response.data.returnCode === "0") {
-                    setServiceRequest(response.data.serviceRequest)
-                    setServiceCategoryText(categoryValueToText.get(response.data.serviceRequest.serviceCategory))
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getServiceRequest()
-    }, [id]);
-
 
     const handleDeleteButtonDialogOpen = () => {
         setDeleteButtonDialog(true);
     };
 
-    const handleDeleteButtonYesDialogClose = () => {
-        let config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: 'http://localhost:8080/api/serviceRequest/delete?id='+id,
-            headers: { }
-        };
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
 
-        axios.request(config)
-            .then(() => {
-                setDeleteButtonDialog(false);
-                navigate("/requests", { replace: true });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    const handleDeleteButtonYesDialogClose = () => {
+        setDemoModal(true);
     };
 
     const handleDeleteButtonDialogClose = () => {
@@ -224,6 +184,24 @@ const ServiceRequest = () => {
                                                 NO
                                             </Button>
                                         </DialogActions>
+                                    </Dialog>
+                                }
+                                {
+                                    demoModal &&
+                                    <Dialog
+                                        open={demoModal}
+                                        onClose={handleDemoDialogClose}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">
+                                            ALERT
+                                        </DialogTitle>
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-description">
+                                                This is just a demo!! Functionality disabled..
+                                            </DialogContentText>
+                                        </DialogContent>
                                     </Dialog>
                                 }
                             </>

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import PreviousComment from "./PreviousComment";
-import {useSelector} from "react-redux";
-import {addMoreDetailsComment, getMoreDetailsComments} from "../api/MoreDetailsComments";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {serviceRequestComments} from "../data";
 
 const Container = styled.div ``;
 
@@ -58,42 +58,20 @@ const Button = styled.button `
 const MoreDetailsCommentSection = ({properties}) => {
 
     const serviceRequestId = properties.serviceRequestId
-    const [moreDetailsComments, setMoreDetailsComments] = useState([]);
-    const user = useSelector((state) => state.user.currentUser);
-    const [addComment, setAddComment] = useState(false);
     const [commentText, setCommentText] = useState("");
+    const [demoModal, setDemoModal] = useState(false);
 
-    useEffect( () => {
-
-        async function fetchData() {
-            const apiResponse = await getMoreDetailsComments(serviceRequestId)
-            if (apiResponse != null) {
-                setMoreDetailsComments(apiResponse)
-            } else {
-                console.log("Error while getting more details")
-            }
-        }
-        fetchData().then(() => setCommentText(""))
-    }, [serviceRequestId, addComment]);
+    const moreDetailsComments = serviceRequestComments[serviceRequestId];
 
     const handleSubmitButtonClick = async (event) => {
-        event.preventDefault(); // prevents the refresh of the page
-
-        async function fetchData() {
-            const apiResponse = await addMoreDetailsComment({
-                "serviceRequestId": serviceRequestId,
-                "name": user.username,
-                "text": commentText,
-                "fromServiceProvider": false
-            })
-            if (apiResponse != null) {
-                setAddComment(apiResponse);
-            } else {
-                console.log("Error while getting more details")
-            }
-        }
-        fetchData().then(() => setCommentText(""))
+        event.preventDefault();
+        setDemoModal(true);
     }
+
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
 
     return (
         <Container>
@@ -116,6 +94,24 @@ const MoreDetailsCommentSection = ({properties}) => {
                         />
                         <Button onClick={handleSubmitButtonClick}>SUBMIT COMMENT</Button>
                     </AddCommentForm>
+                    {
+                        demoModal &&
+                        <Dialog
+                            open={demoModal}
+                            onClose={handleDemoDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                ALERT
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    This is just a demo!! Functionality disabled..
+                                </DialogContentText>
+                            </DialogContent>
+                        </Dialog>
+                    }
                 </AddCommentContainer>
             </Main>
         </Container>

@@ -39,38 +39,7 @@ const Notification = ({item}) => {
 
     const handleClick = async (item) => {
         if (item.type === "review") {
-            if (!item.seen) {
-                navigate(item.redirectUrl, { replace: true });
-            }
-        } else {
-            if (item.seen) {
-                navigate(item.redirectUrl, { replace: true });
-            } else {
-                let data = JSON.stringify({
-                    "notificationId": item.id,
-                    "seen": true
-                });
-
-                let config = {
-                    method: 'post',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/notification/updateStatus',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data : data
-                };
-
-                await axios.request(config)
-                    .then((response) => {
-                        if (response.data.returnCode === "0") {
-                            navigate(item.redirectUrl, { replace: true });
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            }
+            navigate(item.redirectUrl, { replace: true });
         }
     };
 
@@ -84,8 +53,8 @@ const Notification = ({item}) => {
                                 <NotificationsActiveOutlined/>
                             </Details>
                             <Details>
-                                <NotificationText>{item.message}</NotificationText>
-                                <NotificationTimestamp>{item.timestamp}</NotificationTimestamp>
+                                <NotificationText>{item.notificationText}</NotificationText>
+                                <NotificationTimestamp>{item.notificationTimeStamp}</NotificationTimestamp>
                             </Details>
                         </Main>
                     </>

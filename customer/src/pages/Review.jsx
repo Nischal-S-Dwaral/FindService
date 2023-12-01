@@ -5,9 +5,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import Rating from '@mui/material/Rating';
-import {useLocation, useNavigate} from "react-router-dom";
-import axios from "axios";
-import {useSelector} from "react-redux";
+import {useLocation} from "react-router-dom";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 const Container = styled.div `
 `;
@@ -76,43 +75,20 @@ const Review = () => {
     const serviceId = location.pathname.split("/")[2];
     const [rating, setRating] = useState(0);
     const [commentText, setCommentText] = useState("");
-    const user = useSelector((state) => state.user.currentUser);
-    const navigate = useNavigate();
 
     const searchParams = new URLSearchParams(window.location.search);
-    const notificationId = searchParams.get('nid');
+    const [demoModal, setDemoModal] = useState(false);
+
 
     const handleSubmitButtonClick = async (event) => {
-        event.preventDefault(); // prevents the refresh of the page
-
-        async function fetchData() {
-            let data = JSON.stringify({
-                "serviceId": serviceId,
-                "customerName": user.username,
-                "rating": rating,
-                "comment": commentText,
-                "notificationId": notificationId
-            });
-
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'http://localhost:8080/api/review/add',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data : data
-            };
-
-            const apiResponse = axios.request(config)
-            if (apiResponse != null) {
-                navigate("/", { replace: true })
-            } else {
-                console.log("Error while getting more details")
-            }
-        }
-        fetchData().then(() => setCommentText(""))
+        event.preventDefault();
+        setDemoModal(true);
     }
+
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
 
     return (
         <Container>
@@ -140,6 +116,24 @@ const Review = () => {
                         <Button onClick={handleSubmitButtonClick}>SUBMIT COMMENT</Button>
                     </ReviewLeftContainer>
                 </ReviewContainer>
+                {
+                    demoModal &&
+                    <Dialog
+                        open={demoModal}
+                        onClose={handleDemoDialogClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            ALERT
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                This is just a demo!! Functionality disabled..
+                            </DialogContentText>
+                        </DialogContent>
+                    </Dialog>
+                }
             </Main>
             <Footer/>
         </Container>

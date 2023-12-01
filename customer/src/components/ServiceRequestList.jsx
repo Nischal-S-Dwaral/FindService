@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components";
 import { DataGrid } from "@material-ui/data-grid";
 import {VisibilityOutlined} from "@material-ui/icons";
 import {getColorCodeForStatus} from "../utils";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
-import axios from "axios";
+import {serviceRequestData} from "../data";
 
 const Container = styled.div `
   display: flex;
@@ -77,41 +76,12 @@ const ServiceRequestList = ({properties}) => {
         { field: "price", headerName: "Price", width: 250 }
     ];
 
-    const [serviceRequests, setServiceRequests] = useState([]);
-    const user = useSelector((state) => state.user.currentUser);
-    const id = user.uid
-
-    useEffect(() => {
-        const getServiceRequests = async () => {
-            try {
-                let requestData = '';
-                let config = {
-                    method: 'get',
-                    maxBodyLength: Infinity,
-                    url: 'http://localhost:8080/api/serviceRequest/getServiceRequestList?customerId='+id,
-                    headers: { },
-                    data : requestData
-                };
-
-                const response = await axios.request(config)
-
-                if (response.data.returnCode === "0") {
-                    setServiceRequests(response.data.serviceRequestList)
-                } else {
-                    console.log(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getServiceRequests()
-    }, [id]);
-
+    const serviceRequests = serviceRequestData;
 
     return (
         <Container height={properties.height}>
             {
-                serviceRequests && (
+                serviceRequests.length > 0 && (
                     <>
                         <DataGridContainer>
                             <DataGrid
