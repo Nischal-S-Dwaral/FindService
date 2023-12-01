@@ -1,11 +1,7 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
-import {register} from "../api/Register";
 import {mobile} from "../responsive";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
-import {processStart} from "../redux/userRedux";
-import {useNavigate} from "react-router-dom";
 
 const Container = styled.div `
   width: 100vw;
@@ -82,32 +78,29 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState('');
     const [notMatchingPassword, setNotMatchingPassword] = useState(false)
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    let {error, errorMessage} = useSelector(state => state.user);
+    const error = false;
+    const errorMessage = "This is an error message";
+    const [demoModal, setDemoModal] = useState(false);
 
     /**
      * function to handle register button click
      */
     const handleRegisterButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
-
-        if (password !== confirmPassword) {
-            setNotMatchingPassword(true);
-        } else {
-            register(dispatch, navigate, {email, password, username}).then(() => {
-            })
-        }
+        setDemoModal(true);
     };
 
-    const handleErrorDialogClose = () => {
-        dispatch(processStart());
+    const handleErrorDialogClose = (event) => {
+        event.preventDefault();
     };
 
     const handleNotMatchingPwdDialogClose = () => {
         setNotMatchingPassword(false);
+    };
+
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
     };
 
     return (
@@ -178,6 +171,24 @@ const Register = () => {
                                     Agree
                                 </Button>
                             </DialogActions>
+                        </Dialog>
+                    }
+                    {
+                        demoModal &&
+                        <Dialog
+                            open={demoModal}
+                            onClose={handleDemoDialogClose}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">
+                                ALERT
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    This is just a demo!! Functionality disabled..
+                                </DialogContentText>
+                            </DialogContent>
                         </Dialog>
                     }
                 </Form>

@@ -38,7 +38,7 @@ const ServicesMap = ({services}) => {
     const [activeMarker, setActiveMarker] = useState(null);
     const mapRef = useRef(null);
 
-    const handleActiveMarker = (marker, item) => {
+    const handleActiveMarker = (marker) => {
         if (marker === activeMarker) {
             return;
         }
@@ -74,7 +74,7 @@ const ServicesMap = ({services}) => {
                         <Marker
                             key={item.id}
                             position={item.position}
-                            onClick={() => handleActiveMarker(item.id, item)}
+                            onClick={() => handleActiveMarker(item.id)}
                         >
                             {activeMarker === item.id ? (
                                 <InfoWindow onCloseClick={() => setActiveMarker(null)}>

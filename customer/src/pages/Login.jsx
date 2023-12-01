@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {googleLogin, login} from "../api/Login";
 import GoogleButton from 'react-google-button'
 import {mobile} from "../responsive";
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
-import {processStart} from "../redux/userRedux";
 
 const Container = styled.div `
   width: 100vw;
@@ -90,23 +87,28 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const error = false;
+    const errorMessage = "This is error message";
 
-    const dispatch = useDispatch();
-
-    let {error, errorMessage} = useSelector(state => state.user);
+    const [demoModal, setDemoModal] = useState(false);
 
     const handleLoginButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
-        login(dispatch, {email, password}).then(() => {});
+        setDemoModal(true);
     }
 
     const handleGoogleLoginButtonClick = (event) => {
         event.preventDefault(); // prevents the refresh of the page
-        googleLogin(dispatch);
+        setDemoModal(true);
     }
 
-    const handleErrorDialogClose = () => {
-        dispatch(processStart());
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
+
+    const handleErrorDialogClose = (event) => {
+        event.preventDefault();
     };
 
     return (
@@ -151,6 +153,24 @@ const Login = () => {
                                 Agree
                             </Button>
                         </DialogActions>
+                    </Dialog>
+                }
+                {
+                    demoModal &&
+                    <Dialog
+                        open={demoModal}
+                        onClose={handleDemoDialogClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            ALERT
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                This is just a demo!! Functionality disabled..
+                            </DialogContentText>
+                        </DialogContent>
                     </Dialog>
                 }
             </Wrapper>

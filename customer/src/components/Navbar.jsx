@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {AccountCircleRounded} from "@material-ui/icons";
 import {mobile} from "../responsive";
-import {useDispatch, useSelector} from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
-import {logout} from "../api/Logout";
+import {Link} from "react-router-dom";
 import {CircleNotifications} from "@mui/icons-material";
 import {Badge} from "@material-ui/core";
-import axios from "axios";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 
 const Container =styled.div `
   height: 60px;
@@ -169,48 +167,19 @@ const Button = styled.button `
  */
 const Navbar = () => {
 
-    let {currentUser} = useSelector(state => state.user);
     const [openDropdown, setOpenDropdown] = useState(false);
-    const [notifications, setNotifications] = useState(0)
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-
-        const getNotificationsCount = async () => {
-            let config = {
-                method: 'get',
-                maxBodyLength: Infinity,
-                url: 'http://localhost:8080/api/notification/getUnseenNotificationsCount?customerId=Wr0OtFpBPYMbvFxhvRMaEnjH9ad2',
-                headers: { }
-            };
-
-            axios.request(config)
-                .then((response) => {
-                    if (response.data.returnCode === "0") {
-                        setNotifications(response.data.notificationCount)
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        getNotificationsCount()
-    }, []);
+    const notifications = 5
+    const [demoModal, setDemoModal] = useState(false);
 
     const handleLogoutButtonClick = (event) => {
-        event.preventDefault(); // prevents the refresh of the page
-
-        try {
-            logout(dispatch).then(() =>
-                navigate("/login", { replace: true })
-            )
-        } catch (error) {
-            console.log("Error while logging out: ", error);
-        }
+        event.preventDefault();
+        setDemoModal(true);
     }
+
+    const handleDemoDialogClose = (event) => {
+        event.preventDefault();
+        setDemoModal(false);
+    };
 
     return (
         <Container>
@@ -229,21 +198,39 @@ const Navbar = () => {
                             </Badge>
                         </MenuItem>
                     </Link>
-                    <MenuItemText>Hello, {currentUser.username}</MenuItemText>
+                    <MenuItemText>Hello, Demo</MenuItemText>
                     <MenuItem>
                         <AccountCircleRounded onClick={() => {setOpenDropdown(!openDropdown)}}/>
                         <ProfileDropdown active={openDropdown}>
                             <DropdownTopContainer>
-                                <LetterImage>{currentUser.username.charAt(0).toUpperCase()}</LetterImage>
+                                <LetterImage>D</LetterImage>
                                 <DropdownRightContainer>
-                                    <UserName>{currentUser.username}</UserName>
-                                    <UserEmail>{currentUser.email}</UserEmail>
+                                    <UserName>Demo</UserName>
+                                    <UserEmail>demo@gmail.com</UserEmail>
                                 </DropdownRightContainer>
                             </DropdownTopContainer>
                             <Button onClick={handleLogoutButtonClick}>LOGOUT</Button>
                         </ProfileDropdown>
                     </MenuItem>
                 </Right>
+                {
+                    demoModal &&
+                    <Dialog
+                        open={demoModal}
+                        onClose={handleDemoDialogClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">
+                            ALERT
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                This is just a demo!! Functionality disabled..
+                            </DialogContentText>
+                        </DialogContent>
+                    </Dialog>
+                }
             </Wrapper>
         </Container>
     );
